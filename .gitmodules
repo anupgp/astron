@@ -4,3 +4,6 @@
 [submodule "lib/new_insilico"]
 	path = lib/new_insilico
 	url = https://github.com/anupgp/new_insilico.git
+[submodule "lib/boost"]
+	path = lib/boost
+	url = https://github.com/anupgp/boost.git
