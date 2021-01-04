@@ -1,0 +1,3 @@
+[submodule "lib/stochastic_euler"]
+	path = lib/stochastic_euler
+	url = https://github.com/anupgp/stochastic_euler.git
