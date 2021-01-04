@@ -1,0 +1,8 @@
+"Time-stamp: <2016-04-11 12:51:42 anup>"
+"insilico input file for k_pre "
+
+dxdt : 1, 
+k_pre_n : 0.15, 
+k_pre_rev : -85e-03, 
+k_pre_gmax : 36e01,
+k_pre_current : 0.0,

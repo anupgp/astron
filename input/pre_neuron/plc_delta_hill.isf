@@ -1,0 +1,10 @@
+"Time-stamp: <2016-03-31 21:05:34 anup>"
+"insilico input file for plc_delta_hill"
+
+dxdt : 0,
+plc_delta_hill_v_max : 0.02e-6,
+plc_delta_hill_k_diss : 0.3e-6,
+plc_delta_hill_coop : 2,
+plc_delta_hill_ip3_ihb : 1e-6,	
+plc_delta_hill_ip3_cyt_flux : 0.0,
+

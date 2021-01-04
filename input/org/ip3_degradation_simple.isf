@@ -1,0 +1,7 @@
+"Time-stamp: <2016-03-25 16:32:12 anup>"
+"insilico input file for ip3_degradation_simple"
+
+dxdt : 0,
+ip3_deg_simple_v_max : 0.1, 
+ip3_deg_simple_ip3_cyt_flux : 0.0,
+

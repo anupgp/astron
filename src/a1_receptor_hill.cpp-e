@@ -1,0 +1,36 @@
+// Time-stamp: <2019-01-04 13:16:28 macbookair>
+// Units: all SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
+// "Ref 1: L. Wu & P. Saggau, Neuron (1994)"
+// "Ref 2: H. Yawo & N. Chuhma, Nature (1993)"
+
+#include <vector>
+#include <iostream>
+#include <cmath>
+
+#include "include/new_insilico.hpp"
+
+#include "data_types.hpp"
+#include "a1_receptor_hill.hpp"
+
+void a1_receptor_hill::current(state_type &variables, state_type &dxdt, const double t, unsigned index) 
+{
+
+  // Get pre_neuron variable indices 
+
+  auto ado_ext_indices = newinsilico::get_pre_neuron_indices(index, "ado_ext");
+
+  // Sum up all ado_ext from all the pre_cell synapses
+
+  auto ado_ext = 0.0;
+  for(unsigned int iter = 0; iter < ado_ext_indices.size(); ++iter) {
+    ado_ext = ado_ext + std::max(variables[ado_ext_indices[iter]],0.0);
+  }
+    
+  // Get parameter values
+  const double v_max = newinsilico::neuron_value(index, "a1r_vgcc_hill_v_max");
+  const double k_diss = newinsilico::neuron_value(index, "a1r_vgcc_hill_k_diss");
+
+  // Compute parameter values
+  double a1r_vgcc_frac = v_max * (pow(ado_ext,0.7)/(pow(ado_ext,0.7) + k_diss));
+  newinsilico::neuron_value(index, "a1r_vgcc_frac", a1r_vgcc_frac);
+}

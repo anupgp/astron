@@ -1,0 +1,16 @@
+"Time-stamp: <2017-12-05 15:09:30 anup>"
+"insilico astrocyte input file for pmca "
+
+dxdt : 3,  
+pmca0 : 1.0,  
+pmca1 : 0.0, 
+pmca2 : 0.0,
+
+pmca_kf1 : 1.5e07,	"1.5e7" 
+pmca_kb1 : 20,		"ctrl: 20, AD: 60"
+pmca_kf2 : 20,		"20"
+pmca_kf3 : 100,		"100"
+pmca_kl : 0.6,		"ctrl: 0.6"
+pmca_density : 400e12,	"ctrl: 400e12"
+pmca_ca_cyt_flux : 0.0,
+pmca_init_check : 0.0,

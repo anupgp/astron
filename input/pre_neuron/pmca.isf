@@ -1,0 +1,16 @@
+"Time-stamp: <2016-12-15 11:26:33 anup>"
+"insilico pre_neuron input file for pmca "
+
+dxdt : 3,  
+pmca0 : 1.0,  
+pmca1 : 0.0, 
+pmca2 : 0.0,
+
+pmca_kf1 : 1.5e07, 
+pmca_kb1 : 20,
+pmca_kf2 : 20,
+pmca_kf3 : 100,
+pmca_kl : 0.6, "12.5"
+pmca_density : 250e12, "180e12"
+pmca_ca_cyt_flux : 0.0,
+pmca_init_check : 0.0,

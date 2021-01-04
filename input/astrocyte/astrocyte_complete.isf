@@ -1,0 +1,269 @@
+"Time-stamp: <2016-05-23 14:08:35 anup>"
+"astrocyte insilico input file for na_pre "
+"Ref: Halnes2013"
+
+dxdt : 2, 
+na_pre_m : 0.1, 
+na_pre_h : 0.2, 
+na_pre_rev : 80e-03, 
+na_pre_gmax : 1.0,
+na_pre_aalpham : 93.8285e03,
+na_pre_balpham : -105.023,
+na_pre_calpham : 17.7094,
+na_pre_abetam : 0.168396e03,
+na_pre_cbetam : 23.2707,
+na_pre_aalphah : 0.000354e03,
+na_pre_calphah : 18.706,
+na_pre_abetah : 6.62694e03,
+na_pre_bbetah : 17.6769,
+na_pre_cbetah : 13.3097,
+na_pre_current : 0.0,
+
+"Time-stamp: <2016-04-16 10:39:21 anup>"
+"astrocyte insilico input file for k_pre "
+"Ref: Halnes2013"
+
+dxdt : 1, 
+k_pre_n : 0.15, 
+k_pre_rev : -85e-03, 
+k_pre_gmax : 16.96,
+k_pre_current : 0.0,
+
+"Time-stamp: <2016-04-16 11:04:41 anup>"
+"astrocyte insilico input file for leak_pre "
+"astrocytes should have high leak owing to their potassium buffering functions"
+
+dxdt : 0, 
+leak_pre_rev : -80e-03, 
+leak_pre_gmax : 5.0e1,
+leak_pre_current : 0.0,
+
+"Time-stamp: <2018-02-15 12:03:05 anup>"
+"insilico input file for astrocyte ip3_degradation_simple"
+"Ref:ullah2006"
+
+dxdt : 0,
+ip3_degradation_simple_v_max : 1.25,		"0.3,0.1,1.5,0.66" 
+ip3_degradation_simple_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2017-10-11 11:38:18 anup>"
+"insilico input file for astrocyte ip3_kinase_hill"
+
+dxdt : 0,
+ip3_kinase_hill_v_max : 5e-6,"0.8e-6,3e-6" 
+ip3_kinase_hill_k_diss_ca : 0.4e-6, "0.3e-6"
+ip3_kinase_hill_coop_ca : 4, "4"
+ip3_kinase_hill_k_diss_ip3 : 10.0e-6,"0.5e-6" 
+ip3_kinase_hill_coop_ip3 : 1, "3"
+ip3_kinase_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2017-10-11 11:37:03 anup>"
+"insilico input file for astrocyte plc_delta_hill"
+
+dxdt : 0,
+plc_delta_hill_v_max : 0.02e-6,		"0.02e-6, 0.1e-6"
+plc_delta_hill_k_diss : 1e-6,		"1e-6"
+plc_delta_hill_coop : 2,
+plc_delta_hill_ip3_ihb : 1.5e-6,	
+plc_delta_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2017-06-13 15:46:57 anup>"
+"insilico input file for astrocyte p2y_receptor_hill "
+
+dxdt : 1,
+p2yr_hill_dsen_frac : 0.0,
+p2yr_hill_dsen_v_max : 0.001,			
+p2yr_hill_dsen_k_diss : 500e-9,
+ 
+p2yr_hill_v_max : 0.8e-6, "dr: 1.2e-6,  gca: 1.85e-6"
+p2yr_hill_k_diss : 3.5e-6, "dr: 8.0e-6,  gca: 3.5e-6"
+p2yr_hill_coop : 2, 	   "2"
+p2yr_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2017-10-13 14:26:12 anup>"
+"insilico input file for astrocyte serca_hill "
+"ref: swaminathan2009"
+
+dxdt : 0.0,
+serca_hill_v_max : 250.0e-6,"3.5e-6, 80e-6" 
+serca_hill_k_half : 0.1e-6, "0.1e-6"
+serca_hill_coeff : 2, "3" 
+serca_hill_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2017-12-05 15:09:30 anup>"
+"insilico astrocyte input file for pmca "
+
+dxdt : 3,  
+pmca0 : 1.0,  
+pmca1 : 0.0, 
+pmca2 : 0.0,
+
+pmca_kf1 : 1.5e07,	"1.5e7" 
+pmca_kb1 : 20,		"ctrl: 20, AD: 60"
+pmca_kf2 : 20,		"20"
+pmca_kf3 : 100,		"100"
+pmca_kl : 0.6,		"ctrl: 0.6"
+pmca_density : 400e12,	"ctrl: 400e12"
+pmca_ca_cyt_flux : 0.0,
+pmca_init_check : 0.0,
+
+"Time-stamp: <2017-10-11 11:34:16 anup>"
+"insilico input file for astrocyte ca_er buffer simple"
+"Ref: higgins2006"
+
+dxdt : 2,
+ca_er_buffer_simple_c0 : 5.0e-6, "140e-6, 5e-6"
+ca_er_buffer_simple_c1 : 5.0e-6, "20e-6, 5e-6"
+
+ca_er_buffer_simple_kc0c1 : 1.0e6, "1.0e6"
+ca_er_buffer_simple_kc1c0 : 80, "80"
+
+ca_er_buffer_simple_flux : 0.0,
+
+"Time-stamp: <2017-10-23 11:35:18 anup>"
+"insilico input file for astrocyte er_leak "
+
+dxdt : 0.0,
+er_leak_flux_coef : 0.2,		"normal: 0.2, alzheim: 0.1"
+er_leak_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2017-10-20 15:09:28 anup>"
+"insilico input file for astrocyte ip3_receptor_lr "
+"Ref: swaminathan2009, shuai2002, ullah2006"
+
+dxdt : 1,
+ip3r_lr_h : 0.5,
+
+ip3r_lr_a1 : 400e06,		"IP3 act:	400e06,	167.6e6" 
+ip3r_lr_a2 : 0.2e06, 		"Ca2+ inh:	0.2e06,	3.81e6"
+ip3r_lr_a3 : 400e06, 		"IP3 act:	400e06,	413.4e6"
+ip3r_lr_a4 : 0.2e06,		"Ca2+ inh:	0.2e06,	0.3101e6"
+ip3r_lr_a5 : 20e06,		"Ca2+ act:	20e06,	53.9e6"
+
+ip3r_lr_b1 : 52.0, 		"IP3 act:	52,	228.0"
+ip3r_lr_b2 : 0.2,		"Ca2+ inh:	0.2098,	0.409"
+ip3r_lr_b3 : 377.36, 		"IP3 act:	377.36,	188.5"
+ip3r_lr_b4 : 0.02, 		"Ca2+ inh:	0.0289,	0.096"
+ip3r_lr_b5 : 1.64,		"Ca2+ act:	1.6468,	4.52"
+
+ip3r_lr_flux_coef : 6,		"6, 10"
+ip3r_lr_num : 5,    		"5,10,20"
+ip3r_lr_openprob : 0.0,
+ip3r_lr_ca_cyt_flux : 0.0,
+ip3r_lr_open_fraction : 0.0,
+ip3r_lr_alpha_h : 0.0,
+ip3r_lr_beta_h : 0.0,
+ip3r_lr_m_inf : 0.0,
+ip3r_lr_n_inf : 0.0,
+
+"Time-stamp: <2020-12-15 22:56:16 anup>"
+"insilico input file for astrocyte mglu_receptor_hill (mGluR1)"
+"Ref: zou2017, conn1997, wisniewski2002, zhang2005, nieden2005, balazs1997"
+
+dxdt : 0,
+mglur_hill_v_max : 0.65e-06,	"ctrl(dhpg): 0.65e-06, AD(dhpg): 1.4e-06"
+mglur_hill_k_diss : 11.0e-06,	"ctrl(dhpg): 6.0e-06, AD(dhpg): 3.0e-06, glutamate: 11e-6, dhpg: 6e-6"
+mglur_hill_coop : 2, 
+mglur_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2018-02-15 19:57:14 anup>"
+"insilico input file for astrocyte glutamate release via transmitter_release_syt4a sensor"
+"Ref: bacaj2013, sun2007"
+
+dxdt : 17,
+syt45_k0_glu : 0.0,		"450e-9"
+syt45_k1_glu : 0.0,
+syt45_k2_glu : 0.0,
+
+syt45_f0_glu : 0.0,		"450e-9"
+syt45_f1_glu : 0.0,
+syt45_f2_glu : 0.0,
+syt45_f3_glu : 0.0,
+syt45_f4_glu : 0.0,
+syt45_f5_glu : 0.0,
+
+syt45_vkdoc_glu : 0.8,		"1.1"
+syt45_vkrel_glu : 0.0,
+syt45_vkend_glu : 0.0,
+syt45_vkacd_glu : 0.0,
+               
+syt45_vfmob_glu : 0.25,
+syt45_vfrel_glu : 0.0,
+syt45_vfend_glu : 0.0,
+syt45_vfacd_glu : 0.0,
+
+"-----------------------"
+syt45_kkf_glu : 1.53e8,		"1.53e8"
+syt45_kkb_glu : 3500,		"3500"
+syt45_kbb_glu : 0.25,		"0.25"
+syt45_k0exo_glu : 0.417e-3,	"0.417e-3"
+syt45_kcaexo_glu : 115,		"115"
+
+syt45_fkf_glu : 3.82e6,		"3.82e6"
+syt45_fkb_glu : 60,		"60"
+syt45_fbb_glu : 0.25,		"0.25"
+syt45_f0exo_glu : 0.417e-3,
+syt45_fcaexo_glu : 20.0,	"8.0"
+
+syt45_rkend_glu : 0.66,		"2,		0.66"		
+syt45_rkacd_glu : 0.6,		"4.0,		0.6"
+
+syt45_rfend_glu : 0.16,		"0.36,		0.16"
+syt45_rfacd_glu : 0.052,	"4.0,    	0.052"
+syt45_fracmob2doc_glu : 0.25,	"0.25"
+
+syt45_rmob2doc_glu : 1.0,	"5.0,		1.0"
+syt45_rkacd2mob_glu : 0.615,	"5,		0.615"
+syt45_rfacd2mob_glu : 0.615,	"1.0,		0.615"
+
+syt45_initcheck_glu : 0.0,
+syt45_reldelay_glu : 0.0,
+
+"-------------------------"
+syt45_ca_cyt_flux_glu : 0.0,
+syt45_krrelrate_glu : 0.0,
+syt45_ffrelrate_glu : 0.0,
+syt45_totalrelrate_glu : 0.0,
+
+syt45_krrelflag_glu : 0.0,
+syt45_krreltime_glu : 0.0,
+syt45_ffrelflag_glu : 0.0,
+syt45_ffreltime_glu : 0.0,
+
+syt45_relflag_glu : 0.0,
+syt45_reltime_glu : 0.0,
+syt45_random_glu : 0.0,
+
+"Time-stamp: <2017-10-15 15:47:56 anup>"
+"insilico input file for astrocyte ca_cyt buffer simple"
+"Ref: bartol2015, bartol2008, odonnell2011, sabatini2002"
+
+dxdt : 2,
+ca_cyt_buffer_simple_c0 : 30e-6,	"1e-7,	50e-6, 30e-6"
+ca_cyt_buffer_simple_c1 : 20e-6,  	"99.9e-6"
+
+ca_cyt_buffer_simple_kc0c1 : 6.0e7,	"1e8, 1.1e8,	2.47e8,	6.0e7"
+ca_cyt_buffer_simple_kc1c0 : 1200,  	"500,  1200,	524.0,	1200"
+
+ca_cyt_buffer_simple_flux : 0.0,
+
+"Time-stamp: <2017-10-18 17:03:37 anup>"
+"insilico input file for astrocyte"
+"Ref:ostby2009 - astrocyte area-to-volume ratio = 4e4 m^2"
+"Ref: grosche2013 - volume of an entire astrocyte = 40000e-18 m^3"
+"Ref: grosche1999, marchaland2008 - volume, area and area-volume ratio of microdomains"
+
+dxdt : 4,
+voltage : -76e-03,	
+ca_cyt : 100.0e-09,
+ip3_cyt : 160.0e-09,
+ca_er : 250.0e-6,			"400e-6"
+
+external_current : 0.0,
+ca_ext : 2e-03,
+volume_cyt : 0.37e-18,			"local:0.37e-18,	global:40000e-18"
+area_volume_ratio_cyt : 13.3e6,		"10e6-26e6,13.33e6"
+volume_ratio_er_cyt : 0.5, 		"0.185"
+area_ratio_er_cyt : 10.0,		"10.0" 
+spec_cap_cyt : 1.0e-02,
+ip3_cyt_baseline : 160e-09;

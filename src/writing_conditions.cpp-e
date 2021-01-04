@@ -1,0 +1,47 @@
+// Time-stamp: <2019-01-04 13:52:48 macbookair>
+// Units: All SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
+// Description: This file will contain all the codes which will modify the variables or parameters at run time
+// This script will implement the call to dynamic parameters and external currents
+
+#include <vector>
+#include <iostream>
+#include <cmath>
+
+#include "include/new_insilico.hpp"
+
+#include "writing_conditions.hpp"
+
+#include "data_types.hpp"
+#include "physical_constants.hpp"
+#include "global_variables.hpp"
+
+void writing_conditions::current(state_type &variables, const state_type &dxdt, const double t, const unsigned index)
+{
+
+  // Updates the RK4 counter function for cell
+  // astron::globals::RK4CELL.counter_update(index,t);
+
+  // ------------------------------
+  // limit writing the output file
+  // double relflag =  newinsilico::neuron_value(index, "syt45_relflag_glu");
+  // // double tstart = 200;
+  // double tstart = 185;
+  // // double tstop = 320;
+  // double tstop = 210;
+  // // --------------------------------
+  // if( ((t >= tstart) && (t <= tstop))){
+  //   insilico::configuration::set_write_this_interval(true);
+  // }
+  // else{
+  //   insilico::configuration::set_write_this_interval(false);
+  // }
+  // // compulsory write when a release event occurs
+  // // --------------------------------
+  // if( ((t >= tstart) && (t <= tstop)) && (relflag >0)){
+  //   insilico::configuration::set_write_this_interval2(true);
+  // }
+  // else{
+  //   insilico::configuration::set_write_this_interval2(false);
+  // }  
+  // ----------------------------------
+}

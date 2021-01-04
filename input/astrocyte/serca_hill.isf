@@ -1,0 +1,9 @@
+"Time-stamp: <2017-10-13 14:26:12 anup>"
+"insilico input file for astrocyte serca_hill "
+"ref: swaminathan2009"
+
+dxdt : 0.0,
+serca_hill_v_max : 250.0e-6,"3.5e-6, 80e-6" 
+serca_hill_k_half : 0.1e-6, "0.1e-6"
+serca_hill_coeff : 2, "3" 
+serca_hill_ca_cyt_flux : 0.0,

@@ -1,0 +1,28 @@
+"Time-stamp: <2017-10-20 15:09:28 anup>"
+"insilico input file for astrocyte ip3_receptor_lr "
+"Ref: swaminathan2009, shuai2002, ullah2006"
+
+dxdt : 1,
+ip3r_lr_h : 0.5,
+
+ip3r_lr_a1 : 400e06,		"IP3 act:	400e06,	167.6e6" 
+ip3r_lr_a2 : 0.2e06, 		"Ca2+ inh:	0.2e06,	3.81e6"
+ip3r_lr_a3 : 400e06, 		"IP3 act:	400e06,	413.4e6"
+ip3r_lr_a4 : 0.2e06,		"Ca2+ inh:	0.2e06,	0.3101e6"
+ip3r_lr_a5 : 20e06,		"Ca2+ act:	20e06,	53.9e6"
+
+ip3r_lr_b1 : 52.0, 		"IP3 act:	52,	228.0"
+ip3r_lr_b2 : 0.2,		"Ca2+ inh:	0.2098,	0.409"
+ip3r_lr_b3 : 377.36, 		"IP3 act:	377.36,	188.5"
+ip3r_lr_b4 : 0.02, 		"Ca2+ inh:	0.0289,	0.096"
+ip3r_lr_b5 : 1.64,		"Ca2+ act:	1.6468,	4.52"
+
+ip3r_lr_flux_coef : 6,		"6, 10"
+ip3r_lr_num : 5,    		"5,10,20"
+ip3r_lr_openprob : 0.0,
+ip3r_lr_ca_cyt_flux : 0.0,
+ip3r_lr_open_fraction : 0.0,
+ip3r_lr_alpha_h : 0.0,
+ip3r_lr_beta_h : 0.0,
+ip3r_lr_m_inf : 0.0,
+ip3r_lr_n_inf : 0.0,

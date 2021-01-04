@@ -1,0 +1,17 @@
+"Time-stamp: <2016-03-25 16:33:55 anup>"
+"insilico input file for pmca "
+
+dxdt : 3,  
+pmca0 : 1.0,  
+pmca1 : 0.0, 
+pmca2 : 0.0,
+
+pmca_kf1 : 1.5E07, 
+pmca_kb1 : 20,
+pmca_kf2 : 20,
+pmca_kf3 : 100,
+pmca_kl : 0.6,
+pmca_density : 250e12,
+pmca_init : 0,
+pmca_flux : 0.0,
+

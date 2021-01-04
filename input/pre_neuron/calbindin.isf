@@ -1,0 +1,19 @@
+"Time-stamp: <2016-05-27 12:12:57 anup>"
+"insilico pre_neuron input file for calbindin"
+
+dxdt : 8,
+cb_H0L0 : 45e-06, 
+cb_H1L0 : 0, 
+cb_H2L0 : 0, 
+cb_H3L0 : 0,
+cb_H0L1 : 0, 
+cb_H1L1 : 0, 
+cb_H2L1 : 0, 
+cb_H3L1 : 0,
+cb_kon_f : 0.55e07, 
+cb_koff_f : 2.6, 
+cb_kon_s : 4.35e07, 
+cb_koff_s : 35.8,
+cb_total : 0.0,
+cb_ca_cyt_flux : 0.0,
+

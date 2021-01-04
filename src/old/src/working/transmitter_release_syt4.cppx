@@ -1,0 +1,229 @@
+// Time-stamp: <2017-08-19 12:19:07 anup>
+// Units: All SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
+// Ref: bollmann2000, zhang2004b, van_poser1997, sun2007, bacaj2013, jackman2016
+
+#include <vector>
+#include <iostream>
+#include <cmath>
+#include <string>
+
+#include "data_types.hpp"
+#include "physical_constants.hpp"
+#include "global_variables.hpp"
+
+#include "insilico/core.hpp"
+#include "transmitter_release_syt4.hpp"
+#include "random_number_generator.hpp"
+
+namespace consts=astron::phy_const;
+namespace gvars=astron::globals;
+namespace ar = astron::random;
+
+void transmitter_release_syt4::state_machine(state_type &variables, state_type &dxdt, const double t, unsigned index, 
+					      stringmap varnames,
+					      stringmap parnames,
+					      stringmap valnames) 
+{
+  // Get all variable indices
+  unsigned ca_cyt_index = insilico::engine::neuron_index(index, "ca_cyt");
+
+  // Sensor states
+  unsigned s0_index = insilico::engine::neuron_index(index, varnames["trsyt4_s0"]);
+  unsigned s1_index = insilico::engine::neuron_index(index, varnames["trsyt4_s1"]);
+  unsigned s2_index = insilico::engine::neuron_index(index, varnames["trsyt4_s2"]);
+  unsigned s3_index = insilico::engine::neuron_index(index, varnames["trsyt4_s3"]);
+  
+  // Vesicle recycling
+  unsigned vff_index = insilico::engine::neuron_index(index, varnames["trsyt4_vff"]);
+  unsigned vkr_index = insilico::engine::neuron_index(index, varnames["trsyt4_vkr"]);
+  
+  // Get all parameter values
+  const double volume_cyt = insilico::engine::neuron_value(index, "volume_cyt"); // Volume_Cyt (m^3)
+  
+  const double kf = insilico::engine::neuron_value(index, parnames["trsyt4_kf"]);
+  const double kb = insilico::engine::neuron_value(index, parnames["trsyt4_kb"]);
+  const double ca_indep_vr_rate = insilico::engine::neuron_value(index, parnames["trsyt4_ca_indep_vr_rate"]);
+  const double ca_dep_vr_rate = insilico::engine::neuron_value(index, parnames["trsyt4_cadep_vr_rate"]);
+
+  const double kf_vrec_ff = insilico::engine::neuron_value(index, parnames["trsyt4_kf_vrec_ff"]); // Forward recycling  rate full fusion
+  const double kf_vrec_kr = insilico::engine::neuron_value(index, parnames["trsyt4_kf_vrec_kr"]); // Forward recycling rate kiss-and-run
+  const double probff = insilico::engine::neuron_value(index, parnames["trsyt4_probff"]); // Probability of full fusion events
+  
+  // Set limits on variable values
+  variables[ca_cyt_index] = std::max<double>(variables[ca_cyt_index],0.0);
+  variables[h0l0_index] = std::max<double>(variables[h0l0_index],0.0);
+  variables[h0l1_index] = std::max<double>(variables[h0l1_index],0.0);
+  variables[h0l2_index] = std::max<double>(variables[h0l2_index],0.0);
+
+  // Variables for sensor refcyling
+  variables[hff_index] = std::max<double>(variables[hff_index],0.0);
+  variables[hkr_index] = std::max<double>(variables[hkr_index],0.0);
+
+  // Variable for sensor refractory period
+  variables[href_index] = std::max<double>(variables[href_index],0.0);
+  
+  // Load initial values of glutamate_vesicles
+  const double initcheck  = insilico::engine::neuron_value(index, parnames["initcheck"]);
+  const double vesnum = insilico::engine::neuron_value(index, parnames["vesnum"]);
+  if (initcheck <= 0) {
+    variables[h0l0_index] = (vesnum) / (consts::Av * volume_cyt * 1000);
+    // Update initialization check value
+    insilico::engine::neuron_value(index, parnames["initcheck"], 1.0);
+  }
+
+  // -------------------
+  // check whether refractory period is needed
+  const double refon  = insilico::engine::neuron_value(index, parnames["refon"]);
+  // -------------------
+  
+  // Get all variable values
+  double ca_cyt = variables[ca_cyt_index];
+
+  double h0l0 = variables[h0l0_index];
+  double h0l1 = variables[h0l1_index];
+  double h0l2 = variables[h0l2_index];
+
+  double href =std::max<double>(variables[href_index],0.0); // Variables for a refractory period
+  double hff = variables[hff_index]; // Variable for vesicles released via full fusion events
+  double hkr = variables[hkr_index]; // Variable for vesicles released via kiss-and-run events
+  
+  // --------------------------------------------
+  // Time until no release is allowed
+  // double reldelay =   insilico::engine::neuron_value(index, parnames["reldelay"]);
+  
+  // --------------------------------------------
+  // Order of reactions: right, down, up, left
+  // std::cout << sponf << " " << synf << " " << asynf << " " << freezeb << " " << offb << std::endl;
+  
+  dxdt[h0l0_index]  = (-h0l0*2*lf*ca_cyt) + (h0l1*lb) + (hff*recfff) + (hkr*reckrf) + (-h0l0 * sponf * href);
+  dxdt[h0l1_index]  = (-h0l1*lf*ca_cyt)   + (h0l2*2*lb) + (-h0l1*lb) +   (h0l0*2*lf*ca_cyt);
+  dxdt[h0l2_index]  = (-h0l2*2*lb) + (h0l1*lf*ca_cyt) + (-h0l2 * slowf * href); 
+
+    // Calculate RRP
+  double rrp = (
+		(0
+		 + h0l0 + h0l1 + h0l2
+		 )
+		* (consts::Av * volume_cyt * 1000));
+
+  // Calculate total release rate
+  double trr = ((h0l0 * sponf) + (h0l2 * slowf) );
+
+  // Implementing the refractory period using a cost/punishment function
+  // dxdt[href_index] = (-href * trr * refon * (consts::Av * volume_cyt * 1000) / vesnum) + ((1-href) * refb * refon);
+  dxdt[href_index] = (-href * trr * refon * (consts::Av * volume_cyt * 1000)) + ((1-href) * refb * refon);
+  // dxdt[href_index] = (-href * trr * refon * (consts::Av * volume_cyt * 1000)) + ((1-href) * refb * refon);
+
+  // Implementing vesicular releasr via kiss-and-run and full-fusion
+  // Vesicles released via full-fusions and via kiss-and-run are recycled back to the initial state
+  dxdt[hff_index] = (-hff*recfff) + (probff * trr * href);
+  dxdt[hkr_index] = (-hkr*reckrf) + ((1-probff) * trr * href);
+  
+  double ca_cyt_flux = 0.0
+    + (-h0l0*2*lf*ca_cyt) + (h0l1*lb)                     
+    + (-h0l1*lf*ca_cyt)   + (h0l2*2*lb);
+
+  double sponrelrate = (h0l0 * sponf) * href * (consts::Av * volume_cyt * 1000);
+  double slowrelrate = (h0l2 * slowf) * href * (consts::Av * volume_cyt * 1000);
+  double totalrelrate = sponrelrate + slowrelrate;
+ 
+  // Update parameter values
+  insilico::engine::neuron_value(index, valnames["ca_cyt_flux"], ca_cyt_flux);
+  insilico::engine::neuron_value(index, valnames["rrp"], rrp);
+  insilico::engine::neuron_value(index, valnames["sponrelrate"], sponrelrate);
+  insilico::engine::neuron_value(index, valnames["slowrelrate"], slowrelrate);
+  insilico::engine::neuron_value(index, valnames["totalrelrate"], totalrelrate);
+
+};
+
+void transmitter_release_syt7::update_release(state_type &variables, const double t, unsigned index, 
+					       ar::random_class &rnum1, ar::random_class &rnum2, ar::random_class &rnum3,
+					       stringmap varnames,
+					       stringmap parnames,
+					       stringmap valnames)
+{
+  const double sponrelrate = insilico::engine::neuron_value(index, valnames["sponrelrate"]); // Forward rate for spontaneous release
+  const double slowrelrate = insilico::engine::neuron_value(index, valnames["slowrelrate"]); // Forward rate for synchronous release
+
+  const double probff = insilico::engine::neuron_value(index, parnames["probff"]); // Percentage of full fusions
+  
+  int ffflag = 0;
+  int krflag = 0;
+
+  // ---------------------------------------------------------------------------
+  double r1,r2,r3,random = 0;
+  
+  int sponflag = 0;
+  double spontime = -1.0;
+    
+  int slowflag = 0;
+  double slowtime = -1.0;
+
+  int relflag = 0;
+  double reltime = -1.0;
+  
+  // Time until no release is allowed
+  double reldelay =   insilico::engine::neuron_value(index, parnames["reldelay"]);	
+
+  r1 = rnum1.uni_double();
+  r2 = rnum2.uni_double();
+  r3 = rnum3.uni_double();
+
+  if((sponrelrate * gvars::DELTA_T) > r1 && (t > reldelay) ){
+    sponflag = 1;
+    spontime = t;
+    relflag = 1;
+    reltime = t;
+    random = r1;
+  }
+  if((slowrelrate * gvars::DELTA_T) > r2 && (t > reldelay)){
+    slowflag = 1;
+    slowtime = t;
+    relflag = 1;
+    reltime = t;
+    random = r2;
+  }
+
+  if (relflag){
+    // ---------------------------------------------------------------------------
+    // Throw dice here to decide whether it is full-fusion or kiss-and-run release
+    // Check for the percentage of full-fusion by calling the random number
+    // Update the released vesicles via full-fusions or kiss-and-run
+    if (probff  >= r3){
+      ffflag = 1;
+      krflag = 0;
+    }
+    else{
+      ffflag = 0;
+      krflag = 1;
+    }
+    //  check which transmitter is released
+    std::string str = varnames["h0l0"];
+    std::string transmitter = "not found";
+    if(str.find("gluves") < str.npos)
+      transmitter = "glutamate";
+    else if(str.find("atpves") < str.npos)
+      transmitter = "atp";
+    // check which type of release occured
+    std::string reltype = "unknown transmitter";
+    if(slowflag)
+      reltype = "slow";
+    else if(sponflag)
+      reltype = "spontaneous";
+    std::cout << "*** " << reltype << " release of " << transmitter << " from cell" <<  index << " at " << reltime << std::endl;
+  }    
+  // ----------------------------------
+  insilico::engine::neuron_value(index, valnames["ffflag"], ffflag);
+  insilico::engine::neuron_value(index, valnames["krflag"], krflag);
+    
+  insilico::engine::neuron_value(index, valnames["sponflag"], sponflag);
+  insilico::engine::neuron_value(index, valnames["spontime"], spontime);
+    
+  insilico::engine::neuron_value(index, valnames["slowflag"], slowflag);
+  insilico::engine::neuron_value(index, valnames["slowtime"], slowtime);
+
+  insilico::engine::neuron_value(index, valnames["relflag"], relflag);
+  insilico::engine::neuron_value(index, valnames["reltime"], reltime);
+
+  insilico::engine::neuron_value(index, valnames["random"], random); 
+}

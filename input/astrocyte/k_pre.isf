@@ -1,0 +1,9 @@
+"Time-stamp: <2016-04-16 10:39:21 anup>"
+"astrocyte insilico input file for k_pre "
+"Ref: Halnes2013"
+
+dxdt : 1, 
+k_pre_n : 0.15, 
+k_pre_rev : -85e-03, 
+k_pre_gmax : 16.96,
+k_pre_current : 0.0,

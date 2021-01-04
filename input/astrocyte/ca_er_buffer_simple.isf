@@ -1,0 +1,12 @@
+"Time-stamp: <2017-10-11 11:34:16 anup>"
+"insilico input file for astrocyte ca_er buffer simple"
+"Ref: higgins2006"
+
+dxdt : 2,
+ca_er_buffer_simple_c0 : 5.0e-6, "140e-6, 5e-6"
+ca_er_buffer_simple_c1 : 5.0e-6, "20e-6, 5e-6"
+
+ca_er_buffer_simple_kc0c1 : 1.0e6, "1.0e6"
+ca_er_buffer_simple_kc1c0 : 80, "80"
+
+ca_er_buffer_simple_flux : 0.0,

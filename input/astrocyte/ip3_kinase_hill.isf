@@ -1,0 +1,11 @@
+"Time-stamp: <2017-10-11 11:38:18 anup>"
+"insilico input file for astrocyte ip3_kinase_hill"
+
+dxdt : 0,
+ip3_kinase_hill_v_max : 5e-6,"0.8e-6,3e-6" 
+ip3_kinase_hill_k_diss_ca : 0.4e-6, "0.3e-6"
+ip3_kinase_hill_coop_ca : 4, "4"
+ip3_kinase_hill_k_diss_ip3 : 10.0e-6,"0.5e-6" 
+ip3_kinase_hill_coop_ip3 : 1, "3"
+ip3_kinase_hill_ip3_cyt_flux : 0.0,
+

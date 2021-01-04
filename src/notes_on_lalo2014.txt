@@ -1,0 +1,21 @@
+Time-stamp: <2016-03-03 14:49:14 anup>
+Lalo 2014
+Gives evidence for
+1. a functional calcium-dependent vesicular release mechanism for gliotransmitter release
+2. P2X-mediated ionic currents in neocortical neurons from ATP released by astrocytes
+3. preventing release or deleting/blocking P2X-receptors impairs purinergic modulation of GABAergic synaptic transmission
+Results
+Uncaging calcium in the astrocyte elicited P2X-mediated unitary events (4 Hz) in the HEK cells expressing P2X2 receptors. 
+Some sniffer cells also responded with unitary currents (0.2 Hz) without evoked calcium transients in astrocytes.
+activating astrocyte specific PAR-1 receptors (TFLLR) that activate ip3-receptors or NMDA receptors lead to robust increase in the P2X2-mediated currents.
+Amplitude: 11.2 pA
+Risetime: 1.6 ms
+Decaytime: 15 ms
+Pretreatment with a blocker of vacuolar-type H-ATPase bafilomycin A1 decreased both amplitude and frequency of calcium triggered P2X2-mediated events.
+Also, astrocytes from dn-SNARE mice showed reduced release after elevation of astrocytic calcium levels
+Very important: Figure 2D
+-------------------------
+Release probability: 0.28
+Quantal size: 7.9 pA
+Other experiments ruled out the involvement of non-vesicular release of ATP via TREK-1 potassium channels and best1 chloride channels
+Thus astrocytes release ATP via a calcium-dependent exocytosis mechanism (SNARE).

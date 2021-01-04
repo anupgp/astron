@@ -1,0 +1,51 @@
+"Time-stamp: <2017-06-10 17:00:26 anup>"
+"insilico input file for astrocyte glutamate release via transmitter_release_hybrid sensor"
+
+dxdt : 12,
+gluves_h0l0 : 0.0, 
+gluves_h1l0 : 0, 
+gluves_h2l0 : 0, 
+gluves_h0l1 : 0, 
+gluves_h1l1 : 0, 
+gluves_h2l1 : 0, 
+gluves_h0l2 : 0, 
+gluves_h1l2 : 0,
+gluves_h2l2 : 0, 
+gluves_href : 1,
+gluves_hff : 0,
+gluves_hkr : 0,
+
+gluves_hf : 0.612e8,		"ts: 1.53e8,	sn: 0.612e8"
+gluves_hb : 2320,		"ts: 5800,	sn: 2320"
+gluves_lf : 3.82e6,		"ts: 2.94e6,	sn: 3.82e6"
+gluves_lb : 13,			"ts: 130,	sn: 13" 
+gluves_b : 0.25,              	"ts: 0.25,	sn: 0.25" 
+gluves_sponf : 0.417e-3,	"ts: 0.417e-3,	sn: 0.417e-3"
+gluves_slowf : 2000,		"ts: 2000,	sn: 2000" 
+gluves_sslowf : 50,		"ts: 50,	sn: 50"
+gluves_refb : 0.0,		"ts: 0.0,	sn: 157.48"
+gluves_vesnum : 295,		"ts: 269,	sn: 269"
+gluves_refon : 0,
+gluves_initcheck : 0.0,
+gluves_reldelay : 0.0,
+gluves_recfff : 0.0666,		"0.06"
+gluves_reckrf : 0.6667,		"0.6667"
+gluves_probff : 0.64,	      	"0.64"
+
+gluves_ffflag : 0.0,
+gluves_krflag : 0.0,
+gluves_sponflag : 0.0,
+gluves_spontime : -1.0,
+gluves_slowflag : 0.0,
+gluves_slowtime : -1.0,
+gluves_sslowflag : 0.0,
+gluves_sslowtime : -1.0,
+gluves_relflag : 0.0,
+gluves_reltime : -1.0,
+gluves_rrp : 0,
+gluves_sponrelrate : 0.0,
+gluves_slowrelrate : 0.0,
+gluves_sslowrelrate : 0.0,
+gluves_totalrelrate : 0.0,
+gluves_ca_cyt_flux : 0.0,
+gluves_random : 0,

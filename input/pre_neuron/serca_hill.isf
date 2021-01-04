@@ -1,0 +1,7 @@
+"Time-stamp: <2016-06-20 11:06:57 anup>"
+"insilico input file for pre_neuron serca_hill "
+
+dxdt : 0.0,
+serca_hill_v_max : 20e-6, 
+serca_hill_k_half : 0.18e-6, 
+serca_hill_ca_cyt_flux : 0.0,

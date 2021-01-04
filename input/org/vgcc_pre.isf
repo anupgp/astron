@@ -1,0 +1,15 @@
+"Time-stamp: <2016-03-25 16:34:36 anup>"
+"insilico input file for vgcc_pre"
+
+dxdt : 5,
+vgcc_pre_v0 : 1.0, 
+vgcc_pre_v1 : 0.0, 
+vgcc_pre_v2 : 0.0, 
+vgcc_pre_v3 : 0.0, 
+vgcc_pre_v4 : 0.0,
+vgcc_pre_gmax : 4e-12,  
+vgcc_pre_rev : 60.33e-03,
+vgcc_pre_num : 50, 
+vgcc_pre_ca_cyt_flux : 0.0,
+vgcc_pre_current : 0.0,
+

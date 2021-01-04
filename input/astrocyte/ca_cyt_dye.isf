@@ -1,0 +1,12 @@
+"Time-stamp: <2017-06-10 10:59:35 anup>"
+"insilico input file for astrocyte calcium dye (fluorescence indicator)"
+"Ref: bartol2015, bartol2008, maravall2000, scott2006"
+
+dxdt : 2,
+ca_cyt_dye_c0 : 3.6e-6,		"fluo4: 2.5e-6, indo1: 5.0e-6"
+ca_cyt_dye_c1 : 1.4e-6, 	"fluo4: 0.7e-6"
+
+ca_cyt_dye_kc0c1 : 8.0e8, 	"fluo4: 8e8, indo1: 5e8"
+ca_cyt_dye_kc1c0 : 160,   	"fluo4: 160, indo1: 130"
+
+ca_cyt_dye_ca_cyt_flux : 0.0,

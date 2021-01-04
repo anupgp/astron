@@ -1,0 +1,47 @@
+"Time-stamp: <2017-09-25 10:19:56 anup>"
+"insilico input file for astrocyte glutamate release via transmitter_release_syt4a sensor"
+
+dxdt : 8,
+gluves_h0 : 10e-6,
+gluves_h1 : 0.0,
+gluves_h2 : 0.0,
+gluves_l0 : 10e-6,
+gluves_l1 : 0.0,
+gluves_l2 : 0.0,
+
+gluves_vdoc : 0.0,
+gluves_vmob : 0.0,
+gluves_vreckr : 0.0,
+gluves_vrecff : 0.0,
+
+gluves_hf : 1.3e8,		"ap: 1.3e8"
+gluves_hb : 4000,		"ap: 4000"
+gluves_b : 0.25,              	"ap: 0.25"
+gluves_lf : 1.3e8,		"ap: 1.3e8"
+gluves_lb : 4000,		"ap: 4000"
+
+gluves_exosponkr : 0.417e-3,	"ap: 0.417e-3"
+gluves_exocakr : 650,		"ap: 650"
+gluves_exosponff : 0.417e-3,	"ap: 0.417e-3"
+gluves_exocaff : 0.417e-3,	"ap: 0.417e-3"
+gluves_reckr : 0.333,		"ap: 0.333"
+gluves_recff : 0.333,		"ap: 0.333"
+gluves_mob2doc : 10,		"ap: "
+gluves_vesnum : 100,		"ap: "
+gluves_initcheck : 0.0,		"ap: 0.0"
+gluves_reldelay : 0.0,		"ap: 0.0"
+
+gluves_sponflag : 0.0,
+gluves_spontime : -1.0,
+gluves_fastflag : 0.0,
+gluves_fasttime : -1.0,
+gluves_relflag : 0.0,
+gluves_reltime : -1.0,
+
+gluves_sponrelrate : 0.0,
+gluves_fastrelrate : 0.0,
+gluves_totalrelrate : 0.0,
+gluves_docrelrate : 0.0,
+gluves_mobrelrate : 0.0,
+gluves_ca_cyt_flux : 0.0,
+gluves_random : 0,

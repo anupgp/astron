@@ -1,0 +1,105 @@
+// Time-stamp: <2017-10-20 10:34:24 anup>
+// Units: all SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
+// Doc: ip3 receptor deterministic (li-rinzel model)
+// Ref: shuai2002
+
+#include <vector>
+#include <iostream>
+#include <cmath>
+
+#include "insilico/core.hpp"
+
+#include "physical_constants.hpp"
+#include "global_variables.hpp"
+#include "data_types.hpp"
+#include "ip3_receptor_lr.hpp"
+
+namespace gvars=astron::globals;
+
+void ip3_receptor_lr::current(state_type &variables, state_type &dxdt, const double t, unsigned index)
+{
+  state_type noise = newinsilico::get_noise();
+  ip3_receptor_lr::current(variables, dxdt, noise, t, index);
+}
+
+void ip3_receptor_lr::current(state_type &variables, state_type &dxdt, state_type &noise, const double t, unsigned index) 
+{
+  // Get parameter values
+  double a1 = newinsilico::neuron_value(index, "ip3r_lr_a1");
+  double a2 = newinsilico::neuron_value(index, "ip3r_lr_a2");
+  double a3 = newinsilico::neuron_value(index, "ip3r_lr_a3");
+  double a4 = newinsilico::neuron_value(index, "ip3r_lr_a4");
+  double a5 = newinsilico::neuron_value(index, "ip3r_lr_a5");
+
+  double b1 = newinsilico::neuron_value(index, "ip3r_lr_b1");
+  double b2 = newinsilico::neuron_value(index, "ip3r_lr_b2");
+  double b3 = newinsilico::neuron_value(index, "ip3r_lr_b3");
+  double b4 = newinsilico::neuron_value(index, "ip3r_lr_b4");
+  double b5 = newinsilico::neuron_value(index, "ip3r_lr_b5");
+
+  const double ip3r_lr_flux_coef = newinsilico::neuron_value(index, "ip3r_lr_flux_coef");
+  const double ip3r_lr_num = newinsilico::neuron_value(index, "ip3r_lr_num");
+
+  // Get all variable indices
+  unsigned ca_cyt_index = newinsilico::get_neuron_index(index, "ca_cyt");
+  unsigned ca_er_index = newinsilico::get_neuron_index(index, "ca_er");
+  unsigned ip3_cyt_index = newinsilico::get_neuron_index(index, "ip3_cyt");
+  unsigned h_index = newinsilico::get_neuron_index(index, "ip3r_lr_h");
+
+  // Set lower limits on variable values
+  variables[ca_cyt_index] = std::max<double>(variables[ca_cyt_index],0.0);
+  variables[ca_er_index] = std::max<double>(variables[ca_er_index],0.0);
+  variables[ip3_cyt_index] = std::max<double>(variables[ip3_cyt_index],0.0);
+  variables[h_index] = std::max<double>(variables[h_index],0.0);
+
+  // Set upper limits on variable values
+  variables[h_index] = std::min<double>(variables[h_index],1.0);
+
+  // Get variable values
+  double ca_cyt = variables[ca_cyt_index];
+  double ca_er = variables[ca_er_index];
+  double ip3_cyt = variables[ip3_cyt_index];
+  double h = variables[h_index];
+
+  // Special assignments
+  double d1 = b1/a1;
+  double d2 = b2/a2;
+  double d3 = b3/a3;
+  double d5 = b5/a5;
+  // double d1 = 0.13e-6;
+  // double d2 = 1.049e-6;
+  // double d3 = 0.9434e-6;
+  // double d5 = 0.08234e-6;
+  // a2 = 0.2e6;
+
+  double q2 = d2 * ( (ip3_cyt + d1) / (ip3_cyt + d3) );
+  double n_inf = ip3_cyt / (ip3_cyt + d1);
+  double m_inf = ca_cyt / (ca_cyt + d5);
+  double h_inf = q2 / (q2 + ca_cyt);
+  double tau_h = 1 / (a2 * (q2 + ca_cyt) );
+
+  // call other functions
+  double alpha_h = a2 * d2 * ( (ip3_cyt + d1) / (ip3_cyt + d3) );
+  double beta_h = a2 * ca_cyt;
+
+  // Compute noise
+  noise[h_index] = sqrt((((alpha_h * (1 - h)) + (beta_h * h)) / ip3r_lr_num) * gvars::DELTA_T) * rand.uni_double();
+  // noise[h_index] = 0.0;
+  
+  // Compute dxdt values
+  dxdt[h_index] = (alpha_h * (1 - h)) - (beta_h * h);
+  // dxdt[h_index] = (1 / tau_h) * (h_inf - h);
+
+  // compute open probability
+  double openprob = pow(m_inf,3.0) * pow(n_inf,3.0) * pow(h,3.0);
+  
+  // compute the flux
+  double ip3r_lr_ca_cyt_flux = (ca_er - ca_cyt) * ip3r_lr_flux_coef * pow(m_inf,3.0) * pow(n_inf,3.0) * pow(h,3.0);
+  
+  newinsilico::neuron_value(index, "ip3r_lr_alpha_h", alpha_h);
+  newinsilico::neuron_value(index, "ip3r_lr_beta_h", beta_h);
+  newinsilico::neuron_value(index, "ip3r_lr_m_inf", m_inf);
+  newinsilico::neuron_value(index, "ip3r_lr_n_inf", n_inf);
+  newinsilico::neuron_value(index, "ip3r_lr_openprob", openprob);
+  newinsilico::neuron_value(index, "ip3r_lr_ca_cyt_flux", ip3r_lr_ca_cyt_flux);
+}

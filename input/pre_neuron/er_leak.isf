@@ -1,0 +1,7 @@
+"Time-stamp: <2016-04-29 11:01:23 anup>"
+"insilico input file for pre_neuron er_leak "
+
+dxdt : 0.0,
+er_leak_flux_coef : 0.01,
+er_leak_ca_cyt_flux : 0.0,
+

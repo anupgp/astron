@@ -1,0 +1,8 @@
+bb7b6f27826854a187496c3294e66303c85116d8 36b40928a6cafe6bff37e7a369a3b2fe19b859b3 Macbook Air <anupgp@gmail.com> 1598454010 -0400	commit: begin code prepartion for resubmission
+36b40928a6cafe6bff37e7a369a3b2fe19b859b3 86eacc80f4ea4c40b5aa468d0dc67e84c6731643 Macbook Air <anupgp@gmail.com> 1600110357 -0400	commit: last working version: Linux rosalind1 3.10.0-327.el7.x86_64 #1 SMP Thu Nov 19 22:10:57 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+86eacc80f4ea4c40b5aa468d0dc67e84c6731643 e2e6bf72f3477b5cece0ea430a7ae4fec3756d92 Anup <anup@pickachu.hitronhub.home> 1609210256 -0500	commit: added new analyses in python
+e2e6bf72f3477b5cece0ea430a7ae4fec3756d92 6e48eb26415985c0257e8c7491f59d27ee8fc4f5 Anup <anupgp@gmail.com> 1609769267 -0500	commit: added new data analysis files, etc
+6e48eb26415985c0257e8c7491f59d27ee8fc4f5 53da26fbabcb0c1b3c9b05d96aaae305a505e215 Anup <anupgp@gmail.com> 1609770480 -0500	commit: deleted stochastic_euler folder
+53da26fbabcb0c1b3c9b05d96aaae305a505e215 314b9bc3b2b71a8a4cc10f40a25f3dbe73d0e524 Anup <anupgp@gmail.com> 1609770744 -0500	commit: added stochastic_euler as submodule
+314b9bc3b2b71a8a4cc10f40a25f3dbe73d0e524 371b544ce53e8886ed255239179686ba6fc328ae Anup <anupgp@gmail.com> 1609771243 -0500	commit: removed stochastic_euler
+371b544ce53e8886ed255239179686ba6fc328ae 14421e16b6c9d7327218b9d55260a559aa9f2a56 Anup <anupgp@gmail.com> 1609771811 -0500	commit: testing

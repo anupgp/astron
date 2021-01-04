@@ -1,0 +1,8 @@
+"Time-stamp: <2016-03-22 15:37:41 anup>"
+"insilico input file for a1_receptor_hill"
+
+dxdt : 0,
+a1r_vgcc_frac : 0.0,
+a1r_vgcc_hill_v_max : 0.45,			
+a1r_vgcc_hill_k_diss : 1e-03, 
+

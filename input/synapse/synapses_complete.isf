@@ -1,0 +1,65 @@
+"Time-stamp: <2016-06-22 05:30:28 anup>"
+"insilico input file for atp_production_hill"
+
+dxdt : 0,
+atpves_prod_time : -1.0,
+atpves_content : 0.0e-06,"100e-6"
+
+"Time-stamp: <2017-04-03 11:08:26 anup>"
+"insilico input file for atp_degradation_hill"
+
+dxdt : 0,  
+atp_deg_hill_v_max : 0.0e-06, "1200e-06"
+atp_deg_hill_k_diss : 1e-06,
+atp_deg_hill_atp_ext_flux : 0.0,
+
+"Time-stamp: <2016-06-22 05:34:03 anup>"
+"insilico input file for adenosine_production_hill"
+
+dxdt : 0,  
+ado_prod_hill_v_max : 0.0e-06,"1200e-6"
+ado_prod_hill_k_diss : 1e-06,
+ado_prod_hill_ado_ext_flux : 0.0,
+
+"Time-stamp: <2016-03-25 16:31:14 anup>"
+"insilico input file for adenosine_degradation_hill"
+
+dxdt : 0,  
+ado_deg_hill_v_max : 200e-06,
+ado_deg_hill_k_diss : 400e-06,
+ado_deg_hill_ado_ext_flux : 0.0,
+
+"Time-stamp: <2016-11-01 15:47:51 anup>"
+"insilico input file for atp_synapse"
+
+pre : 0,
+post : 0,
+
+dxdt : 2,  
+atp_ext : 0.0,
+ado_ext : 0.0;
+"Time-stamp: <2017-07-15 15:21:51 anup>"
+"insilico input file for glutamate_production"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002"
+
+dxdt: 0,
+gluves_prod_time: -1.0,
+gluves_content_ectopic: 1.2e-03,	"ectopic release: 1.2e-3"
+gluves_content_spillover: 200e-06,	"ectopic spillover: 200e-6"
+
+"Time-stamp: <2017-07-15 15:22:02 anup>"
+"insilico input file for glutamate degradation simple"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002,bergles1997"
+
+dxdt: 0,
+glu_deg_simple_ectopic : 3000.0,	"ectopic release: 3000.0"
+glu_deg_simple_spillover : 160.0,	"glu deg. spillover: 160.0"
+
+"Time-stamp: <2016-04-29 16:13:15 anup>"
+"insilico input file for glutamate_synapse"
+
+pre : 0,
+post : 0,
+
+dxdt : 1,
+glu_ext : 0.0;

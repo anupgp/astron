@@ -1,0 +1,8 @@
+"Time-stamp: <2016-04-16 11:04:41 anup>"
+"astrocyte insilico input file for leak_pre "
+"astrocytes should have high leak owing to their potassium buffering functions"
+
+dxdt : 0, 
+leak_pre_rev : -80e-03, 
+leak_pre_gmax : 5.0e1,
+leak_pre_current : 0.0,

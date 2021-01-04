@@ -1,0 +1,40 @@
+"Time-stamp: <2016-03-28 11:42:06 anup>"
+"insilico input file for atp_production_hill"
+
+dxdt : 0,
+atpves_rel_time : -1.0,
+atpves_content : 100e-06,
+
+"Time-stamp: <2016-03-25 16:31:51 anup>"
+"insilico input file for atp_degradation_hill"
+
+dxdt : 0,  
+atp_deg_hill_v_max : 1200e-06,
+atp_deg_hill_k_diss : 1e-06,
+atp_deg_hill_atp_ext_flux : 0.0,
+
+"Time-stamp: <2016-03-25 16:31:24 anup>"
+"insilico input file for adenosine_production_hill"
+
+dxdt : 0,  
+ado_prod_hill_v_max : 1200e-06,
+ado_prod_hill_k_diss : 1e-06,
+ado_prod_hill_ado_ext_flux : 0.0,
+
+"Time-stamp: <2016-03-25 16:31:14 anup>"
+"insilico input file for adenosine_degradation_hill"
+
+dxdt : 0,  
+ado_deg_hill_v_max : 200e-06,
+ado_deg_hill_k_diss : 400e-06,
+ado_deg_hill_ado_ext_flux : 0.0,
+
+"Time-stamp: <2016-03-31 21:19:25 anup>"
+"insilico input file for atp_synapse"
+
+pre : 0,
+post: 0,
+
+dxdt : 2,  
+atp_ext : 0.0,
+ado_ext : 0.0;

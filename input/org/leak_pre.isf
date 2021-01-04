@@ -1,0 +1,7 @@
+"Time-stamp: <2016-03-25 16:32:49 anup>"
+"insilico input file for leak_pre "
+
+dxdt : 0, 
+leak_pre_rev : -80e-03, 
+leak_pre_gmax : 0.3e01,
+

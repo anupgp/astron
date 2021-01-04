@@ -1,0 +1,8 @@
+"Time-stamp: <2016-03-25 16:31:14 anup>"
+"insilico input file for adenosine_degradation_hill"
+
+dxdt : 0,  
+ado_deg_hill_v_max : 200e-06,
+ado_deg_hill_k_diss : 400e-06,
+ado_deg_hill_ado_ext_flux : 0.0,
+

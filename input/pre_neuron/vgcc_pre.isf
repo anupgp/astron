@@ -1,0 +1,15 @@
+"Time-stamp: <2016-05-27 16:12:17 anup>"
+"insilico pre_neuron input file for vgcc_pre"
+
+dxdt : 5,
+vgcc_pre_v0 : 1.0, 
+vgcc_pre_v1 : 0.0, 
+vgcc_pre_v2 : 0.0, 
+vgcc_pre_v3 : 0.0, 
+vgcc_pre_v4 : 0.0,
+vgcc_pre_gmax : 2e-12,"4e-12"  
+vgcc_pre_rev : 60.33e-03,
+vgcc_pre_num : 20,"50" 
+vgcc_pre_ca_cyt_flux : 0.0,
+vgcc_pre_current : 0.0,
+

@@ -1,0 +1,8 @@
+"Time-stamp: <2016-03-25 16:31:24 anup>"
+"insilico input file for adenosine_production_hill"
+
+dxdt : 0,  
+ado_prod_hill_v_max : 1200e-06,
+ado_prod_hill_k_diss : 1e-06,
+ado_prod_hill_ado_ext_flux : 0.0,
+

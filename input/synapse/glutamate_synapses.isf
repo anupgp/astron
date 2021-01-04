@@ -1,0 +1,25 @@
+"Time-stamp: <2017-07-15 15:21:51 anup>"
+"insilico input file for glutamate_production"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002"
+
+dxdt: 0,
+gluves_prod_time: -1.0,
+gluves_content_ectopic: 1.2e-03,	"ectopic release: 1.2e-3"
+gluves_content_spillover: 200e-06,	"ectopic spillover: 200e-6"
+
+"Time-stamp: <2017-07-15 15:22:02 anup>"
+"insilico input file for glutamate degradation simple"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002,bergles1997"
+
+dxdt: 0,
+glu_deg_simple_ectopic : 3000.0,	"ectopic release: 3000.0"
+glu_deg_simple_spillover : 160.0,	"glu deg. spillover: 160.0"
+
+"Time-stamp: <2016-04-29 16:13:15 anup>"
+"insilico input file for glutamate_synapse"
+
+pre : 0,
+post : 0,
+
+dxdt : 1,
+glu_ext : 0.0;

@@ -1,0 +1,8 @@
+"Time-stamp: <2017-07-15 15:22:02 anup>"
+"insilico input file for glutamate degradation simple"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002,bergles1997"
+
+dxdt: 0,
+glu_deg_simple_ectopic : 3000.0,	"ectopic release: 3000.0"
+glu_deg_simple_spillover : 160.0,	"glu deg. spillover: 160.0"
+

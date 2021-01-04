@@ -1,0 +1,12 @@
+"Time-stamp: <2017-10-15 15:47:56 anup>"
+"insilico input file for astrocyte ca_cyt buffer simple"
+"Ref: bartol2015, bartol2008, odonnell2011, sabatini2002"
+
+dxdt : 2,
+ca_cyt_buffer_simple_c0 : 30e-6,	"1e-7,	50e-6, 30e-6"
+ca_cyt_buffer_simple_c1 : 20e-6,  	"99.9e-6"
+
+ca_cyt_buffer_simple_kc0c1 : 6.0e7,	"1e8, 1.1e8,	2.47e8,	6.0e7"
+ca_cyt_buffer_simple_kc1c0 : 1200,  	"500,  1200,	524.0,	1200"
+
+ca_cyt_buffer_simple_flux : 0.0,

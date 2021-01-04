@@ -1,0 +1,13 @@
+"Time-stamp: <2016-03-25 16:33:38 anup>"
+"insilico input file for p2y_receptor_hill "
+
+dxdt : 1,
+p2yr_hill_dsen_frac : 0.0,
+p2yr_hill_dsen_v_max : 0.1,			
+p2yr_hill_dsen_k_diss : 5e-6,
+ 
+p2yr_hill_v_max : 0.12e-6,	 
+p2yr_hill_k_diss : 10e-6,
+p2yr_hill_coop : 1,
+p2yr_hill_ip3_cyt_flux : 0.0,
+

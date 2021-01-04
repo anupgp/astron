@@ -1,0 +1,29 @@
+"Time-stamp: <2016-11-01 15:39:16 anup>"
+"insilico input file for astrocyte atp release"
+
+dxdt : 6,
+atpves_h0l0 : 7.1946e-08, 
+atpves_h0l1 : 0, 
+atpves_h0l2 : 0, 
+atpves_h0l0f : 0, 
+atpves_h0l2f : 0, 
+atpves_ves_off : 0, 
+
+atpves_lf : 3.68E06, 
+atpves_lb : 26, 
+atpves_b : 0.25, 
+atpves_sponf : 1E-3, 
+atpves_asynf : 50,
+atpves_freezeb : 10.0,  
+atpves_offb : 0.05,
+
+atpves_spon_flag : 0.0,
+atpves_spon_time : -1.0,
+atpves_asyn_flag : 0.0,
+atpves_asyn_time : -1.0,
+atpves_rel_flag : 0.0,
+atpves_rel_time : -1.0,
+atpves_rrp : 0.0,
+atpves_spon_relrate : 0.0,
+atpves_asyn_relrate : 0.0,
+atpves_ca_cyt_flux : 0.0,

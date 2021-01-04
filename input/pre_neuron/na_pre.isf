@@ -1,0 +1,20 @@
+"Time-stamp: <2016-05-23 14:07:53 anup>"
+"pre_neuron insilico input file for na_pre "
+
+dxdt : 2, 
+na_pre_m : 0.1, 
+na_pre_h : 0.2, 
+na_pre_rev : 80e-03, 
+na_pre_gmax : 120e01,
+na_pre_aalpham : 93.8285e03,
+na_pre_balpham : -105.023,
+na_pre_calpham : 17.7094,
+na_pre_abetam : 0.168396e03,
+na_pre_cbetam : 23.2707,
+na_pre_aalphah : 0.000354e03,
+na_pre_calphah : 18.706,
+na_pre_abetah : 6.62694e03,
+na_pre_bbetah : 17.6769,
+na_pre_cbetah : 13.3097,
+na_pre_current : 0.0,
+

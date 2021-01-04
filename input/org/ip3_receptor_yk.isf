@@ -1,0 +1,28 @@
+"Time-stamp: <2016-03-26 08:58:17 anup>"
+"insilico input file for ip3_receptor_yk "
+
+dxdt : 8,
+ip3r_yk_s000 : 1.0,
+ip3r_yk_s100 : 0.0, 
+ip3r_yk_s101 : 0.0, 
+ip3r_yk_s001 : 0.0, 
+ip3r_yk_s010 : 0.0, 
+ip3r_yk_s110 : 0.0, 
+ip3r_yk_s111 : 0.0, 
+ip3r_yk_s011 : 0.0,
+
+ip3r_yk_a1 : 400e06, 
+ip3r_yk_a2 : 0.2e06, 
+ip3r_yk_a3 : 400e06, 
+ip3r_yk_a4 : 0.2e06, 
+ip3r_yk_a5 : 20e06,
+ip3r_yk_b1 : 52, 
+ip3r_yk_b2 : 0.2098, 
+ip3r_yk_b3 : 377.36, 
+ip3r_yk_b4 : 0.0289, 
+ip3r_yk_b5 : 1.6468,
+ip3r_yk_flux_coef : 4.5, 
+ip3r_yk_num : 1,
+ip3r_yk_ca_cyt_flux : 0.0,
+ip3r_yk_open_fraction : 0.0,
+

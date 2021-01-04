@@ -1,0 +1,9 @@
+"Time-stamp: <2020-12-15 22:56:16 anup>"
+"insilico input file for astrocyte mglu_receptor_hill (mGluR1)"
+"Ref: zou2017, conn1997, wisniewski2002, zhang2005, nieden2005, balazs1997"
+
+dxdt : 0,
+mglur_hill_v_max : 0.65e-06,	"ctrl(dhpg): 0.65e-06, AD(dhpg): 1.4e-06"
+mglur_hill_k_diss : 6.0e-06,	"ctrl(dhpg): 6.0e-06, AD(dhpg): 3.0e-06, glutamate: 11e-6, dhpg: 6e-6"
+mglur_hill_coop : 2, 
+mglur_hill_ip3_cyt_flux : 0.0,

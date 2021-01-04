@@ -1,0 +1,13 @@
+# Ignore data files will following extensions in all folders
+*.o
+*.a
+
+# Ignore build folder
+build/
+
+# Ignore bin folder
+bin/
+
+
+# Ignore files ending with ~
+*~

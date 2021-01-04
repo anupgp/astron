@@ -1,0 +1,21 @@
+"Time-stamp: <2020-12-20 19:33:23 anup>"
+"insilico input file for astrocyte"
+"Ref:ostby2009 - astrocyte area-to-volume ratio = 4e4 m^2"
+"Ref: grosche2013 - volume of an entire astrocyte = 40000e-18 m^3"
+"Ref: grosche1999, marchaland2008 - volume, area and area-volume ratio of microdomains"
+
+dxdt : 4,
+voltage : -76e-03,	
+ca_cyt : 100.0e-09,
+ip3_cyt : 160.0e-09,
+ca_er : 250.0e-6,			"400e-6"
+
+external_current : 0.0,
+ca_ext : 2e-03,
+volume_cyt : 0.37e-18,			"local:0.37e-18,	global:40000e-18"
+area_volume_ratio_cyt : 13.3e6,		"10e6-26e6,13.33e6"
+volume_ratio_er_cyt : 0.5, 		"0.185"
+area_ratio_er_cyt : 10.0,		"10.0" 
+spec_cap_cyt : 1.0e-02,
+ip3_cyt_baseline : 160e-09,
+ca_cyt_dyn : 0.0,

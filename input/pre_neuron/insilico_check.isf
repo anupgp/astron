@@ -1,0 +1,28 @@
+
+dxdt : 2, 
+m : 1.0, 
+h : 0.5, 
+
+na_rev : 80e-3, 
+na_gmax : 120e01,
+na_current : 0.0,
+
+
+dxdt : 1, 
+n : 0.5, 
+k_rev : -85e-3, 
+k_gmax : 36e01,
+k_current : 0.0,
+
+
+dxdt : 1,
+voltage : -75.0e-3,	
+
+external_current : 0.0,
+area_volume_ratio_cyt : 26e6,
+spec_cap_cyt : 1.0e-2,
+
+dxdt : 0, 
+leak_rev : -80e-3, 
+leak_gmax : 2e01,
+leak_current : 0.0;

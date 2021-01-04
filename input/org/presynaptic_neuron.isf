@@ -1,0 +1,17 @@
+"Time-stamp: <2016-03-22 15:46:45 anup>"
+"insilico input file for presynaptic_neuron"
+
+dxdt : 4,
+voltage : -76e-03,	
+ca_cyt : 100e-09,
+ip3_cyt : 160.0e-09,
+ca_er : 250e-06,
+
+external_current : 0.0,
+ca_ext : 2e-03,
+volume_cyt : 1e-18,
+area_volume_ratio_cyt : 26e06,
+volume_ratio_er_cyt : 0.02, 
+spec_cap_cyt : 1.0e-02,
+ip3_cyt_baseline : 160e-09,
+

@@ -1,0 +1,285 @@
+"Time-stamp: <2016-05-23 14:07:53 anup>"
+"pre_neuron insilico input file for na_pre "
+
+dxdt : 2, 
+na_pre_m : 0.1, 
+na_pre_h : 0.2, 
+na_pre_rev : 80e-03, 
+na_pre_gmax : 120e01,
+na_pre_aalpham : 93.8285e03,
+na_pre_balpham : -105.023,
+na_pre_calpham : 17.7094,
+na_pre_abetam : 0.168396e03,
+na_pre_cbetam : 23.2707,
+na_pre_aalphah : 0.000354e03,
+na_pre_calphah : 18.706,
+na_pre_abetah : 6.62694e03,
+na_pre_bbetah : 17.6769,
+na_pre_cbetah : 13.3097,
+na_pre_current : 0.0,
+
+"Time-stamp: <2016-04-11 12:51:42 anup>"
+"insilico input file for k_pre "
+
+dxdt : 1, 
+k_pre_n : 0.15, 
+k_pre_rev : -85e-03, 
+k_pre_gmax : 36e01,
+k_pre_current : 0.0,
+
+"Time-stamp: <2016-04-06 11:45:02 anup>"
+"insilico input file for leak_pre "
+
+dxdt : 0, 
+leak_pre_rev : -80e-03, 
+leak_pre_gmax : 2.0e1,
+leak_pre_current : 0.0,
+
+"Time-stamp: <2016-05-27 16:12:17 anup>"
+"insilico pre_neuron input file for vgcc_pre"
+
+dxdt : 5,
+vgcc_pre_v0 : 1.0, 
+vgcc_pre_v1 : 0.0, 
+vgcc_pre_v2 : 0.0, 
+vgcc_pre_v3 : 0.0, 
+vgcc_pre_v4 : 0.0,
+vgcc_pre_gmax : 2e-12,"4e-12"  
+vgcc_pre_rev : 60.33e-03,
+vgcc_pre_num : 20,"50" 
+vgcc_pre_ca_cyt_flux : 0.0,
+vgcc_pre_current : 0.0,
+
+"Time-stamp: <2016-03-31 21:03:39 anup>"
+"insilico input file for ip3_degradation_simple"
+
+dxdt : 0,
+ip3_degradation_simple_v_max : 0.1, 
+ip3_degradation_simple_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2016-12-28 15:17:32 anup>"
+"insilico input file for pre_neuron ip3_kinase_hill"
+"Degrades ip3"
+
+dxdt : 0,
+ip3_kinase_hill_v_max : 30e-06,"30e-6" 
+ip3_kinase_hill_k_diss_ca : 0.1e-06, "0.2e-6" 
+ip3_kinase_hill_coop_ca : 1, "4"
+ip3_kinase_hill_k_diss_ip3 : 0.1e-06, 
+ip3_kinase_hill_coop_ip3 : 1, 
+ip3_kinase_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2016-03-31 21:05:34 anup>"
+"insilico input file for plc_delta_hill"
+
+dxdt : 0,
+plc_delta_hill_v_max : 0.02e-6,
+plc_delta_hill_k_diss : 0.3e-6,
+plc_delta_hill_coop : 2,
+plc_delta_hill_ip3_ihb : 1e-6,	
+plc_delta_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2016-03-31 21:17:32 anup>"
+"insilico input file for p2x2_receptor "
+
+dxdt : 8,
+p2x2r_c1 : 10.0e-08, 
+p2x2r_c2 : 0.0, 
+p2x2r_c3 : 0.0, 
+p2x2r_c4 : 0.0, 
+p2x2r_f5 : 0.0, 
+p2x2r_o6 : 0.0, 
+p2x2r_o7 : 0.0, 
+p2x2r_f8 : 0.0, 
+p2x2r_kon : 8e06, 
+p2x2r_koff : 0.019, 
+p2x2r_kon2 : 10.3e06,
+p2x2r_koff2 : 280.0, 
+p2x2r_kon3 : 13e06,
+p2x2r_koff3 : 7000.0,                
+p2x2r_gamma : 300.54, 
+p2x2r_delta : 2218.0,
+p2x2r_alpha : 4000.0,
+p2x2r_beta : 400.0,
+p2x2r_alpha2 : 0.225, 
+p2x2r_beta2 : 0.02,
+p2x2r_zeta1 : 31.16,
+p2x2r_eps1 : 69.0, 
+p2x2r_zeta2 : 4.53, 
+p2x2r_eps2 : 3.20,
+p2x2r_rev : 0.01,
+p2x2r_ca_frac : 0.16, 
+p2x2r_gmax : 2e-12, 
+p2x2r_num : 40,
+p2x2r_open_fraction : 0.0,
+p2x2r_ca_cyt_flux : 0.0,
+p2x2r_current : 0.0,
+
+"Time-stamp: <2016-03-25 16:33:18 anup>"
+"insilico input file for p2x2_receptor_hill "
+
+dxdt : 0,
+p2x2r_hill_v_max : 0.03e-06,
+p2x2r_hill_k_half : 0.9e-06,	 
+p2x2r_hill_coop : 1.4,	 
+p2x2r_hill_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2016-05-04 16:29:13 anup>"
+"insilico input file for pre_neuron p2y_receptor_hill "
+
+dxdt : 1,
+p2yr_hill_dsen_frac : 0.0,
+p2yr_hill_dsen_v_max : 0.1,			
+p2yr_hill_dsen_k_diss : 5e-6,
+ 
+p2yr_hill_v_max : 0.012e-6,	"0.12e-6"
+p2yr_hill_k_diss : 10e-6,
+p2yr_hill_coop : 1,
+p2yr_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2016-05-04 16:33:21 anup>"
+"insilico input file for pre_neuron mglu_receptor_hill "
+
+dxdt : 0,
+mglur_hill_v_max : 0.07e-06,	"0.7e-06"
+mglur_hill_k_diss : 10e-06,
+mglur_hill_coop : 0.7, 
+mglur_hill_ip3_cyt_flux : 0.0,
+
+"Time-stamp: <2016-05-27 12:12:57 anup>"
+"insilico pre_neuron input file for calbindin"
+
+dxdt : 8,
+cb_H0L0 : 45e-06, 
+cb_H1L0 : 0, 
+cb_H2L0 : 0, 
+cb_H3L0 : 0,
+cb_H0L1 : 0, 
+cb_H1L1 : 0, 
+cb_H2L1 : 0, 
+cb_H3L1 : 0,
+cb_kon_f : 0.55e07, 
+cb_koff_f : 2.6, 
+cb_kon_s : 4.35e07, 
+cb_koff_s : 35.8,
+cb_total : 0.0,
+cb_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2016-06-20 11:06:57 anup>"
+"insilico input file for pre_neuron serca_hill "
+
+dxdt : 0.0,
+serca_hill_v_max : 20e-6, 
+serca_hill_k_half : 0.18e-6, 
+serca_hill_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2016-12-15 11:26:33 anup>"
+"insilico pre_neuron input file for pmca "
+
+dxdt : 3,  
+pmca0 : 1.0,  
+pmca1 : 0.0, 
+pmca2 : 0.0,
+
+pmca_kf1 : 1.5e07, 
+pmca_kb1 : 20,
+pmca_kf2 : 20,
+pmca_kf3 : 100,
+pmca_kl : 0.6, "12.5"
+pmca_density : 250e12, "180e12"
+pmca_ca_cyt_flux : 0.0,
+pmca_init_check : 0.0,
+
+"Time-stamp: <2016-04-29 11:01:23 anup>"
+"insilico input file for pre_neuron er_leak "
+
+dxdt : 0.0,
+er_leak_flux_coef : 0.01,
+er_leak_ca_cyt_flux : 0.0,
+
+"Time-stamp: <2016-03-26 08:53:39 anup>"
+"insilico input file for ryanodine_receptor"
+
+dxdt : 8,
+ryr_C1 : 1.0,	
+ryr_C2 : 0.0, 
+ryr_C3 : 0.0, 
+ryr_C4 : 0.0, 
+ryr_C5 : 0.0, 
+ryr_O1 : 0.0, 
+ryr_O2 : 0.0, 
+ryr_O3 : 0.0,
+
+ryr_kc1c2 : 2.5e06,	 
+ryr_kc2c1 : 13.3, 
+ryr_kc2c3 : 68e06, 
+ryr_kc3c2 : 8000, 
+ryr_kc3o2 : 17.0,
+ryr_ko2c3 : 92.0,   
+ryr_ko2c4 : 1900.0, 
+ryr_kc4o2 : 520,
+ryr_kc3o3 : 14.0,    
+ryr_ko3c3 : 138.0, 
+ryr_ko3c4 : 300.0,  
+ryr_kc4o3 : 46.0, 
+ryr_kc3o1 : 1100.0, 
+ryr_ko1c3 : 3400.0, 
+ryr_kc2c5 : 0.13,   
+ryr_kc5c2 : 3.6,
+ryr_flux_coef : 6,
+ryr_num : 1,
+ryr_ca_cyt_flux : 0.0,
+ryr_open_prob : 0.0,
+
+"Time-stamp: <2016-04-29 11:00:30 anup>"
+"insilico input file for pre_neuron ip3_receptor_yk "
+
+dxdt : 8,
+ip3r_yk_s000 : 1.0,
+ip3r_yk_s100 : 0.0, 
+ip3r_yk_s101 : 0.0, 
+ip3r_yk_s001 : 0.0, 
+ip3r_yk_s010 : 0.0, 
+ip3r_yk_s110 : 0.0, 
+ip3r_yk_s111 : 0.0, 
+ip3r_yk_s011 : 0.0,
+
+ip3r_yk_a1 : 400e06, 
+ip3r_yk_a2 : 0.2e06, 
+ip3r_yk_a3 : 400e06, 
+ip3r_yk_a4 : 0.2e06, 
+ip3r_yk_a5 : 20e06,
+ip3r_yk_b1 : 52, 
+ip3r_yk_b2 : 0.2098, 
+ip3r_yk_b3 : 377.36, 
+ip3r_yk_b4 : 0.0289, 
+ip3r_yk_b5 : 1.6468,
+ip3r_yk_flux_coef : 4.5, 
+ip3r_yk_num : 1,
+ip3r_yk_ca_cyt_flux : 0.0,
+ip3r_yk_open_fraction : 0.0,
+
+"Time-stamp: <2016-03-22 15:37:41 anup>"
+"insilico input file for a1_receptor_hill"
+
+dxdt : 0,
+a1r_vgcc_frac : 0.0,
+a1r_vgcc_hill_v_max : 0.45,			
+a1r_vgcc_hill_k_diss : 1e-03,
+
+"Time-stamp: <2016-04-29 12:09:50 anup>"
+"insilico input file for presynaptic_neuron"
+
+dxdt : 4,
+voltage : -76.0e-03,	
+ca_cyt : 100e-09,
+ip3_cyt : 160.0e-09,
+ca_er : 250e-06,
+
+external_current : 0.0,
+ca_ext : 2e-03,
+volume_cyt : 1e-18,
+area_volume_ratio_cyt : 26e06,
+volume_ratio_er_cyt : 0.18, 
+spec_cap_cyt : 1.0e-2,
+ip3_cyt_baseline : 160e-09;

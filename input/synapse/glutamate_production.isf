@@ -1,0 +1,9 @@
+"Time-stamp: <2017-07-15 15:21:51 anup>"
+"insilico input file for glutamate_production"
+"Ref: dzubay1999, matsui2003, matsui2005, clements1992,franks2002"
+
+dxdt: 0,
+gluves_prod_time: -1.0,
+gluves_content_ectopic: 1.2e-03,	"ectopic release: 1.2e-3"
+gluves_content_spillover: 200e-06,	"ectopic spillover: 200e-6"
+

@@ -1,0 +1,39 @@
+Time-stamp: <2016-03-03 14:17:02 anup>
+Zhang 2003: 
+Results
+Blocking P2Y-receptor (using RB-2) increased the amplitude of EPSCs but not IPSCs (actually decreased the amplitude and this probably a non-specific effect)
+Blocking P2X-receptor (using PPADS) or A1-receptor (DPCPX) had not effect no neither EPSCs or IPSCs
+Blocking P2Y-receptor increased synaptic fatigue induced by a train of 10 pulses (10 Hz)
+Blocking ATP degradation decreased both EPSC and IPSC amplitude. This effect could be blocked by a P2Y-receptor antagonist. This effect was not present when glutamate/GABA was externally applied.
+Direct ATP(2 micro M) significantly reduced both EPSC and IPSCs. This effect was abolished by both P2Y and A1-receptor antagonists but not by P2X-receptor and A2-receptor antagonists (DMPX).
+Direct perfusion of adenosine (10 micro M) also suppressed EPSCs but not IPSCs. This suppression could be blocked by A1-receptor antagonist but not by P2Y-receptor antagonist.
+ATP does not modify synaptic currents induced by local application of glutamate or GABA.
+ATP (10 micro M) significantly decreased the frequency (not amplitude) of mEPSCs & mIPSCs.
+ATP (10 micro M) also increased PPF
+ATP (10 micro M) decreased somatic calcium current in a reversible manner.
+
+Heterosynaptic depression
+
+               	        --------------------
+            N1          | synapse          |
+            oo          ^                  |
+    -------o  o====================        |
+    |       oo                             |axon
+    |                |  ** astrocyte       |
+    |           -------*  *------          |
+    |     dendrite	**	|   oo	   |
+    |     =========================o  o-----
+    |      	       ^  	    oo
+    |                  |            N2
+    --------------------
+
+
+Heterosynaptic synaptic depression of EPSCs/IPSCs only when the stimulated neuron (one which fires high frequency action potentials, 10 pulses at 10 Hz) is glutamatergic
+Efficiency of suppression is time-dependent: maximum suppression at about 500 ms, moderate at 200 ms, no suppression at 1 s after the high frequency stimulation.
+The Hetero-LTD is blocked by P2Y-receptor antagonists but not by A1 or P2X antagonists
+
+Is ATP coreleased with glutamate? Is ATP released after activation of glutamate receptors?
+Blocking AMPA receptors, not NMDA receptors, prevented ATP-mediated synaptic suppression.
+Blocking H-LTD by P2Y and/or AMPA receptor antagonists were not additive. Suggesting a sequential, rather than parallel, activation.
+How is ATP released? Astrocytes?
+Blocking gap junctions abolished high frequency-mediated H-LTD but not direct ATP-mediated suppression

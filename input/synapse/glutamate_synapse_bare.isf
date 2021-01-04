@@ -1,0 +1,9 @@
+"Time-stamp: <2016-04-29 16:13:15 anup>"
+"insilico input file for glutamate_synapse"
+
+pre : 0,
+post: 0,
+
+dxdt : 1,
+glu_ext : 0.0,
+

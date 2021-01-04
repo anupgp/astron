@@ -1,0 +1,9 @@
+"Time-stamp: <2016-11-01 15:47:51 anup>"
+"insilico input file for atp_synapse"
+
+pre : 0,
+post: 0,
+
+dxdt : 2,  
+atp_ext : 0.0,
+ado_ext : 0.0, 

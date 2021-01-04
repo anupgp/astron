@@ -1,0 +1,10 @@
+"Time-stamp: <2017-10-11 11:37:03 anup>"
+"insilico input file for astrocyte plc_delta_hill"
+
+dxdt : 0,
+plc_delta_hill_v_max : 0.02e-6,		"0.02e-6, 0.1e-6"
+plc_delta_hill_k_diss : 1e-6,		"1e-6"
+plc_delta_hill_coop : 2,
+plc_delta_hill_ip3_ihb : 1.5e-6,	
+plc_delta_hill_ip3_cyt_flux : 0.0,
+

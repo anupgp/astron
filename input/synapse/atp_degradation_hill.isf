@@ -1,0 +1,8 @@
+"Time-stamp: <2017-04-03 11:08:26 anup>"
+"insilico input file for atp_degradation_hill"
+
+dxdt : 0,  
+atp_deg_hill_v_max : 0.0e-06, "1200e-06"
+atp_deg_hill_k_diss : 1e-06,
+atp_deg_hill_atp_ext_flux : 0.0,
+

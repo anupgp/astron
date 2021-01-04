@@ -1,0 +1,7 @@
+"Time-stamp: <2017-10-23 11:35:18 anup>"
+"insilico input file for astrocyte er_leak "
+
+dxdt : 0.0,
+er_leak_flux_coef : 0.2,		"normal: 0.2, alzheim: 0.1"
+er_leak_ca_cyt_flux : 0.0,
+

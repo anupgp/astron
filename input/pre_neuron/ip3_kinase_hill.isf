@@ -1,0 +1,12 @@
+"Time-stamp: <2016-12-28 15:17:32 anup>"
+"insilico input file for pre_neuron ip3_kinase_hill"
+"Degrades ip3"
+
+dxdt : 0,
+ip3_kinase_hill_v_max : 30e-06,"30e-6" 
+ip3_kinase_hill_k_diss_ca : 0.1e-06, "0.2e-6" 
+ip3_kinase_hill_coop_ca : 1, "4"
+ip3_kinase_hill_k_diss_ip3 : 0.1e-06, 
+ip3_kinase_hill_coop_ip3 : 1, 
+ip3_kinase_hill_ip3_cyt_flux : 0.0,
+

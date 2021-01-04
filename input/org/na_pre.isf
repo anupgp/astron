@@ -1,0 +1,10 @@
+"Time-stamp: <2016-03-26 08:52:36 anup>"
+"insilico input file for na_pre "
+
+dxdt : 2, 
+na_pre_m : 0.1, 
+na_pre_h : 0.2, 
+na_pre_rev : 80e-03, 
+na_pre_gmax : 80e01,
+na_pre_current : 0.0,
+

@@ -1,0 +1,8 @@
+"Time-stamp: <2016-05-04 16:33:21 anup>"
+"insilico input file for pre_neuron mglu_receptor_hill "
+
+dxdt : 0,
+mglur_hill_v_max : 0.07e-06,	"0.7e-06"
+mglur_hill_k_diss : 10e-06,
+mglur_hill_coop : 0.7, 
+mglur_hill_ip3_cyt_flux : 0.0,

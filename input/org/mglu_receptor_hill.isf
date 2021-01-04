@@ -1,0 +1,8 @@
+"Time-stamp: <2016-03-25 16:33:02 anup>"
+"insilico input file for mglu_receptor_hill "
+
+dxdt : 0,
+mglur_hill_v_max : 0.7E-06,
+mglur_hill_k_diss : 10E-06,
+mglur_hill_coop : 0.7, 
+

@@ -1,0 +1,8 @@
+"Time-stamp: <2016-03-25 16:31:56 anup>"
+"insilico input file for atp_production_hill"
+
+dxdt : 1,
+atp_ext : 0.0,  
+atpves_rel_time : -1.0,
+atpves_content : 100e-06,
+

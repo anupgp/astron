@@ -1,0 +1,14 @@
+"Time-stamp: <2017-06-09 14:52:14 anup>"
+"insilico astrocyte input file for ryr_receptor_xw "
+"Ref: wang2015"
+
+dxdt : 1,
+ryr_xw_fo : 0.5,
+
+ryr_xw_kf : 0.4e06,
+ryr_xw_kb : 50,
+ryr_xw_coop : 2,
+ryr_xw_flux_coef : 0.3,		"1.56" 
+ryr_xw_num : 20,
+ryr_xw_ca_incr_single : 60e-9,
+ryr_xw_ca_cyt_flux : 0.0,

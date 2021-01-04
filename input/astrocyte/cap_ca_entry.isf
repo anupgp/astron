@@ -1,0 +1,8 @@
+"Time-stamp: <2017-09-12 10:06:32 anup>"
+"insilico input file for astrocyte cap_ca_entry "
+
+dxdt : 0.0,
+cap_ca_entry_v_max : 0.1e-6,"0.01e-6" 
+cap_ca_entry_k_half : 10e-6, "10e-6"
+cap_ca_entry_coeff : 2, "2" 
+cap_ca_entry_ca_cyt_flux : 0.0,

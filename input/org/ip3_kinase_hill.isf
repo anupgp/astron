@@ -1,0 +1,11 @@
+"Time-stamp: <2016-03-25 16:32:24 anup>"
+"insilico input file for ip3_kinase_hill"
+
+dxdt : 0,
+ip3_kinase_hill_v_max : 2e-06, 
+ip3_kinase_hill_k_diss_ca : 0.7e-06, 
+ip3_kinase_hill_coop_ca : 4, 
+ip3_kinase_hill_k_diss_ip3 : 1e-06, 
+ip3_kinase_hill_coop_ip3 : 1, 
+ip3_kinase_hill_ip3_cyt_flux : 0.0,
+

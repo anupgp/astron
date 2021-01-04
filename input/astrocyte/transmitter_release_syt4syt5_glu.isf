@@ -1,0 +1,67 @@
+"Time-stamp: <2018-02-15 19:57:14 anup>"
+"insilico input file for astrocyte glutamate release via transmitter_release_syt4a sensor"
+"Ref: bacaj2013, sun2007"
+
+dxdt : 17,
+syt45_k0_glu : 0.0,		"450e-9"
+syt45_k1_glu : 0.0,
+syt45_k2_glu : 0.0,
+
+syt45_f0_glu : 0.0,		"450e-9"
+syt45_f1_glu : 0.0,
+syt45_f2_glu : 0.0,
+syt45_f3_glu : 0.0,
+syt45_f4_glu : 0.0,
+syt45_f5_glu : 0.0,
+
+syt45_vkdoc_glu : 0.8,		"1.1"
+syt45_vkrel_glu : 0.0,
+syt45_vkend_glu : 0.0,
+syt45_vkacd_glu : 0.0,
+               
+syt45_vfmob_glu : 0.25,
+syt45_vfrel_glu : 0.0,
+syt45_vfend_glu : 0.0,
+syt45_vfacd_glu : 0.0,
+
+"-----------------------"
+syt45_kkf_glu : 1.53e8,		"1.53e8"
+syt45_kkb_glu : 3500,		"3500"
+syt45_kbb_glu : 0.25,		"0.25"
+syt45_k0exo_glu : 0.417e-3,	"0.417e-3"
+syt45_kcaexo_glu : 115,		"115"
+
+syt45_fkf_glu : 3.82e6,		"3.82e6"
+syt45_fkb_glu : 60,		"60"
+syt45_fbb_glu : 0.25,		"0.25"
+syt45_f0exo_glu : 0.417e-3,
+syt45_fcaexo_glu : 20.0,	"8.0"
+
+syt45_rkend_glu : 0.66,		"2,		0.66"		
+syt45_rkacd_glu : 0.6,		"4.0,		0.6"
+
+syt45_rfend_glu : 0.16,		"0.36,		0.16"
+syt45_rfacd_glu : 0.052,	"4.0,    	0.052"
+syt45_fracmob2doc_glu : 0.25,	"0.25"
+
+syt45_rmob2doc_glu : 1.0,	"5.0,		1.0"
+syt45_rkacd2mob_glu : 0.615,	"5,		0.615"
+syt45_rfacd2mob_glu : 0.615,	"1.0,		0.615"
+
+syt45_initcheck_glu : 0.0,
+syt45_reldelay_glu : 0.0,
+
+"-------------------------"
+syt45_ca_cyt_flux_glu : 0.0,
+syt45_krrelrate_glu : 0.0,
+syt45_ffrelrate_glu : 0.0,
+syt45_totalrelrate_glu : 0.0,
+
+syt45_krrelflag_glu : 0.0,
+syt45_krreltime_glu : 0.0,
+syt45_ffrelflag_glu : 0.0,
+syt45_ffreltime_glu : 0.0,
+
+syt45_relflag_glu : 0.0,
+syt45_reltime_glu : 0.0,
+syt45_random_glu : 0.0,

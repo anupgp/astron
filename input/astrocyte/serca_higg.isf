@@ -1,0 +1,28 @@
+"Time-stamp: <2017-01-30 10:59:48 anup>"
+"insilico input file for astrocyte serca_higg "
+
+dxdt : 6.0,
+serca_higg_x0 : 0.2, 
+serca_higg_x1 : 0.2,
+serca_higg_x2 : 0.2,
+serca_higg_y0 : 0.2, 
+serca_higg_y1 : 0.1,
+serca_higg_y2 : 0.1,
+
+serca_higg_kx0x1 : 2.0e7,
+serca_higg_kx1x0 : 83.7,"83.7,60.3"
+serca_higg_kx1x2 : 1.0e7,
+serca_higg_kx2x1 : 167.4,"167.4,120.6"
+serca_higg_kx2y2 : 10, "0.6,1,5,10"
+serca_higg_ky2x2 : 4.171,"0.04,0.097,4.171"
+serca_higg_kx0y0 : 1.2e-3,
+serca_higg_ky0x0 : 0.4,
+serca_higg_ky0y1 : 2.0e5,
+serca_higg_ky1y0 : 30.02,
+serca_higg_ky1y2 : 1.0e5,
+serca_higg_ky2y1 : 60.04,
+
+serca_higg_density : 1000.0e12,"1100e12,80e12"
+serca_higg_ca_cyt_flux : 0.0,
+serca_higg_ca_er_flux : 0.0,
+serca_higg_init_check : 0.0,
