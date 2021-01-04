@@ -1,3 +1,6 @@
 [submodule "lib/stochastic_euler"]
 	path = lib/stochastic_euler
 	url = https://github.com/anupgp/stochastic_euler.git
+[submodule "lib/new_insilico"]
+	path = lib/new_insilico
+	url = https://github.com/anupgp/new_insilico.git
