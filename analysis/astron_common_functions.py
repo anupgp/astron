@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 from scipy.signal import find_peaks,peak_widths,argrelextrema
 from scipy.signal import find_peaks_cwt
 from scipy.signal import butter, lfilter, freqz, detrend
+from scipy.integrate import simps
 import h5py
 
 # -----------------------------
@@ -238,3 +239,23 @@ def compute_pmca_features(t,y,tstim0,tstim1):
     # ah.plot([t[istim_ss],t[istim1]],[yss,yss],'-',color='k',linewidth=2)
     # plt.show()
     return(ypeak,yss)
+
+# -----------------------------
+
+def compute_responsivity(t,y,tstim0,tstim1):
+    # computes responsiveness of calicum signal
+    dt = np.mean(np.diff(t))
+    istim0 = np.where(t>tstim0)[0][0]-1
+    istim1 = np.where(t>(tstim1-dt))[0][0]
+    baseline_auc = simps(y[0:istim0],t[0:istim0]-t[0])
+    baseline_dur = t[istim0]-t[0]
+    baseline_auc_norm = baseline_auc/baseline_dur
+    
+    response_auc = simps(y[istim0:istim1],t[istim0:istim1]-t[istim0])
+    response_dur = t[istim1]-t[istim0]
+
+    response_auc_norm = response_auc/response_dur
+    responsivity = response_auc_norm/baseline_auc_norm
+    return(responsivity)
+
+# -----------------------------------------
