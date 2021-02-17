@@ -103,12 +103,12 @@ ntrials = 100
 # fh1.savefig(os.path.join(figsavepath,fh1_name))
 # plt.show()
 # --------------------------------------------------------
-# datasets = [cacyt_resting,ip3cyt_resting,caer_resting] # [igroup,itrial,istimdur,idhpg]
-# barsavg = np.array([np.mean(dataset[:,:,istimdur,0], axis=1) for dataset in datasets])
-# barssem = np.array([np.std(dataset[:,:,istimdur,0], axis=1)/np.sqrt(ntrials) for dataset in datasets])
+datasets = [cacyt_resting,ip3cyt_resting,caer_resting] # [igroup,itrial,istimdur,idhpg]
+barsavg = np.array([np.mean(dataset[:,:,istimdur,0], axis=1) for dataset in datasets])
+barssem = np.array([np.std(dataset[:,:,istimdur,0], axis=1)/np.sqrt(ntrials) for dataset in datasets])
 # print(barsavg.shape,barssem.shape)
-# print(barsavg)
-# print(barssem)
+print(barsavg)
+print(barssem)
 # # --------------
 # fh1,ah11 = plt.subplots(figsize=(2,2),dpi=600,frameon=False,ncols=1,gridspec_kw={"width_ratios":[1]})
 # grouplabels = ["Control",r"$A\beta$-mGluR",r"$A\beta$-PMCA",r"$A\beta$-mGluR & PMCA"]
@@ -226,5 +226,5 @@ ah11.set_ylabel(yaxislabel,fontsize=8,font=fontprop)
 # saving figures
 figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg0to100000nM2to120s/"
 fh1_name = "cacyt10to1000000nM50s_ip3cyt_max.svg"
-fh1.savefig(os.path.join(figsavepath,fh1_name))
+# fh1.savefig(os.path.join(figsavepath,fh1_name))
 plt.show()

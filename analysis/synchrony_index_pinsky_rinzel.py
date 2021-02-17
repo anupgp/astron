@@ -48,7 +48,7 @@ def synchrony_index(ts,tstart,tstop):
                 zph = np.exp(ph * 2 * np.pi * np.complex(0,1))
                 r =  np.sqrt(1 - np.var(zph))
                 rs = np.append(rs,r)
-                print("tss_min: {}, tss_max: {}, dt: {}, syn: {}".format(np.min(tss),np.max(tss),dt,r))
+                # print("tss_min: {}, tss_max: {}, dt: {}, syn: {}".format(np.min(tss),np.max(tss),dt,r))
             # ----------------
         # ------------
     # ---------

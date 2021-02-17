@@ -27,10 +27,13 @@ def loadh5pydata(fname,dataname):
 
 
 # --------------------------------------------------------------------------
-dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s"
-h5pyfname = "ap1to1000dhz30s_cacyt_rel_synchrony.hdf5"
+# dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s" # with noise
+# h5pyfname = "ap1to1000dhz30s_cacyt_rel_synchrony.hdf5" # with noise
 # dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s"
 # h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5"
+dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s0noise" # no noise
+h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5" # no noise
+# -----------------------
 groups = ["ctrl","admglur","adpmca","admglurpmca"]
 ngroups = len(groups)
 freqs = loadh5pydata(os.path.join(dir1,h5pyfname),"freqs")
@@ -124,15 +127,15 @@ xticks = [1,10,100]
 # ah11.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 [ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop) for ah in [ah11]]
 # -------------
-yticks = [item for item in np.array([0,0.25,0.5]) if len(np.where(freqs>item)[0]) > 0]
+yticks = [0,0.25,0.5]            # adjust here for y ticks
 [ah.set_ylim([-0.1,0.5]) for ah in [ah11]]
 [ah.set_yticks(yticks) for ah in [ah11]]
 [ah.spines["right"].set_visible(False) for ah in [ah11]]
 [ah.spines["top"].set_visible(False) for ah in [ah11]]
-[ah.set_yticklabels([0.0,0.25,0.5],fontsize=8,font=fontprop) for ah in [ah11]]
+[ah.set_yticklabels(yticks,fontsize=8,font=fontprop) for ah in [ah11]] 
 [ah.set_ylabel("Synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
 # ----------------
-ah12.set_xticks([0.5,1.3,2.3])
+ah12.set_xticks([0,1.3,2.3])
 ah12.tick_params(right=False,bottom=False,top=False)
 ah12.set_xticklabels(["Low","Mid","High"],va="bottom",fontsize=8,font=fontprop,rotation=45)
 [ah.spines["right"].set_visible(False) for ah in [ah12]]
@@ -153,14 +156,14 @@ fh3.subplots_adjust(hspace=0,wspace=0.5)
 # cax = divider.append_axes("right", size="5%", pad=0.05)
 
 for igroup,ah in zip(range(0,ngroups),[ah31,ah32,ah33,ah34]):
-    ph = ah.imshow(syn[igroup,:,:,:].mean(-1).T,origin="lower",interpolation="nearest",cmap="hot",vmin=0,vmax=0.7)
+    ph = ah.imshow(syn[igroup,:,:,:].mean(-1).T,origin="lower",interpolation="nearest",cmap="hot",vmin=0,vmax=1)
 # }
 # add color bar
 ip = InsetPosition(ah34, [1.4,0,0.3,1]) 
 ah35.set_axes_locator(ip)
-cb = fh3.colorbar(ph,cax=ah35,ax=[ah31,ah32,ah33,ah34],orientation="vertical",ticks=[0,0.3,0.7])
-cb.ax.set_ylim([0,0.7])
-cb.ax.set_yticklabels((0.0,0.3,0.7),fontsize=8,font=fontprop)
+cb = fh3.colorbar(ph,cax=ah35,ax=[ah31,ah32,ah33,ah34],orientation="vertical",ticks=[0,0.5,1])
+cb.ax.set_ylim([0,1])
+cb.ax.set_yticklabels((0.0,0.5,1),fontsize=8,font=fontprop)
 cb.set_label("Synchrony index",font=fontprop,fontsize=10)
 
 # --------- formating ---------
@@ -175,24 +178,24 @@ xticks = [np.where(freqs>item)[0][0] for item in np.array([4,69,999]) if len(np.
 [ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop,loc="left") for ah in [ah31]]
 
 # --------------------------
-yticks = [np.where(tbins>item)[0][0] for item in np.array([0,2.4,4.9]) if len(np.where(tbins>item)[0]) > 0]  
-[ah.set_ylim([0,48]) for ah in [ah31,ah32,ah33,ah34]]
+yticks = [np.where(tbins>item)[0][0] for item in np.array([0,2.4,4.9]) if len(np.where(tbins>item)[0]) > 0] # don't adjust here
+[ah.set_ylim([0,48]) for ah in [ah31,ah32,ah33,ah34]] # 
 [ah.set_yticks(yticks) for ah in [ah31,ah32,ah33,ah34]]
 [ah.set_yticklabels([0,2.5,5],fontsize=8,font=fontprop) for ah in [ah31]]
 [ah.set_yticklabels([],fontsize=8,font=fontprop) for ah in [ah32,ah33,ah34]]
 # [ah.yaxis.set_visible(False) for ah in [ah32,ah33,ah34]]
-[ah.set_ylabel("Timeseries length (s)",fontsize=8,font=fontprop) for ah in [ah31]]
+[ah.set_ylabel("Interevent interval (s)",fontsize=8,font=fontprop) for ah in [ah31]]
 # fh3.tight_layout(pad=0)
 # ---------------------------------------------------
 # saving figures
-figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/ap1to1000dhz30s"
-fh1_name = "ap1to1000dhz30s_synchrony_rel_line_bar.svg"
+figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/ap1to1000dhz30s0noise"
+fh1_name = "ap1to1000dhz30s0noise_synchrony_rel_line_bar.svg"
 fh1.savefig(os.path.join(figsavepath,fh1_name))
 
 # fh2_name = "ap1to1000dhz30s_synchrony_cacyt_bars.svg"
 # fh2.savefig(os.path.join(figsavepath,fh2_name))
 
-fh3_name = "ap1to1000dhz30s_synchrony_rel_cmap.svg" 
+fh3_name = "ap1to1000dhz30s0noise_synchrony_rel_cmap.svg" 
 fh3.savefig(os.path.join(figsavepath,fh3_name))
 # ---------------------------------------------------
 plt.show()
