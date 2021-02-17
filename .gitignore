@@ -2,12 +2,22 @@
 *.o
 *.a
 
-# Ignore build folder
-build/
+# Ignore object files in build folder
+build/*.o
 
-# Ignore bin folder
-bin/
+# Ignore executables in the bin folder
+bin/astron_main
 
+# Ignore file in the bin/utility folder
+bin/utility/filetrim
+bin/utility/generate_inputfiles_two_parameter_sweep 
+bin/utility/generate_runtime_mod_file_1param_poisson
+bin/utility/generate_inputfiles_one_parameter_sweep
+bin/utility/generate_runtime_mod_file_1param_expdecay
+bin/utility/generate_runtime_mod_file_alter_anycolumn_fixedval
+bin/utility/generate_inputfiles_three_parameter_sweep 
+bin/utility/generate_runtime_mod_file_1param_fixedstep
+bin/utility/lineskip
 
 # Ignore files ending with ~
 *~
