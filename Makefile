@@ -1,4 +1,4 @@
-# Time-stamp: <2021-02-17 21:36:39 anup>
+# Time-stamp: <2021-02-17 21:50:24 anup>
 
 CC = g++ 
 # CC = /usr/local/Cellar/gcc/9.3.0_1/bin/g++-9	
@@ -59,7 +59,8 @@ all:	$(SUBDIRS) $(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-.PHONY:	$(SUBDIRS)
+.PHONY:	all $(SUBDIRS) $(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)
+
 # pattern rule for c++ files in the utility directory
 $(UTIL_EXE_DIR)%: $(UTIL_SRC_DIR)%.cpp $(UTIL_SRC_DIR)*.hpp
 	@echo "Compiling..."
