@@ -1,4 +1,4 @@
-# Time-stamp: <2021-02-17 19:16:54 anup>
+# Time-stamp: <2021-02-17 19:18:25 anup>
 
 CC = g++ 
 # CC = /usr/local/Cellar/gcc/9.3.0_1/bin/g++-9	
@@ -21,8 +21,8 @@ ODE_STOCH_PATH := lib/stochastic_euler/include
 BOOST_ODEINT_PATH := lib/boost/1.71.0/
 
 # lib/new_insilico/lib/libnew_insilico.a:
-$(MAKE) -C lib/new_insilico/lib	libnew_insilico.a
-.PHONY:	lib/new_insilico/lib/libnew_insilico.a
+$(MAKE)	-C	lib/new_insilico/lib	libnew_insilico.a
+.PHONY:	lib/new_insilico/lib/libnew_insilico.a	
 
 # ------------------------
 MAIN_EXE := astron_main
