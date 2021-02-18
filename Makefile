@@ -1,4 +1,4 @@
-# Time-stamp: <2021-02-17 19:18:25 anup>
+# Time-stamp: <2021-02-17 21:36:39 anup>
 
 CC = g++ 
 # CC = /usr/local/Cellar/gcc/9.3.0_1/bin/g++-9	
@@ -19,10 +19,6 @@ ODE_STOCH_PATH := lib/stochastic_euler/include
 # BOOST_LIBS_PATH := /usr/local/opt/boost/lib
 # BOOST_ODEINT_PATH := /usr/local/Cellar/boost/1.71.0/include
 BOOST_ODEINT_PATH := lib/boost/1.71.0/
-
-# lib/new_insilico/lib/libnew_insilico.a:
-$(MAKE)	-C	lib/new_insilico/lib	libnew_insilico.a
-.PHONY:	lib/new_insilico/lib/libnew_insilico.a	
 
 # ------------------------
 MAIN_EXE := astron_main
@@ -55,9 +51,15 @@ SRC := $(wildcard $(SRC_DIR)*.cpp)
 SRC := $(filter-out $(CPP_MAIN_DIR)$(CPP_MAIN_FILE),$(SRC))
 OBJ := $(patsubst $(SRC_DIR)%, $(OBJ_DIR)%, $(SRC)) 
 OBJ := $(patsubst %.cpp, %.o, $(OBJ))
+# lising sub directories that have to be build (run their own make files)
+SUBDIRS = lib/new_insilico
 
-all:	$(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)  
+all:	$(SUBDIRS) $(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)
 
+$(SUBDIRS):
+	$(MAKE) -C $@
+
+.PHONY:	$(SUBDIRS)
 # pattern rule for c++ files in the utility directory
 $(UTIL_EXE_DIR)%: $(UTIL_SRC_DIR)%.cpp $(UTIL_SRC_DIR)*.hpp
 	@echo "Compiling..."
@@ -71,6 +73,7 @@ $(EXE_DIR)$(MAIN_EXE): $(CPP_MAIN_DIR)$(CPP_MAIN_FILE) $(OBJ)
 $(OBJ_DIR)astron_main.o:
 	@echo compile $<
 
+
 # pattern rule for c++ files in the src directory
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp $(SRC_DIR)%.hpp
 	@echo "Compiling..."$<
@@ -78,6 +81,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp $(SRC_DIR)%.hpp
 
 clean:	
 	@rm -f $(EXE_DIR)$(MAIN_EXE)
+	@echo "Removed new_insilico/lib/libnewinsilico.a"
+	@rm  -f lib/new_insilico/lib/libnew_insilico.a
 	@echo "Removed main executable!: astron "
 
 clean_all:	
