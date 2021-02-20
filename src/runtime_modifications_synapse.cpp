@@ -1,4 +1,4 @@
-// Time-stamp: <2020-12-24 20:59:10 anup>
+// Time-stamp: <2021-02-19 22:12:27 anup>
 // Units: All SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
 // Description: This file will contain all the codes which will modify the variables or parameters at run time
 // This script will implement the call to dynamic parameters and external currents
@@ -29,39 +29,33 @@ void runtime_modifications_synapse::current(state_type &variables, const state_t
   bool glu_ext_absent = 1;
   unsigned glu_ext_index = newinsilico::get_synapse_index(index, "glu_ext",glu_ext_absent);
   
-  // // Checks if atp_ext variable is present in the synapse
-  // bool atp_ext_absent = 1;
-  // unsigned atp_ext_index = newinsilico::get_synapse_index(index, "atp_ext",atp_ext_absent);
-
-
+  // Checks if dhpg_ext variable is present in the synapse
+  bool dhpg_ext_absent = 1;
+  unsigned dhpg_ext_index = newinsilico::get_synapse_index(index, "dhpg_ext",dhpg_ext_absent);
+  
   std::string dyparname;
   double dypar = 0.0;
   // -------------------------------------------
   // Increase glu concentration based on dynamic parameter     
   if(!glu_ext_absent){
-    // dyparname = "dhpg" + std::to_string(index);
-    // dyparname = "glu_ext1";
-    dyparname = "dhpg_ext1";
-    // dyparname = "dhpg_ext1";
+    dyparname = "glu_ext" + std::to_string(index);
     dypar = newinsilico::value(dyparname,t);
     if (dypar > 0.0){
       variables[glu_ext_index] = dypar;
     }
   }
-  // --------------------------------------------
-  // Increase atp concentration based on dynamic parameter     
-  // if(!atp_ext_absent){
-  //   double atp_ext_dyn = 0.0;
-  //   std::string atp_ext_dyn_name = "atp_ext" + std::to_string(index);
-  //   atp_ext_dyn = insilico::dynamic_params::value(atp_ext_dyn_name,t);
-  //   // std::cout << "Dynparam value = " << atp_ext_dyn << "\n";
-  //   if (atp_ext_dyn > 0.0){
-  //     variables[atp_ext_index] = atp_ext_dyn;
-  //   }
-  //   if (atp_ext_dyn <= 0.0){
-  //     variables[atp_ext_index] = 0.0;
-  //   }
-  // }
+  // -------------------------------------------
+  // Increase DHPG concentration based on dynamic parameter     
+  if(!dhpg_ext_absent){
+    dyparname = "dhpg_ext" + std::to_string(index);
+    dypar = newinsilico::value(dyparname,t);
+    if (dypar > 0.0){
+      variables[dhpg_ext_index] = dypar;
+    }
+    else {
+      variables[dhpg_ext_index] = 0.0;
+    }
+  }
   // ---------------------------------------------
   // Release glutamate vesicle based on dynamic parameter
   if(!glu_ext_absent){

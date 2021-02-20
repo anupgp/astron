@@ -1,4 +1,4 @@
-// Time-stamp: <2020-12-28 21:17:48 anup>
+// Time-stamp: <2021-02-19 17:43:49 anup>
 // Units: all SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
 // Ref: lv2015
 
@@ -146,12 +146,12 @@ void astrocyte::ode_set(state_type &variables, state_type &dxdt, state_type &noi
   
   // ---------------------
   dxdt[ca_cyt_index] = 0.0
-    // + ( + pmca_ca_cyt_flux * (1))
-    // + ( + ca_cyt_buffer_simple_flux * (1))
-    // + ( - serca_hill_ca_cyt_flux * (1))
-    // + ( + er_leak_ca_cyt_flux * (1))
-    // + ( + ip3r_lr_ca_cyt_flux * (1))
-    // + ( + syt45_ca_cyt_flux_glu * (1))
+    + ( + pmca_ca_cyt_flux * (1))
+    + ( + ca_cyt_buffer_simple_flux * (1))
+    + ( - serca_hill_ca_cyt_flux * (1))
+    + ( + er_leak_ca_cyt_flux * (1))
+    + ( + ip3r_lr_ca_cyt_flux * (1))
+    + ( + syt45_ca_cyt_flux_glu * (1))
     // + ( + calbindin_ca_cyt_flux * (1))    /* NOT INCLUDED */
     // + ( + cap_ca_entry_ca_cyt_flux * (1)) /* NOT INCLUDED */
     // + ( + ryr_xw_ca_cyt_flux * (1))       /* NOT INCLUDED */

@@ -5,8 +5,8 @@
 exefile="/home/anup/goofy/codes/astron/bin/utility/generate_runtime_mod_file_1param_fixedstep";
 # exefile="/home/anup/goofy/projects/codes/astron/bin/utility/generate_runtime_mod_file_1param_expdecay";
 # -----------
-# dynfile_pf1="/home/anup/goofy/codes/astron/dynparams/dynparams_dhpg"
-dynfile_pf1="/home/anup/goofy/codes/astron/dynparams/dynparams_cacyt"
+dynfile_pf1="/home/anup/goofy/codes/astron/stimparams/stimparams_dhpg"
+# dynfile_pf1="/home/anup/goofy/codes/astron/stimparams/stimparams_cacyt"
 # dynfile_pf1="/Volumes/Anup_2TB/raw_data/astron/raw/astrocyte/frap30scarel/dypars/dynparams_ap30s"
 # dynfile_pf1="/mnt/mount1/data/astron/raw/astrocyte/dr_ip3r/dypars/dynparams_ip360s"
 # dynfile_pf1="/mnt/mount1/data/astron/raw/astrocyte/sensor/dypars/dynparams_cacyt10s"
@@ -32,21 +32,21 @@ colname1="time";
 # colname2="ap_ext1";
 # colname2="ip3_ext0"
 # colname2="dhpg0";
-colname2="ca_cyt0";
-# colname2="dhpg_ext1"
+# colname2="ca_cyt0";
+colname2="dhpg_ext1"
 # ------------
 tstart=200;
-tstop=251;
-# tstop=202;
+# tstop=251;
+tstop=202;
 # pulsedur=3;
 tstep=50e-6;
 # -----------------
-# pulseamps=(100000)		# 0.1 mM of DHPG application for 2 sec
-pulsedurs=(50)			# 0.1 mM of DHPG application for 2 sec
+pulseamps=(100000)		# 0.1 mM of DHPG application for 2 sec
+pulsedurs=(2)			# 0.1 mM of DHPG application for 2 sec
 # pulseamps=(100 200 300 400 500 600 700 800 900 1000);
 # pulseamps=(0 1 10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000);
 # pulsedurs=(2 10 30 60 90 120 180 240);
-pulseamps=(10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000 200000 300000 400000 500000 600000 700000 800000 900000 1000000);
+# pulseamps=(10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000 200000 300000 400000 500000 600000 700000 800000 900000 1000000);
 # pulseamps=(200000 300000 400000 500000 600000 700000 800000 900000 1000000);
 # pulseamps=(0)
 # freqs=(1 2 3 4 5 6 7 8 9 10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900 1000);
@@ -76,7 +76,7 @@ do
 	echo $dynfile
 	# echo $period, $freq
 	echo $amp, $pulsedur
-	$exefile --fname $dynfile --colname1 $colname1 --colname2 $colname2 --ncols 2 --tstart $tstart --tstop $tstop --tstep $tstep --pulse-amp $amp --pulse-on-dur $pulsedur --pulse-period 100 --sepchar ',' # glu1to100000nM2s, cacyt10to1000000nM30s
+	$exefile --fname $dynfile --colname1 $colname1 --colname2 $colname2 --ncols 2 --tstart $tstart --tstop $tstop --tstep $tstep --pulse-amp $amp --pulse-on-dur $pulsedur --pulse-period 100 --sepchar ',' # dgpg100000nM2s, glu1to100000nM2s, cacyt10to1000000nM30s
 	# $exefile --fname $dynfile --colname1 $colname1 --colname2 $colname2 --ncols 2 --tstart $tstart --tstop $tstop --tstep $tstep --pulse-amp $pulseamp --pulse-on-dur $tstep --pulse-period $period --sepchar ',' # ap1to1000dHz30s
 	# $exefile --fname $dynfile --colname1 $colname1 --colname2 $colname2 --ncols 2 --tstart $tstart --tstop $tstop --tstep $tstep --pulse-amp $amp --pulse-on-dur 100 --pulse-period 1000 --sepchar ','
 

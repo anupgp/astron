@@ -1,4 +1,4 @@
-// Time-stamp: <2020-12-24 20:31:55 anup>
+// Time-stamp: <2021-02-18 14:34:14 anup>
 // Units: all SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
 // Doc: ip3 receptor deterministic (li-rinzel model)
 // Ref: shuai2002
@@ -83,8 +83,8 @@ void ip3_receptor_lr::current(state_type &variables, state_type &dxdt, state_typ
   double beta_h = a2 * ca_cyt;
 
   // Compute noise
-  noise[h_index] = sqrt((((alpha_h * (1 - h)) + (beta_h * h)) / ip3r_lr_num) * gvars::DELTA_T) * rand.uni_double();
-  // noise[h_index] = 0.0;
+  noise[h_index] = sqrt((((alpha_h * (1 - h)) + (beta_h * h)) / ip3r_lr_num) * gvars::DELTA_T) * rand.uni_double(); // adds Langevin noise
+  // noise[h_index] = 0.0; // sets Langevin noise to zero
   
   // Compute dxdt values
   dxdt[h_index] = (alpha_h * (1 - h)) - (beta_h * h);

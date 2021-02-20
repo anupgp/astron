@@ -10,7 +10,15 @@ ASTRON 1.0. A biophysically-detailed computational model of a single astrocyte c
 
 ## Dependencies
 
+## Installation
+
+Clone the repository
+git submodules update --init --recursive
+make
+
 ## Usage
+
+
 
 
 ## Documentation
@@ -27,4 +35,6 @@ University of Ottawa
 
 Dependencies:
 -------------
-1. The C++ BOOST library.
+1. C++ BOOST library.
+2. new_insilico library
+3. stochastic_euler

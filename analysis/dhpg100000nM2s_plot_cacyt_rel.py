@@ -13,9 +13,15 @@ font_path = '/home/anup/.matplotlib/fonts/arial.ttf'
 fontprop = font_manager.FontProperties(fname=font_path)
 import h5py
 
-# load data
-dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/dhpg100000nM2s_cacyt_rel_features"
+# =====================================================================================
+# load data: Provide the path and filename of the hdf5 file containing the analyzed data
+dir1 = "/home/anup/data/dhpg100000nM2s/analysis/"
 fnameh5py = "dhpg100000nM2s_cacyt_rel_event_features.hdf5"
+figsavepath = dir1 # path to the folder where figures will be saved
+# ------------
+# dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/dhpg100000nM2s_cacyt_rel_features"
+# fnameh5py = "dhpg100000nM2s_cacyt_rel_event_features.hdf5"
+# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s" # path to the folder where figures will be saved
 # ------------
 binscacytpk = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"binscacytpk")
 binscacytrt = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"binscacytrt")
@@ -25,11 +31,11 @@ hcacytpk = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"hcacytpk")
 hcacytrt = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"hcacytrt")
 hcacytdk = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"hcacytdk")
 hcacytfw = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"hcacytfw")
-
+# ------------
 dmaxtcacyt = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"dmaxtcacyt")
 dmaxtkrrel = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"dmaxtkrrel")
 dmaxtffrel = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"dmaxtffrel")
-
+# ------------
 binst = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"binst")
 psthca = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"psthca")
 psthrel = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"psthrel")
@@ -45,6 +51,7 @@ tc_nffmob = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"tc_nffmob")
 tc_nffend = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"tc_nffend")
 tc_nffacd = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"tc_nffacd")
 # ------------
+# fgiure legend labels and colors
 grouplabels = ["Control",r"$A\beta$-mGluR",r"$A\beta$-PMCA",r"$A\beta$-mGluR & PMCA"]
 plotcolors = np.array([
     [0,0,0],
@@ -52,14 +59,16 @@ plotcolors = np.array([
     [0,0,1],
     [0,1,0]
 ])
-# ----------------
-# # timecourse plots of release event features
-# # datasets = [tc_nkrdoc,tc_nkrrel,tc_nkrend,tc_nkracd]
+# =========================================================================================================================
+# Figures 3D&E
+# Timecourse plots of release event features: number of docked/mobile vesicle release-ready/released/endocytosed/reacidified
+# ==========================================================================================================================
+# datasets = [tc_nkrdoc,tc_nkrrel,tc_nkrend,tc_nkracd]
 # datasets = [tc_nffmob,tc_nffrel,tc_nffend,tc_nffacd]
-# ndataset = 4
-# ngroup = 4
-# nbatch = 6
-# ntrial = 400
+# ndataset = len(datasets)
+# ngroup = 1
+# nbatch = 1
+# ntrial = 280
 # lineavgs = np.array([np.mean(dataset,axis=1)*400 for dataset in datasets])
 # linesems = np.array([np.std(dataset,axis=1)/np.sqrt(nbatch)*400 for dataset in datasets])
 # # downsample data to reduce plot image filesize
@@ -113,65 +122,68 @@ plotcolors = np.array([
 # yaxislabel = r'# Number of mobile vesicles'
 # ah11.set_ylabel(yaxislabel,fontsize=8,font=fontprop)
 # # saving figures
-# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s"
-# fh1_name = "dhpg100000nM2s_ff_ves_features.svg"
-# fh1.savefig(os.path.join(figsavepath,fh1_name))
-# plt.show()
-# -----------------------
-# # plot calcium/release psth with experimental data
-# # Load experimental data for DHPG-mediated ca2+ events
-# folder1 = "/home/anup/goofy/data/suhitalab/astron/cooked"
-# # fname1 = "marchaland2008_dhpg_cacyt_histogram.csv" # psth cacyt
-# fname1 = "marchaland2008_dhpg_release_histogram.csv"
-# dfexp = pd.read_csv(os.path.join(folder1,fname1));
-# # interpolate experimental data to fill make the time bins 50 ms
-# tbinsexp = np.arange(-1,5,50e-3)
-# # expy = np.interp(tbinsexp,dfexp["time"],dfexp["ca_cyt_events"]) # cacyt
-# expy = np.interp(tbinsexp,dfexp["time"],dfexp["release"])
-# expy[expy<0] = 0
-# expy[tbinsexp>max(dfexp["time"])] = 0
-# dfexp2 = pd.DataFrame({"tbins":tbinsexp,"psth":expy})
-# dataset = psthrel
-# ngroup = 4
-# nbatch = 6
-# ntrial = 400
-# toffset = 0.05
-# lineavg = np.mean(dataset,axis=1)
-# linesem = np.std(dataset,axis=1)/np.sqrt(nbatch)
-# fh1,ah11 = plt.subplots(figsize=(2,2),dpi=600,frameon=False,ncols=1,gridspec_kw={"width_ratios":[1]})
-# ph11 = ah11.plot(dfexp2["tbins"]+toffset,dfexp2["psth"])
-# for igroup in range(0,1):
-#     for ibin in range(0,len(binst)-1):
-#         error1 = lineavg[igroup,ibin] - linesem[igroup,ibin]
-#         error2 = lineavg[igroup,ibin] + linesem[igroup,ibin]
-#         ah11.plot([binst[ibin]-200,binst[ibin]-200],[error1,error2],linestyle="-",color="grey")
-#         ph11 = ah11.plot(binst[ibin]-200,lineavg[igroup,ibin],marker='o',linestyle="-",color=plotcolors[igroup,:],markersize=1)
-#     # }
-# # }
-# # formatting
-# ah11.set_xlim([-1,3])
-# xticks = [-1,0,1,2,3]
-# ah11.set_xticks(xticks)
-# ah11.set_xticklabels(xticks,fontsize=8,font=fontprop)
-# # ah11.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-# ah11.set_xlabel("Time (s)",fontsize=8,font=fontprop)
-# yticks = [0,20,40]
-# ah11.set_ylim([-10,40])
-# ah11.set_yticks(yticks)
-# ah11.set_yticklabels(yticks,fontsize=8,font=fontprop)
-# ah11.spines["right"].set_visible(False)
-# ah11.spines["top"].set_visible(False)
-# # matplotlib.rcParams["mathtext.sf"]
-# # yaxislabel = r'#$Ca^{2+}$ events' # cacyt
-# yaxislabel = r'#Release events'
-# ah11.set_ylabel(yaxislabel,fontsize=8,font=fontprop)
-# # saving figures
-# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s"
+# # fh1_name = "dhpg100000nM2s_ff_ves_features.svg"
+# # fh1.savefig(os.path.join(figsavepath,fh1_name))
+# # plt.show()
+# =====================================================================================
+# Figures 1H & 3F
+# Plot calcium/release psth with experimental data
+# =====================================================================================
+# Load experimental data for DHPG-mediated ca2+ events
+folder1 = "/home/anup/goofy/codes/astron/validation_data"
+# fname1 = "marchaland2008_dhpg_cacyt_histogram.csv" # validation data psth cacyt
+fname1 = "marchaland2008_dhpg_release_histogram.csv" # validation data psth release
+dfexp = pd.read_csv(os.path.join(folder1,fname1));   # load validation data set
+# interpolate experimental data to fill make the time bins 50 ms
+tbinsexp = np.arange(-1,5,50e-3)
+# expy = np.interp(tbinsexp,dfexp["time"],dfexp["ca_cyt_events"]) # validation psth cacyt
+expy = np.interp(tbinsexp,dfexp["time"],dfexp["release"]) # validation psth releases
+expy[expy<0] = 0
+expy[tbinsexp>max(dfexp["time"])] = 0
+dfexp2 = pd.DataFrame({"tbins":tbinsexp,"psth":expy})
+# dataset = psthca               # select simulation data for calcium events
+dataset = psthrel               # select simulation data for release events
+ngroup = 1
+nbatch = 1
+ntrial = 400
+toffset = 0.05
+lineavg = np.mean(dataset,axis=1)
+linesem = np.std(dataset,axis=1)/np.sqrt(nbatch)
+fh1,ah11 = plt.subplots(figsize=(2,2),dpi=600,frameon=False,ncols=1,gridspec_kw={"width_ratios":[1]})
+ph11 = ah11.plot(dfexp2["tbins"]+toffset,dfexp2["psth"])
+for igroup in range(0,1):
+    for ibin in range(0,len(binst)-1):
+        error1 = lineavg[igroup,ibin] - linesem[igroup,ibin]
+        error2 = lineavg[igroup,ibin] + linesem[igroup,ibin]
+        ah11.plot([binst[ibin]-200,binst[ibin]-200],[error1,error2],linestyle="-",color="grey")
+        ph11 = ah11.plot(binst[ibin]-200,lineavg[igroup,ibin],marker='o',linestyle="-",color=plotcolors[igroup,:],markersize=1)
+    # }
+# }
+# formatting
+ah11.set_xlim([-1,3])
+xticks = [-1,0,1,2,3]
+ah11.set_xticks(xticks)
+ah11.set_xticklabels(xticks,fontsize=8,font=fontprop)
+# ah11.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+ah11.set_xlabel("Time (s)",fontsize=8,font=fontprop)
+yticks = [0,20,40]
+ah11.set_ylim([-10,40])
+ah11.set_yticks(yticks)
+ah11.set_yticklabels(yticks,fontsize=8,font=fontprop)
+ah11.spines["right"].set_visible(False)
+ah11.spines["top"].set_visible(False)
+# matplotlib.rcParams["mathtext.sf"]
+yaxislabel = r'#$Ca^{2+}$ events' # cacyt events
+# yaxislabel = r'#Release events' # release events
+ah11.set_ylabel(yaxislabel,fontsize=8,font=fontprop)
+# saving figures
 # fh1_name = "dhpg100000nM2s_psth_release.svg"
 # fh1.savefig(os.path.join(figsavepath,fh1_name))
-# plt.show()
-# -----------------------
-# plot histogram cacyt event features: peak/risetime/tau/fwhm
+plt.show()
+# =======================================================================================
+# Figures 1D,E,F,& G
+# Plot histogram cacyt event features: peak/risetime/decaytime(tau)/fwhm
+# ======================================================================================
 # ydat = hcacytpk
 # xdat = binscacytpk*1e6
 # ydat = hcacytrt
@@ -236,12 +248,13 @@ plotcolors = np.array([
 # # ah11.plot([0,0],[0,ntrial],color="grey",linestyle="--",linewidth=0.5)
 # # ah11.plot([2,2],[0,ntrial],color="grey",linestyle="--",linewidth=0.5)
 # # saving figures
-# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s"
 # fh1_name = "dhpg100000nM2s_hist_cacyt_dk.svg"
 # fh1.savefig(os.path.join(figsavepath,fh1_name))
 # plt.show()
-# --------------------------
-# raster plot cacyt/release events
+# ==============================================================================================
+# Figures 1C & 3A
+# Raster plot cacyt/release events
+# ==============================================================================================
 # fh1,ah11 = plt.subplots(figsize=(2,2),dpi=600,frameon=False,ncols=1,gridspec_kw={"width_ratios":[1]})
 # ntrial = 400
 # ibatch = 0
@@ -280,12 +293,13 @@ plotcolors = np.array([
 # ah11.plot([0,0],[0,ntrial],color="grey",linestyle="--",linewidth=0.5)
 # ah11.plot([2,2],[0,ntrial],color="grey",linestyle="--",linewidth=0.5)
 # # # saving figures
-# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s"
 # fh1_name = "dhpg100000nM2s_raster_dmaxtrel.svg"
 # fh1.savefig(os.path.join(figsavepath,fh1_name))
 # plt.show()
-# -----------------------------------
-# # plot kr/ff release psth
+# ===================================================================================
+# # Figures 3B & C
+# # Plot kr/ff release psth
+# ==================================================================================
 # dataset = psthkrrel
 # # dataset = psthffrel
 # ngroup = 4
@@ -325,7 +339,6 @@ plotcolors = np.array([
 # yaxislabel = r'# Kiss-and-run events'
 # ah11.set_ylabel(yaxislabel,fontsize=8,font=fontprop)
 # # saving figures
-# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/dhpg100000nM2s"
 # fh1_name = "dhpg100000nM2s_psth_kr_release.svg"
 # fh1.savefig(os.path.join(figsavepath,fh1_name))
 # plt.show()

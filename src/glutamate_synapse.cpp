@@ -1,4 +1,4 @@
-// Time-stamp: <2019-07-10 18:10:00 macbookair>
+// Time-stamp: <2021-02-19 22:08:38 anup>
 // Units: all SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
 // Description: This class calls the other glutamate-related classes to update the dxdt variables 
 
@@ -28,6 +28,10 @@ void glutamate_synapse::ode_set(state_type &variables, state_type &dxdt, state_t
   bool glu_ext_absent = 1;
   unsigned glu_ext_index = newinsilico::get_synapse_index(index, "glu_ext",glu_ext_absent);
 
+  // Checks if dhpg_ext variable is present 
+  bool dhpg_ext_absent = 1;
+  unsigned dhpg_ext_index = newinsilico::get_synapse_index(index, "dhpg_ext",dhpg_ext_absent);
+
   if(glu_ext_absent){
     // std::cout << "No glu_ext1 notfound!" << std::endl;
     return;
@@ -48,11 +52,13 @@ void glutamate_synapse::ode_set(state_type &variables, state_type &dxdt, state_t
 
   // Set lower limits on variable values
   variables[glu_ext_index] = std::max<double>(variables[glu_ext_index],0.0);
-  
+  variables[dhpg_ext_index] = std::max<double>(variables[dhpg_ext_index],0.0);
   // std::cout << "t" << " " << t << " " << "index" << " " << index << " " << "glu_ext" << " " << variables[glu_ext_index] << " " << "glu_ext_dxdt" << " " << dxdt[glu_ext_index] << std::endl;
   // if (variables[glu_ext_index] > 10E-06) std::cin.get();
 
   // Perform dxdt for glu_ext
   dxdt[glu_ext_index] = -glu_deg_simple_glu_ext_flux;
+  // Perform dxdt for dhpg_ext
+  dxdt[dhpg_ext_index] = 0;
 
 };    

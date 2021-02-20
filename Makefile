@@ -1,4 +1,4 @@
-# Time-stamp: <2021-02-17 21:50:24 anup>
+# Time-stamp: <2021-02-19 15:19:03 anup>
 
 CC = g++ 
 # CC = /usr/local/Cellar/gcc/9.3.0_1/bin/g++-9	
@@ -54,12 +54,12 @@ OBJ := $(patsubst %.cpp, %.o, $(OBJ))
 # lising sub directories that have to be build (run their own make files)
 SUBDIRS = lib/new_insilico
 
-all:	$(SUBDIRS) $(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)
+all:	$(SUBDIRS) $(UTILS_EXE) $(EXE_DIR)$(MAIN_EXE) 
 
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-.PHONY:	all $(SUBDIRS) $(EXE_DIR)$(MAIN_EXE) $(UTILS_EXE)
+.PHONY:	$(SUBDIRS) $(EXE_DIR)$(MAIN_EXE)
 
 # pattern rule for c++ files in the utility directory
 $(UTIL_EXE_DIR)%: $(UTIL_SRC_DIR)%.cpp $(UTIL_SRC_DIR)*.hpp

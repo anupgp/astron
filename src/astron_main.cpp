@@ -17,13 +17,15 @@ int main(int argc, char **argv) {
 
   newinsilico::initialize(argc, argv); 
   newinsilico::set_write_this_interval(true);
-  newinsilico::set_observe_step_interval(20);
-  // newinsilico::set_observe_step_interval(200); // save results after each n steps
+  // newinsilico::set_observe_step_interval(20);
+  newinsilico::set_observe_step_interval(200); // save results after each n steps
   // --------
   newinsilico::observe("ca_cyt");
   newinsilico::observe("ca_er");
   newinsilico::observe("ip3_cyt");
   newinsilico::observe("glu_ext");
+  newinsilico::observe("dhpg_ext");
+  newinsilico::observe("mglur_hill_ip3_cyt_flux");
   newinsilico::observe("ip3r_lr_openprob");
   newinsilico::observe("pmca_ca_cyt_flux");
   newinsilico::observe("syt45_krrelrate_glu");

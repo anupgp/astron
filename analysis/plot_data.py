@@ -4,13 +4,13 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-disk = "/home/anup/data"
-folder = "cacyt10to1000000nM30s/cacyt10to1000000nM30s/run"
-groups = ["adpmca"]
-fname_prefix = "astrocyte_cacyt100000nM30s_"
+disk = "/home/anup/data/dhpg100000nM2s"
+folder = "output"
+groups = ["ctrl"]
+fname_prefix = "astrocyte_dhpg100000nM2s"
 trial0 = 1
 ntrials = 1
-varnames = ["time","n0ca_cyt","n0pmca_ca_cyt_flux","n0ip3_cyt","s1glu_ext"]
+varnames = ["time","n0ca_cyt","n0pmca_ca_cyt_flux","n0ip3_cyt","s1glu_ext","s1dhpg_ext"]
 
 # data = np.genfromtxt(filename,dtype=float,skip_header=1,delimiter=',',usecols=(0,1,2,3,4))
 fh = plt.figure()
@@ -29,8 +29,8 @@ for igroup in range(0,len(groups)):
 
 # plotting
 ah.plot(df["time"],df["n0ca_cyt"])
-# ah.plot(df["time"],df["s1glu_ext"])
-ah.plot(df["time"],df["n0pmca_ca_cyt_flux"])
+ah.plot(df["time"],df["s1dhpg_ext"])
+# ah.plot(df["time"],df["n0pmca_ca_cyt_flux"])
 
 
 plt.show()

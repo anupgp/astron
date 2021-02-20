@@ -12,15 +12,21 @@ import h5py
     
 
 # ----------------------------------------------
-diskname = "/run/media/anup/3becd611-cb79-4b80-b941-2edcc0d64cb4"
-dir1 = "data/astron/raw/astrocyte"
-dir2="dhpg100000nM2s/run"
-datasavepath = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/dhpg100000nM2s_cacyt_rel_features"
+# diskname = "/run/media/anup/3becd611-cb79-4b80-b941-2edcc0d64cb4"
+# dir1 = "data/astron/raw/astrocyte"
+# dir2="dhpg100000nM2s/run"
+# datasavepath = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/dhpg100000nM2s_cacyt_rel_features"
+# h5pyfname = "dhpg100000nM2s_cacyt_rel_event_features.hdf5"
+# --------------------------------------------
+diskname = "/home/anup/data"
+dir1 = "dhpg100000nM2s"
+dir2="output"
+datasavepath = "/home/anup/data/dhpg100000nM2s/analysis/"
 h5pyfname = "dhpg100000nM2s_cacyt_rel_event_features.hdf5"
+# ---------------------------------------
 
-
-groups = ["ctrl","admglur","adpmca","admglurpmca"]
-# groups = ["ctrl"]
+# groups = ["ctrl","admglur","adpmca","admglurpmca"]
+groups = ["ctrl"]
 fprefix = "astrocyte_dhpg100000nM2s_"
 varnames1 = ["time","n0ca_cyt","n0ca_er","n0ip3_cyt","s1glu_ext","n0syt45_vkdoc_glu","n0syt45_vkrel_glu","n0syt45_vkend_glu","n0syt45_vkacd_glu"]
 varnames2 = ["n0syt45_vfmob_glu","n0syt45_vfrel_glu","n0syt45_vfend_glu","n0syt45_vfacd_glu"]
@@ -32,8 +38,8 @@ varnames = varnames1 + varnames2 + varnames3 + varnames4 + varnames5
 print(varnames)
 fpath = os.path.join(diskname,dir1,dir2)
 ntrial = 400                    # 400
-trial0 = 1
-nbatch = 6                      # 6
+trial0 = 1                      # 1
+nbatch = 1                      # 6
 ngroup = len(groups)
 t0 = 190                        # analyze start time
 t1 = 205                        # analyze stop time
@@ -99,7 +105,7 @@ for igroup in range(0,ngroup):
         fprefix = "astrocyte_dhpg100000nM2s"
         # fprefix = "".join(("astrocyte_ap",str(freqs[ifreq]),"dHz30s"))
         for ifile,itrial in zip(range(1+(ibatch*ntrial),ntrial+1+(ibatch*ntrial)),range(0,ntrial)):
-            fname = "".join((fprefix,"_",groups[igroup],str(ifile),".csv"))
+            fname = "".join((fprefix,"",groups[igroup],str(ifile),".csv"))
             fullname = os.path.join(diskname,dir1,dir2,groups[igroup],fname)
             print(ifile," ",fullname)
             df = pd.read_csv(fullname,header=0,usecols=varnames)

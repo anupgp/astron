@@ -1,4 +1,4 @@
-// Time-stamp: <2020-12-23 11:20:55 anup>
+// Time-stamp: <2021-02-19 17:42:33 anup>
 // Units: All SI units - seconds, Volts, Ampere, Meters, Simenes, Farads
 // Description: This file will contain all the codes which will modify the variables or parameters at run time
 // This script will implement the call to dynamic parameters and external currents
@@ -36,12 +36,12 @@ void writing_conditions::current(state_type &variables, const state_type &dxdt, 
   }
   // compulsory write when a release event occurs
   // --------------------------------
-  // double relflag =  newinsilico::neuron_value(index, "syt45_relflag_glu");
-  // if( ((t >= tstart) && (t <= tstop)) && (relflag >0)){
-  //   newinsilico::set_write_this_interval2(true);
-  // }
-  // else{
-  //   newinsilico::set_write_this_interval2(false);
-  // }  
+  double relflag =  newinsilico::neuron_value(index, "syt45_relflag_glu");
+  if( ((t >= tstart) && (t <= tstop)) && (relflag >0)){
+    newinsilico::set_write_this_interval2(true);
+  }
+  else{
+    newinsilico::set_write_this_interval2(false);
+  }  
   // ----------------------------------
 }

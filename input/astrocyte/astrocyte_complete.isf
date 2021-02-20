@@ -156,15 +156,24 @@ ip3r_lr_beta_h : 0.0,
 ip3r_lr_m_inf : 0.0,
 ip3r_lr_n_inf : 0.0,
 
-"Time-stamp: <2020-12-15 22:56:16 anup>"
+"Time-stamp: <2021-02-19 17:40:19 anup>"
 "insilico input file for astrocyte mglu_receptor_hill (mGluR1)"
 "Ref: zou2017, conn1997, wisniewski2002, zhang2005, nieden2005, balazs1997"
 
 dxdt : 0,
-mglur_hill_v_max : 0.65e-06,	"ctrl(dhpg): 0.65e-06, AD(dhpg): 1.4e-06"
-mglur_hill_k_diss : 11.0e-06,	"ctrl(dhpg): 6.0e-06, AD(dhpg): 3.0e-06, glutamate: 11e-6, dhpg: 6e-6"
-mglur_hill_coop : 2, 
 mglur_hill_ip3_cyt_flux : 0.0,
+
+"parameters for glutamate"
+mglur_hill_v_max_glu : 0.65e-06,	"ctrl(dhpg): 0.65e-06, AD(dhpg): 1.4e-06"
+mglur_hill_k_diss_glu : 11.0e-06,	"ctrl(dhpg): 11e-06, AD(dhpg): 3.0e-06, glutamate: 11e-6, dhpg: 6e-6"
+mglur_hill_coop_glu : 2, 
+mglur_hill_ip3_cyt_flux_glu : 0.0,
+
+"parameters for dhpg" 
+mglur_hill_v_max_dhpg : 0.65e-06,	"ctrl(dhpg): 0.65e-06, AD(dhpg): 1.4e-06"
+mglur_hill_k_diss_dhpg : 6.0e-06,	"ctrl(dhpg): 6.0e-06, AD(dhpg): 3.0e-06, glutamate: 11e-6, dhpg: 6e-6"
+mglur_hill_coop_dhpg : 2,
+mglur_hill_ip3_cyt_flux_dhpg : 0.0,
 
 "Time-stamp: <2018-02-15 19:57:14 anup>"
 "insilico input file for astrocyte glutamate release via transmitter_release_syt4a sensor"
@@ -247,7 +256,7 @@ ca_cyt_buffer_simple_kc1c0 : 1200,  	"500,  1200,	524.0,	1200"
 
 ca_cyt_buffer_simple_flux : 0.0,
 
-"Time-stamp: <2017-10-18 17:03:37 anup>"
+"Time-stamp: <2020-12-20 19:33:23 anup>"
 "insilico input file for astrocyte"
 "Ref:ostby2009 - astrocyte area-to-volume ratio = 4e4 m^2"
 "Ref: grosche2013 - volume of an entire astrocyte = 40000e-18 m^3"
@@ -266,4 +275,5 @@ area_volume_ratio_cyt : 13.3e6,		"10e6-26e6,13.33e6"
 volume_ratio_er_cyt : 0.5, 		"0.185"
 area_ratio_er_cyt : 10.0,		"10.0" 
 spec_cap_cyt : 1.0e-02,
-ip3_cyt_baseline : 160e-09;
+ip3_cyt_baseline : 160e-09,
+ca_cyt_dyn : 0.0;
