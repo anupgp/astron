@@ -62,7 +62,7 @@ The following folders are in the root folder (*astron*)
    - **validation_data:** data for model validation
 
 ## Usage
-Below are the steps to recreate calcium signaling and gliotransmitter release data for validating the model with previous experimental data from astrocytic microdomains (Figures 1 & 3). This is accomplished by stimulating the astrocytic compartment with a single pulse of DHPG (100 μM, 2s). The model is typically run for some time (~200s) until calcium and IP3 levels stabilize. 
+Below are the steps to recreate calcium signaling and gliotransmitter release data for validating the model with previous experimental data from astrocytic microdomains (Figures 1 & 3). This is accomplished by stimulating the astrocytic compartment with a single pulse of DHPG (100 μM, 2s). The model is typically run for some time (~200s) until Ca<sup>2+</sup> and IP<sub>3</sub> levels stabilize. 
 
 ### Step 1: run simulation   
 Edit the launch script (*run/generate_data_dhpg100000nM2s.sh*) to specify paths to the root (*astron*) folder, folder for data storage and path to main executable (*astron_main*).
