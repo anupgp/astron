@@ -1,5 +1,5 @@
  # Astron                                                                                                                                                                                                                                                                                     
- ***A biophysical model for simulating astrocyte signaling***
+ ***A biophysical model for Ca<sup2+<\sup>-signaling and gliotransmission from astrocytes at a single compartment level***
 
 This code implements a detailed biophysical model of a single astrocytic compartment/microdomain. The model incorporates multiple molecular components to reproduce mGluR-mediated calcium signaling and calcium-mediated gliotransmitter release from astrocytic microdomains, as observed experimentally. 
 
