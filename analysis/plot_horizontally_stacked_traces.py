@@ -77,6 +77,6 @@ ah.text(ylabelxpos,ylabelypos,ylabel,rotation = 90,fontsize = 12)
 plt.show()
 
 # figsave
-figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/ap1to1000dhz30s0noise"
-figname = "horizontally_stacked_cacyt_traces_ctrl.png"
-fh.savefig(os.path.join(figsavepath,figname))
+# figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/ap1to1000dhz30s0noise"
+# figname = "horizontally_stacked_cacyt_traces_ctrl.png"
+# fh.savefig(os.path.join(figsavepath,figname))

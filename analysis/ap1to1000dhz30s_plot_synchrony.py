@@ -9,16 +9,18 @@ from matplotlib.transforms import Bbox
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib
 from mpl_toolkits.axes_grid1.inset_locator import InsetPosition
-font_path = '/home/anup/.matplotlib/fonts/arial.ttf'
-fontprop = font_manager.FontProperties(fname=font_path)
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
-
 # plt.ion()
 import h5py
+from scipy import stats
+# --------------
+font_manager.findSystemFonts(fontpaths="/usr/share/fonts/", fontext='ttf')
+font_manager.findfont("Arial") # Test if matplotlib can find the font
+plt.rcParams['font.family'] = 'Arial'
+fontprop = font_manager.FontProperties(family='Arial',weight='normal',style='normal')
 
-
-# -----------------------------
+# =============================================================================
 def loadh5pydata(fname,dataname):
     with h5py.File(fname,'r') as h5fp:
         print(list(h5fp.keys()))
@@ -27,13 +29,18 @@ def loadh5pydata(fname,dataname):
 
 
 # --------------------------------------------------------------------------
-# dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s" # with noise
-# h5pyfname = "ap1to1000dhz30s_cacyt_rel_synchrony.hdf5" # with noise
+dir1 = "/home/anup/goofy/astron/cooked/new_2020_python/ap1to1000dhz30s" # with noise
+h5pyfname = "ap1to1000dhz30s_cacyt_rel_synchrony.hdf5" # with noise
+
 # dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s"
 # h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5"
-dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s0noise" # no noise
-h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5" # no noise
+
+# dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s0noise" # no noise
+# h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5" # no noise
+
+figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.3/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
 # -----------------------
+ntrials = 1000
 groups = ["ctrl","admglur","adpmca","admglurpmca"]
 ngroups = len(groups)
 freqs = loadh5pydata(os.path.join(dir1,h5pyfname),"freqs")
@@ -49,7 +56,7 @@ print("tbins: ",tbins)
 print("requested plotbin {}, obtained plotbin {}".format(plottbin, tbins[iplottbin]))
 # ----------------------------------------------------------------------------
 # plotting
-syn = synrel
+syn = syncacyt
 # avgsynindex = syncacyt[:,:,iplottbin,:].mean(-1) # [igroup,ifreq,tbins,iboot]
 # semsynindex = syncacyt[:,:,iplottbin,:].std(-1)
 avgsynindex = syn[:,:,:,:].mean(-2).mean(-1) # [igroup,ifreq,tbins,iboot]
@@ -60,29 +67,31 @@ semsynindex = syn[:,:,:,:].mean(-2).std(-1)
 # semsynindex = synrel[:,:,:,:].mean(-2).std(-1)
 # ---------------------------
 # Synchrony average line plot
-fh1,(ah11,ah12) = plt.subplots(figsize=(4,2),dpi=600,frameon=False,ncols=2,gridspec_kw={"width_ratios":[1,0.7]},sharey=True)
-# ah11 = fh1.add_subplot(111)
-plotcolors = np.array([
-    [0,0,0],
-    [1,0,0],
-    [0,0,1],
-    [0,1,0]
-])
+# fh1,(ah11,ah12) = plt.subplots(figsize=(4,2),dpi=600,frameon=False,ncols=2,gridspec_kw={"width_ratios":[1,0.7]},sharey=True)
+fh1,(ah11,ah12) = plt.subplots(figsize=(4,2),dpi=600,frameon=False,ncols=2,gridspec_kw={"width_ratios":[0.6,0.4]})
+fh1.subplots_adjust(left=0.13, bottom=0.2, right=0.99, top=0.85, wspace=0.2, hspace=0.2)
 grouplabels = ["Control",r"$A\beta$-mGluR",r"$A\beta$-PMCA",r"$A\beta$-mGluR & PMCA"]
+plotcolors = ['#000000', '#ff7f0e', '#2ca02c', '#d62728']
+
 for igroup in range(0,ngroups):
     for ifreq in range(0,nfreqs):
-        ph11 = ah11.semilogx(freqs[ifreq]/10,avgsynindex[igroup,ifreq],marker='o',linestyle="-",color=plotcolors[igroup,:],markersize=4)
         error1 = avgsynindex[igroup,ifreq]-semsynindex[igroup,ifreq]
         error2 = avgsynindex[igroup,ifreq]+semsynindex[igroup,ifreq]
         ah11.semilogx([freqs[ifreq]/10,freqs[ifreq]/10],[error1,error2],linestyle="-",color="grey")
+        if (ifreq == 0):
+            ph11 = ah11.semilogx(freqs[ifreq]/10,avgsynindex[igroup,ifreq],marker='o',linestyle="-",color=plotcolors[igroup],markersize=2,label=grouplabels[igroup])
+        else:
+            ph11 = ah11.semilogx(freqs[ifreq]/10,avgsynindex[igroup,ifreq],marker='o',linestyle="-",color=plotcolors[igroup],markersize=2)
     # }
 # }
-ah11.plot([0.5,1],[-0.04,-0.04],linestyle="--",color="grey",linewidth=1)
-ah11.plot([2,10],[-0.04,-0.04],linestyle="--",color="grey",linewidth=1)
-ah11.plot([20,100],[-0.04,-0.04],linestyle="--",color="grey",linewidth=1)
-ah11.text(0.55,-0.08,"Low",font=fontprop,fontsize=8)
-ah11.text(3.5,-0.08,"Mid",font=fontprop,fontsize=8)
-ah11.text(30,-0.08,"High",font=fontprop,fontsize=8)
+
+ypos1 = 0.5
+ah11.plot([0.5,1],[ypos1,ypos1],linestyle="--",color="grey",linewidth=1)
+ah11.plot([2,10],[ypos1,ypos1],linestyle="--",color="grey",linewidth=1)
+ah11.plot([20,100],[ypos1,ypos1],linestyle="--",color="grey",linewidth=1)
+ah11.text(0.55,ypos1+0.03,"Low",font=fontprop,fontsize=9)
+ah11.text(3.5,ypos1+0.03,"Mid",font=fontprop,fontsize=9)
+ah11.text(30,ypos1+0.03,"High",font=fontprop,fontsize=9)
 # ------------------
 # Synchrony bar graph
 # fh2 = plt.figure(figsize=(1.5,2.5),dpi=600,frameon=False)
@@ -93,12 +102,43 @@ hfreqs = [200,300,400,500,600,700,800,900,1000]
 _,ilfreqs,_ = np.intersect1d(freqs,lfreqs,return_indices=True)
 _,imfreqs,_ = np.intersect1d(freqs,mfreqs,return_indices=True)
 _,ihfreqs,_ = np.intersect1d(freqs,hfreqs,return_indices=True)
+# --------------------------------
 avgsynl = syn[:,ilfreqs,:,:].mean(-3).mean(-2).mean(-1) # [igroup,ifreq,itime,iset]
 avgsynm = syn[:,imfreqs,:,:].mean(-3).mean(-2).mean(-1)
 avgsynh = syn[:,ihfreqs,:,:].mean(-3).mean(-2).mean(-1)
 semsynl = syn[:,ilfreqs,:,:].mean(-3).mean(-2).std(-1)
 semsynm = syn[:,imfreqs,:,:].mean(-3).mean(-2).std(-1)
 semsynh = syn[:,ihfreqs,:,:].mean(-3).mean(-2).std(-1)
+# -----------------------------------
+# compute pvalues b/w groups for low, mid and high frequency bands
+low = np.nanmean(syn[:,ilfreqs,:],axis=-2).mean(axis=-2)
+mid = np.nanmean(syn[:,imfreqs,:],axis=-2).mean(axis=-2)
+high = np.nanmean(syn[:,ihfreqs,:],axis=-2).mean(axis=-2)
+# remove nan entries from the groups
+low0nan = [low[elm,~np.isnan(low[elm,:])] for elm in range(low.shape[0])]
+mid0nan = [mid[elm,~np.isnan(mid[elm,:])] for elm in range(mid.shape[0])]
+high0nan = [high[elm,~np.isnan(high[elm,:])] for elm in range(high.shape[0])]
+pvals_low = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
+pvals_mid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
+pvals_high = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+# get mean values for barplots
+avg_low = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
+sem_low = np.array([np.std(low0nan[elm])/np.sqrt(ntrials) for elm in range(len(low0nan))])
+avg_mid = np.array([np.mean(mid0nan[elm]) for elm in range(len(mid0nan))])
+sem_mid = np.array([np.std(mid0nan[elm])/np.sqrt(ntrials) for elm in range(len(mid0nan))])
+avg_high = np.array([np.mean(high0nan[elm]) for elm in range(len(high0nan))])
+sem_high = np.array([np.std(high0nan[elm])/np.sqrt(ntrials) for elm in range(len(high0nan))])
+print("pvalues_low:\n",pvals_low)
+print(avg_low)
+print(sem_low)
+print("pvalues_mid:\n",pvals_mid)
+print(avg_mid)
+print(sem_mid)
+print("pvalues_high:\n",pvals_high)
+print(avg_high)
+print(sem_high)
+input()
+# ======================================================
 # set width of bar
 barwidth = 0.21
 # Set position of bar on X axis
@@ -109,10 +149,10 @@ r3 = [x + barwidth for x in r2]
 avgbars = np.concatenate((avgsynl[:,np.newaxis],avgsynm[:,np.newaxis],avgsynh[:,np.newaxis]),axis=1)
 sembars = np.concatenate((semsynl[:,np.newaxis],semsynm[:,np.newaxis],semsynh[:,np.newaxis]),axis=1)
 print(avgbars)
-ah12.bar(r0,avgbars[0,:],width=barwidth,label=grouplabels[0],color=plotcolors[0,:])
-ah12.bar(r1,avgbars[1,:],width=barwidth,label=grouplabels[1],color=plotcolors[1,:])
-ah12.bar(r2,avgbars[2,:],width=barwidth,label=grouplabels[2],color=plotcolors[2,:])
-ah12.bar(r3,avgbars[3,:],width=barwidth,label=grouplabels[3],color=plotcolors[3,:])
+ah12.bar(r0,avgbars[0,:],width=barwidth,label=grouplabels[0],color=plotcolors[0])
+ah12.bar(r1,avgbars[1,:],width=barwidth,label=grouplabels[1],color=plotcolors[1])
+ah12.bar(r2,avgbars[2,:],width=barwidth,label=grouplabels[2],color=plotcolors[2])
+ah12.bar(r3,avgbars[3,:],width=barwidth,label=grouplabels[3],color=plotcolors[3])
 # ------
 ah12.plot([r0,r0],[avgbars[0,:]-sembars[0,:],avgbars[0,:]+sembars[0,:]],color="grey",linewidth=1)
 ah12.plot([r1,r1],[avgbars[1,:]-sembars[1,:],avgbars[1,:]+sembars[1,:]],color="grey",linewidth=1)
@@ -127,27 +167,31 @@ xticks = [1,10,100]
 # ah11.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 [ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop) for ah in [ah11]]
 # -------------
-yticks = [0,0.25,0.5]            # adjust here for y ticks
-[ah.set_ylim([-0.1,0.5]) for ah in [ah11]]
-[ah.set_yticks(yticks) for ah in [ah11]]
+yticks = [0,0.3,0.6]            # adjust here for y ticks
+[ah.set_ylim([-0.03,0.6]) for ah in [ah11,ah12]]
+[ah.set_yticks(yticks) for ah in [ah11,ah12]]
 [ah.spines["right"].set_visible(False) for ah in [ah11]]
 [ah.spines["top"].set_visible(False) for ah in [ah11]]
-[ah.set_yticklabels(yticks,fontsize=8,font=fontprop) for ah in [ah11]] 
-[ah.set_ylabel("Synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
-# ----------------
-ah12.set_xticks([0,1.3,2.3])
+[ah.set_yticklabels(yticks,fontsize=8,font=fontprop) for ah in [ah11,ah12]] 
+[ah.set_ylabel("Ca$^{2+}$ event synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
+# -----------------------
+fontprop1 = font_manager.FontProperties(family='Arial',weight='normal',style='normal',size=9)
+lh = ah11.legend(frameon=False,loc="center",bbox_to_anchor=(0.75,0.9,0.1,0.5),prop=fontprop1,labelspacing=0.1,markerscale=0.01,mode=None,handlelength=0.5,ncol=4,columnspacing=1)
+# -----------------------
+xticks = [0.3,1.3,2.3]
+xticklabels = ["".join((str(min(elm)),"-",str(max(elm)))) for elm in [[0.4,1],[2,10],[20,100]]]
+ah12.set_xticks(xticks)
 ah12.tick_params(right=False,bottom=False,top=False)
-ah12.set_xticklabels(["Low","Mid","High"],va="bottom",fontsize=8,font=fontprop,rotation=45)
+ah12.set_xticklabels(xticklabels,va="center",ha="center",fontsize=8,font=fontprop,rotation=0)
+[ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop) for ah in [ah12]]
+ah12.xaxis.set_label_coords(0.45, -0.2)
 [ah.spines["right"].set_visible(False) for ah in [ah12]]
 [ah.spines["top"].set_visible(False) for ah in [ah12]]
 [ah.spines["bottom"].set_visible(False) for ah in [ah12]]
-# [ah.set_ylim([-0.01,0.5]) for ah in [ah12]]
-# [ah.set_yticks([0,0.25,0.5]) for ah in [ah12]]
-# [ah.set_yticklabels([0,0.25,0.5],fontsize=8,font=fontprop) for ah in [ah12]]
-# ------------------
+# -----------------------
 # Synchrony colormaps
-fh3,(ah31,ah32,ah33,ah34,ah35) = plt.subplots(figsize=(4,12),dpi=600,frameon=False,ncols=5,gridspec_kw={"width_ratios":[1,1,1,1,0.3]})
-fh3.subplots_adjust(hspace=0,wspace=0.5)
+fh3,(ah31,ah32,ah33,ah34,ah35) = plt.subplots(figsize=(4,2),dpi=600,frameon=False,ncols=5,gridspec_kw={"width_ratios":[1,1,1,1,0.3]})
+fh3.subplots_adjust(left=0.11, bottom=0, right=0.9, top=1, wspace=0.6, hspace=0)
 # ah35 = fh3.add_subplot(155,position=Bbox([[0.8,0.2],[0.83,0.7]]),frameon=False) # [[xmin,ymin],[xmax,ymax]]
 # print(ah35.get_position())
 # create an axes on the right side of ax. The width of cax will be 5%
@@ -163,17 +207,17 @@ ip = InsetPosition(ah34, [1.4,0,0.3,1])
 ah35.set_axes_locator(ip)
 cb = fh3.colorbar(ph,cax=ah35,ax=[ah31,ah32,ah33,ah34],orientation="vertical",ticks=[0,0.5,1])
 cb.ax.set_ylim([0,1])
-cb.ax.set_yticklabels((0.0,0.5,1),fontsize=8,font=fontprop)
-cb.set_label("Synchrony index",font=fontprop,fontsize=10)
+cb.ax.set_yticklabels((0.0,0.5,1.0),fontsize=8,font=fontprop)
+cb.set_label("Ca$^{2+}$ event synchrony index",font=fontprop,fontsize=8)
 
 # --------- formating ---------
 # fh3.subplots_adjust(bottom=0.1,left=0.0,right=0.75,top=0.9,hspace=0.2,wspace=-0.6)
 xticks = [np.where(freqs>item)[0][0] for item in np.array([4,69,999]) if len(np.where(freqs>item)[0]) > 0]
 [ah.set_xlim([0,24]) for ah in [ah31,ah32,ah33,ah34]]
 [ah.set_xticks(xticks) for ah in [ah31,ah32,ah33,ah34]]
-[ah.set_xticklabels([0.5,7,100],fontsize=8,font=fontprop) for ah in [ah31]]
-[ah.set_title(title,fontsize=8,font=fontprop,y=1.1) for ah,title in zip([ah31,ah32,ah33,ah34],["Control",r"$A\beta$-mGluR",r"$A\beta$-PMCA",r"           $A\beta$-mGluR-PMCA"])]
-[ah.set_xticklabels([],fontsize=8,font=fontprop) for ah in [ah32,ah33,ah34]]
+[ah.set_xticklabels([0,10,100],fontsize=8,font=fontprop) for ah in [ah31,ah32,ah33,ah34]]
+[ah.set_title(title,fontsize=9,font=fontprop,y=1.1) for ah,title in zip([ah31,ah32,ah33,ah34],["Control",r"$A\beta$-mGluR",r"$A\beta$-PMCA",r"           $A\beta$-mGluR & PMCA"])]
+# [ah.set_xticklabels([],fontsize=8,font=fontprop) for ah in [ah32,ah33,ah34]]
 # [ah.xaxis.set_visible(False) for ah in [ah32,ah33,ah34]]
 [ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop,loc="left") for ah in [ah31]]
 
@@ -181,21 +225,53 @@ xticks = [np.where(freqs>item)[0][0] for item in np.array([4,69,999]) if len(np.
 yticks = [np.where(tbins>item)[0][0] for item in np.array([0,2.4,4.9]) if len(np.where(tbins>item)[0]) > 0] # don't adjust here
 [ah.set_ylim([0,48]) for ah in [ah31,ah32,ah33,ah34]] # 
 [ah.set_yticks(yticks) for ah in [ah31,ah32,ah33,ah34]]
-[ah.set_yticklabels([0,2.5,5],fontsize=8,font=fontprop) for ah in [ah31]]
-[ah.set_yticklabels([],fontsize=8,font=fontprop) for ah in [ah32,ah33,ah34]]
+[ah.set_yticklabels([0.0,2.5,5.0],fontsize=8,font=fontprop) for ah in [ah31,ah32,ah33,ah34]]
+# [ah.set_yticklabels([],fontsize=8,font=fontprop) for ah in [ah32,ah33,ah34]]
 # [ah.yaxis.set_visible(False) for ah in [ah32,ah33,ah34]]
 [ah.set_ylabel("Interevent interval (s)",fontsize=8,font=fontprop) for ah in [ah31]]
+# ---------------------------------------------------
+# -----------------------
+# draw bars for p-values
+# coords = {"low":{"hlines":[(0.1,0,0.2),(0.18,0,0.4),(0.25,0,0.6)],"text":[(-0.1,0.1),(0.06,0.18),(0.13,0.25)],"pval":["***","***","***"]},
+#           "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.3,1,1.6)],"text":[(0.9,0.18),(1.1,0.25),(1.15,0.3)],"pval":["***","***","***"]},
+#           "high":{"hlines":[(0.22,2,2.2),(0.27,2,2.4),(0.33,2,2.6)],"text":[(1.9,0.22),(2.0,0.27),(2.1,0.33)],"pval":["***","***","***"]}} # release syn
+# ------------
+coords = {"low":{"hlines":[(0.1,0,0.2),(0.25,0,0.4),(0.4,0,0.6)],"text":[(-0.1,0.1),(0.06,0.25),(0.13,0.4)],"pval":["***","***","***"]},
+          "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.35,1,1.6)],"text":[(0.9,0.18),(1.0,0.25),(1.15,0.35)],"pval":["***","***","***"]},
+          "high":{"hlines":[(0.22,2,2.2),(0.3,2,2.4),(0.37,2,2.6)],"text":[(1.9,0.22),(2.0,0.3),(2.1,0.37)],"pval":["***","***","***"]}} # calcium syn
+# --------------------------------------------
+# draw lines for significances for low frequency
+ah12.hlines(coords["low"]["hlines"][0][0],coords["low"]["hlines"][0][1],coords["low"]["hlines"][0][2],linewidth=0.5,color="k") # 
+ah12.text(coords["low"]["text"][0][0],coords["low"]["text"][0][1],coords["low"]["pval"][0],fontsize=10,font=fontprop)
+ah12.hlines(coords["low"]["hlines"][1][0],coords["low"]["hlines"][1][1],coords["low"]["hlines"][1][2],linewidth=0.5,color="k") # 
+ah12.text(coords["low"]["text"][1][0],coords["low"]["text"][1][1],coords["low"]["pval"][1],fontsize=10,font=fontprop)
+ah12.hlines(coords["low"]["hlines"][2][0],coords["low"]["hlines"][2][1],coords["low"]["hlines"][2][2],linewidth=0.5,color="k") # 
+ah12.text(coords["low"]["text"][2][0],coords["low"]["text"][2][1],coords["low"]["pval"][2],fontsize=10,font=fontprop)
+# draw lines for significances for mid frequency
+ah12.hlines(coords["mid"]["hlines"][0][0],coords["mid"]["hlines"][0][1],coords["mid"]["hlines"][0][2],linewidth=0.5,color="k") # 
+ah12.text(coords["mid"]["text"][0][0],coords["mid"]["text"][0][1],coords["mid"]["pval"][0],fontsize=10,font=fontprop)
+ah12.hlines(coords["mid"]["hlines"][1][0],coords["mid"]["hlines"][1][1],coords["mid"]["hlines"][1][2],linewidth=0.5,color="k") # 
+ah12.text(coords["mid"]["text"][1][0],coords["mid"]["text"][1][1],coords["mid"]["pval"][1],fontsize=10,font=fontprop)
+ah12.hlines(coords["mid"]["hlines"][2][0],coords["mid"]["hlines"][2][1],coords["mid"]["hlines"][2][2],linewidth=0.5,color="k") # 
+ah12.text(coords["mid"]["text"][2][0],coords["mid"]["text"][2][1],coords["mid"]["pval"][2],fontsize=10,font=fontprop)
+# draw lines for significances for high frequency
+ah12.hlines(coords["high"]["hlines"][0][0],coords["high"]["hlines"][0][1],coords["high"]["hlines"][0][2],linewidth=0.5,color="k") # 
+ah12.text(coords["high"]["text"][0][0],coords["high"]["text"][0][1],coords["high"]["pval"][0],fontsize=10,font=fontprop)
+ah12.hlines(coords["high"]["hlines"][1][0],coords["high"]["hlines"][1][1],coords["high"]["hlines"][1][2],linewidth=0.5,color="k") # 
+ah12.text(coords["high"]["text"][1][0],coords["high"]["text"][1][1],coords["high"]["pval"][1],fontsize=10,font=fontprop)
+ah12.hlines(coords["high"]["hlines"][2][0],coords["high"]["hlines"][2][1],coords["high"]["hlines"][2][2],linewidth=0.5,color="k") # 
+ah12.text(coords["high"]["text"][2][0],coords["high"]["text"][2][1],coords["high"]["pval"][2],fontsize=10,font=fontprop)
+# ---------------------------------------------
 # fh3.tight_layout(pad=0)
 # ---------------------------------------------------
 # saving figures
-figsavepath = "/home/anup/goofy/data/suhitalab/astron/figures/new_2020_python/ap1to1000dhz30s0noise"
-fh1_name = "ap1to1000dhz30s0noise_synchrony_rel_line_bar.svg"
-fh1.savefig(os.path.join(figsavepath,fh1_name))
-
-# fh2_name = "ap1to1000dhz30s_synchrony_cacyt_bars.svg"
-# fh2.savefig(os.path.join(figsavepath,fh2_name))
-
-fh3_name = "ap1to1000dhz30s0noise_synchrony_rel_cmap.svg" 
-fh3.savefig(os.path.join(figsavepath,fh3_name))
+fh1_name = "ap1to1000dhz30s0noise_synchrony_cacyt_linebar.svg"
+fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
+fh1_name = "ap1to1000dhz30s0noise_synchrony_cacyt_linebar.png"
+fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
+fh3_name = "ap1to1000dhz30s0noise_synchrony_cacyt_cmap.svg"
+fh3.savefig(os.path.join(figsavepath,fh3_name),transparent=True,dpi=300)
+fh3_name = "ap1to1000dhz30s0noise_synchrony_cacyt_cmap.png"
+fh3.savefig(os.path.join(figsavepath,fh3_name),transparent=True,dpi=300)
+# plt.show()
 # ---------------------------------------------------
-plt.show()

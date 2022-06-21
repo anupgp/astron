@@ -39,7 +39,7 @@ print(varnames)
 fpath = os.path.join(diskname,dir1,dir2)
 ntrial = 400                    # 400
 trial0 = 1                      # 1
-nbatch = 1                      # 6
+nbatch = 6                      # 6
 ngroup = len(groups)
 t0 = 190                        # analyze start time
 t1 = 205                        # analyze stop time
@@ -55,7 +55,7 @@ ts1 = 202                       # stim stop
 
 # histogram of calcium event features: peak and risetimes, taus, fwhm
 binscacytpk = np.arange(0,15e-6,0.5e-6)
-binscacytrt = np.arange(0,500e-3,30e-3)
+binscacytrt = np.arange(0,500e-3,10e-3)
 binscacytdk = np.arange(0,500e-3,30e-3)
 binscacytfw = np.arange(0,500e-3,30e-3)
 hcacytpk = np.zeros((ngroup,nbatch,len(binscacytpk)-1),dtype=np.float16) # per batch, per freqs, per group
