@@ -16,7 +16,7 @@ fontprop = font_manager.FontProperties(family='Arial',weight='normal',style='nor
 # ---------------------------------
 
 dir1 = "/home/anup/goofy/astron/cooked/new_2020_python/ap1to1000dhz30s"
-figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.3/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
+figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.5/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
 
 # load previously analyzed cacyt event properties data:  oldset(matlab)
 # fnamemat_dmaxtrel = "frap30scarel_dmaxtrel.mat"
@@ -61,6 +61,8 @@ for igroup in range(0,ngroups):
 # ----------------------------------------------------------------------------
 # plotting
 dataset = krrelrate
+# dataset = ffrelrate
+# dataset[np.where(dataset<=0)] = np.nan
 # -------------
 lineavg = dataset.mean(axis=-1)
 linesem = dataset.std(axis=-1)/np.sqrt(ntrials)
@@ -79,25 +81,28 @@ high = np.nanmean(dataset[:,ihfreqs,:],axis=-2)
 low0nan = [low[elm,~np.isnan(low[elm,:])] for elm in range(low.shape[0])]
 mid0nan = [mid[elm,~np.isnan(mid[elm,:])] for elm in range(mid.shape[0])]
 high0nan = [high[elm,~np.isnan(high[elm,:])] for elm in range(high.shape[0])]
-pvals_low = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
-pvals_mid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
-pvals_high = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+pvalslow = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
+pvalsmid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
+pvalshigh = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+lowtrials = np.array([len(low0nan[elm1]) for elm1 in range(len(low0nan))])
+midtrials = np.array([len(mid0nan[elm1]) for elm1 in range(len(mid0nan))])
+hightrials = np.array([len(high0nan[elm1]) for elm1 in range(len(high0nan))])
+print(lowtrials,midtrials,hightrials)
 # get mean values for barplots
-avg_low = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
-sem_low = np.array([np.std(low0nan[elm])/np.sqrt(ntrials) for elm in range(len(low0nan))])
-avg_mid = np.array([np.mean(mid0nan[elm]) for elm in range(len(mid0nan))])
-sem_mid = np.array([np.std(mid0nan[elm])/np.sqrt(ntrials) for elm in range(len(mid0nan))])
-avg_high = np.array([np.mean(high0nan[elm]) for elm in range(len(high0nan))])
-sem_high = np.array([np.std(high0nan[elm])/np.sqrt(ntrials) for elm in range(len(high0nan))])
-print("pvalues_low:\n",pvals_low)
-print(avg_low)
-print(sem_low)
-print("pvalues_mid:\n",pvals_mid)
-print(avg_mid)
-print(sem_mid)
-print("pvalues_high:\n",pvals_high)
-print(avg_high)
-print(sem_high)
+avglow = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
+semlow = np.array([np.std(low0nan[elm])/np.sqrt(lowtrials[elm]) for elm in range(len(low0nan))])
+avgmid = np.array([np.mean(mid0nan[elm]) for elm in range(len(mid0nan))])
+semmid = np.array([np.std(mid0nan[elm])/np.sqrt(midtrials[elm]) for elm in range(len(mid0nan))])
+avghigh = np.array([np.mean(high0nan[elm]) for elm in range(len(high0nan))])
+semhigh = np.array([np.std(high0nan[elm])/np.sqrt(hightrials[elm]) for elm in range(len(high0nan))])
+avgbars = np.concatenate((avglow[:,np.newaxis],avgmid[:,np.newaxis],avghigh[:,np.newaxis]),axis=1)
+sembars = np.concatenate((semlow[:,np.newaxis],semmid[:,np.newaxis],semhigh[:,np.newaxis]),axis=1)
+print(avglow,semlow,pvalslow)
+print(avglow,semlow,pvalsmid)
+print(avgmid,semmid,pvalshigh)
+print(avgbars)
+print(sembars)
+
 input()
 # ======================================================
 fh1,(ah11,ah12) = plt.subplots(figsize=(4,2),dpi=600,frameon=False,ncols=2,gridspec_kw={"width_ratios":[0.6,0.4]})
@@ -154,9 +159,9 @@ r0 = np.arange(3)
 r1 = [x + barwidth for x in r0]
 r2 = [x + barwidth for x in r1]
 r3 = [x + barwidth for x in r2]
-avgbars = np.concatenate((avgsynl[:,np.newaxis],avgsynm[:,np.newaxis],avgsynh[:,np.newaxis]),axis=1)
-sembars = np.concatenate((semsynl[:,np.newaxis],semsynm[:,np.newaxis],semsynh[:,np.newaxis]),axis=1)
-print(avgbars)
+# avgbars = np.concatenate((avgsynl[:,np.newaxis],avgsynm[:,np.newaxis],avgsynh[:,np.newaxis]),axis=1)
+# sembars = np.concatenate((semsynl[:,np.newaxis],semsynm[:,np.newaxis],semsynh[:,np.newaxis]),axis=1)
+# print(avgbars)
 ah12.bar(r0,avgbars[0,:],width=barwidth,label=grouplabels[0],color=plotcolors[0])
 ah12.bar(r1,avgbars[1,:],width=barwidth,label=grouplabels[1],color=plotcolors[1])
 ah12.bar(r2,avgbars[2,:],width=barwidth,label=grouplabels[2],color=plotcolors[2])

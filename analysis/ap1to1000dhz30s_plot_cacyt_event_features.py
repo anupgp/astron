@@ -20,7 +20,7 @@ import h5py
 # load previously analyzed cacyt event properties data:  oldset(matlab)
 dir1 = "/home/anup/goofy/astron/cooked/new_2020_python/ap1to1000dhz30s"
 fnameh5py = "ap1to1000dhz30s_cacyt_event_features.hdf5"
-figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.3/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
+figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.5/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
 # ----------------------------
 freqsall = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"freqs")
 cacytrate = astronfuns.loadh5pydata(os.path.join(dir1,fnameh5py),"cacytrate")
@@ -41,12 +41,13 @@ ngroups = len(groups)
 ntrials = 1000
 # ------------------------------------------------------------------------------
 # select parameter for plotting and satistics
-# dataset = cacytpeak*1e6         # calcium peak
+dataset = cacytpeak*1e6         # calcium peak
 # dataset = cacytrate          # calcium event rate
 # dataset = cacytrt*1000          # calcium event risetime
 # dataset = cacyttau*1000          # calcium event decaytime
-dataset = cacytfwhm*1000          # calcium event decaytime
+# dataset = cacytfwhm*1000          # calcium event decaytime
 print(dataset)
+dataset[np.where(dataset<=0)] = np.nan
 # ------------------
 lfreqs = [4,5,6,7,8,9,10]
 mfreqs = [20,30,40,50,60,70,80,90,100]
@@ -63,26 +64,25 @@ high = np.nanmean(dataset[:,ihfreqs,:],axis=-2)
 low0nan = [low[elm,~np.isnan(low[elm,:])] for elm in range(low.shape[0])]
 mid0nan = [mid[elm,~np.isnan(mid[elm,:])] for elm in range(mid.shape[0])]
 high0nan = [high[elm,~np.isnan(high[elm,:])] for elm in range(high.shape[0])]
-pvals_low = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
-pvals_mid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
-pvals_high = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+pvalslow = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
+pvalsmid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
+pvalshigh = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+lowtrials = np.array([len(low0nan[elm1]) for elm1 in range(len(low0nan))])
+midtrials = np.array([len(mid0nan[elm1]) for elm1 in range(len(mid0nan))])
+hightrials = np.array([len(high0nan[elm1]) for elm1 in range(len(high0nan))])
+print(lowtrials,midtrials,hightrials)
 # pvals_low = [(elm1,elm2) for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]
 # get mean values for barplots
-avg_low = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
-sem_low = np.array([np.std(low0nan[elm])/np.sqrt(ntrials) for elm in range(len(low0nan))])
-avg_mid = np.array([np.mean(mid0nan[elm]) for elm in range(len(mid0nan))])
-sem_mid = np.array([np.std(mid0nan[elm])/np.sqrt(ntrials) for elm in range(len(mid0nan))])
-avg_high = np.array([np.mean(high0nan[elm]) for elm in range(len(high0nan))])
-sem_high = np.array([np.std(high0nan[elm])/np.sqrt(ntrials) for elm in range(len(high0nan))])
-print("pvalues_low:\n",pvals_low)
-print(avg_low)
-print(sem_low)
-print("pvalues_mid:\n",pvals_mid)
-print(avg_mid)
-print(sem_mid)
-print("pvalues_high:\n",pvals_high)
-print(avg_high)
-print(sem_high)
+avglow = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
+semlow = np.array([np.std(low0nan[elm])/np.sqrt(lowtrials[elm]) for elm in range(len(low0nan))])
+avgmid = np.array([np.mean(mid0nan[elm]) for elm in range(len(mid0nan))])
+semmid = np.array([np.std(mid0nan[elm])/np.sqrt(midtrials[elm]) for elm in range(len(mid0nan))])
+avghigh = np.array([np.mean(high0nan[elm]) for elm in range(len(high0nan))])
+semhigh = np.array([np.std(high0nan[elm])/np.sqrt(hightrials[elm]) for elm in range(len(high0nan))])
+print(avglow,semlow,pvalslow)
+print(avglow,semlow,pvalsmid)
+print(avgmid,semmid,pvalshigh)
+input()
 # ---------------------------------------------------------
 # bar graph
 # fh1 = plt.figure(figsize=(1.5,2.5),dpi=600,frameon=False)
@@ -95,8 +95,8 @@ r0 = np.arange(3)
 r1 = [x + barwidth for x in r0]
 r2 = [x + barwidth for x in r1]
 r3 = [x + barwidth for x in r2]
-avgbars = np.concatenate((avg_low[:,np.newaxis],avg_mid[:,np.newaxis],avg_high[:,np.newaxis]),axis=1)
-sembars = np.concatenate((sem_low[:,np.newaxis],sem_mid[:,np.newaxis],sem_high[:,np.newaxis]),axis=1)
+avgbars = np.concatenate((avglow[:,np.newaxis],avgmid[:,np.newaxis],avghigh[:,np.newaxis]),axis=1)
+sembars = np.concatenate((semlow[:,np.newaxis],semmid[:,np.newaxis],semhigh[:,np.newaxis]),axis=1)
 print(avgbars)
 ah1.bar(r0,avgbars[0,:],width=barwidth,label=grouplabels[0],color=plotcolors[0])
 ah1.bar(r1,avgbars[1,:],width=barwidth,label=grouplabels[1],color=plotcolors[1])
@@ -108,10 +108,10 @@ ah1.plot([r1,r1],[avgbars[1,:]-sembars[1,:],avgbars[1,:]+sembars[1,:]],color="gr
 ah1.plot([r2,r2],[avgbars[2,:]-sembars[2,:],avgbars[2,:]+sembars[2,:]],color="grey",linewidth=1)
 ah1.plot([r3,r3],[avgbars[3,:]-sembars[3,:],avgbars[3,:]+sembars[3,:]],color="grey",linewidth=1)
 # -------------
-# ylabel = "Calcium Peak ($\mu$M)" # calcium peak
-# ylim = [1,6]                     # calcium peak
-# yticks = [1,3,5]                 # calcium peak
-# ah1.text(-0.03,-0.2,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0)
+ylabel = "Calcium Peak ($\mu$M)" # calcium peak
+ylim = [1,6]                     # calcium peak
+yticks = [1,3,5]                 # calcium peak
+ah1.text(-0.03,-0.2,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0)
 # -------------
 # ylabel = "Calcium event rate (Hz)" # calcium rate
 # ylim = [0,0.4]                     # calcium rate
@@ -131,10 +131,10 @@ ah1.plot([r3,r3],[avgbars[3,:]-sembars[3,:],avgbars[3,:]+sembars[3,:]],color="gr
 # ah1.text(-0.2,-60,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0) # calcium decaytime
 # -----------------
 # ylabel = "Ca$^{2+}$ event rise time (ms)" # calcium fwhm
-ylabel = "FWHM (ms)" # calcium fwhm
-ylim = [0,400]                     # calcium fwhm
-yticks = [0,200,400]                 # calcium fwhm
-ah1.text(-0.2,-90,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0) # calcium fwhm
+# ylabel = "FWHM (ms)" # calcium fwhm
+# ylim = [0,400]                     # calcium fwhm
+# yticks = [0,200,400]                 # calcium fwhm
+# ah1.text(-0.2,-90,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0) # calcium fwhm
 # -----------------
 # labelfontprop = font_manager.FontProperties(family='Arial',weight='normal',style='normal',size=12)
 # tickfontprop = font_manager.FontProperties(family='Arial',weight='normal',style='normal',size=10)
@@ -155,33 +155,33 @@ ah1.set_yticklabels(yticklabels,fontsize=10,font=fontprop)
 ah1.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ah1.set_ylabel(ylabel,fontsize=12,font=fontprop)
 # --------------------------------------------
-# coords = {"low":{"hlines":[(2.8,0,0.2),(3.2,0,0.4),(3.6,0,0.6)],"text":[(0.016,2.77),(0.14,3.17),(0.22,3.7)]},
-#           "mid":{"hlines":[(3.2,1,1.2),(3.7,1,1.4),(4.2,1,1.6)],"text":[(1,3.2),(1.1,3.7),(1.25,4.2)]},
-#           "high":{"hlines":[(4.5,2,2.2),(4.95,2,2.4),(5.4,2,2.6)],"text":[(2,4.5),(2.15,4.95),(2.22,5.4)]}} # peak
+coords = {"low":{"hlines":[(2.8,0,0.2),(3.2,0,0.4),(3.6,0,0.6)],"text":[(0.015,2.77),(0.10,3.17),(0.2,3.7)],"pval":["***","***",""]},
+          "mid":{"hlines":[(3.2,1,1.2),(3.7,1,1.4),(4.2,1,1.6)],"text":[(1,3.2),(1.1,3.7),(1.12,4.2)],"pval":["***","***","***"]},
+          "high":{"hlines":[(4.5,2,2.2),(4.95,2,2.4),(5.4,2,2.6)],"text":[(2,4.5),(2.11,4.95),(2.2,5.4)],"pval":["***","***","***"]}} # peak
 
-# coords = {"low":{"hlines":[(0.02,0,0.2),(0.1,0,0.4),(0.15,0,0.6)],"text":[(0.016,0.02),(0.11,0.1),(0.22,0.15)],"pval":["***","***","***"]},
-#           "mid":{"hlines":[(0.06,1,1.2),(0.15,1,1.4),(0.21,1,1.6)],"text":[(1,0.05),(1.1,0.15),(1.2,0.21)],"pval":["***","***","***"]},
+# coords = {"low":{"hlines":[(0.02,0,0.2),(0.1,0,0.4),(0.15,0,0.6)],"text":[(0.016,0.02),(0.11,0.1),(0.22,0.15)],"pval":["","***","***"]},
+#           "mid":{"hlines":[(0.08,1,1.2),(0.15,1,1.4),(0.21,1,1.6)],"text":[(1,0.08),(1.1,0.15),(1.2,0.21)],"pval":["***","***","***"]},
 #           "high":{"hlines":[(0.15,2,2.2),(0.27,2,2.4),(0.33,2,2.6)],"text":[(2,0.15),(2.12,0.27),(2.18,0.33)],"pval":["***","***","***"]}} # rate
 
-# coords = {"low":{"hlines":[(100,0,0.2),(160,0,0.4),(180,0,0.6)],"text":[(0.016,100),(0.11,160),(0.22,180)],"pval":["***","***","***"]},
-#           "mid":{"hlines":[(110,1,1.2),(160,1,1.4),(180,1,1.6)],"text":[(1,110),(1.1,160),(1.2,180)],"pval":["**","***","***"]},
-#           "high":{"hlines":[(110,2,2.2),(160,2,2.4),(180,2,2.6)],"text":[(2,110),(2.12,160),(2.18,180)],"pval":["***","***","***"]}} # risetime
+# coords = {"low":{"hlines":[(100,0,0.2),(160,0,0.4),(180,0,0.6)],"text":[(0.016,100),(0.11,160),(0.22,180)],"pval":["","***","***"]},
+#           "mid":{"hlines":[(110,1,1.2),(160,1,1.4),(180,1,1.6)],"text":[(1,110),(1.1,160),(1.2,180)],"pval":["","***","***"]},
+#           "high":{"hlines":[(110,2,2.2),(160,2,2.4),(180,2,2.6)],"text":[(2,110),(2.12,160),(2.18,180)],"pval":["","***","***"]}} # risetime
 
-# coords = {"low":{"hlines":[(160,0,0.2),(190,0,0.4),(220,0,0.6)],"text":[(0.016,165),(0.10,190),(0.20,220)],"pval":["ns","***","***"]},
-#           "mid":{"hlines":[(160,1,1.2),(190,1,1.4),(220,1,1.6)],"text":[(1,165),(1.1,190),(1.15,220)],"pval":["ns","***","***"]},
-#           "high":{"hlines":[(165,2,2.2),(190,2,2.4),(220,2,2.6)],"text":[(2,170),(2.11,190),(2.17,220)],"pval":["ns","***","***"]}} # decaytime
+# coords = {"low":{"hlines":[(160,0,0.2),(190,0,0.4),(220,0,0.6)],"text":[(0.016,165),(0.10,190),(0.20,220)],"pval":["","***","***"]},
+#           "mid":{"hlines":[(160,1,1.2),(190,1,1.4),(220,1,1.6)],"text":[(1,165),(1.1,190),(1.15,220)],"pval":["","***","***"]},
+#           "high":{"hlines":[(165,2,2.2),(190,2,2.4),(220,2,2.6)],"text":[(2,170),(2.11,190),(2.17,220)],"pval":["","***","***"]}} # decaytime
 
-coords = {"low":{"hlines":[(250,0,0.2),(310,0,0.4),(350,0,0.6)],"text":[(0.016,255),(0.10,310),(0.20,350)],"pval":["ns","***","***"]},
-          "mid":{"hlines":[(260,1,1.2),(310,1,1.4),(350,1,1.6)],"text":[(1,260),(1.1,310),(1.15,350)],"pval":["***","***","***"]},
-          "high":{"hlines":[(260,2,2.2),(310,2,2.4),(350,2,2.6)],"text":[(2,260),(2.11,310),(2.17,350)],"pval":["***","***","***"]}} # fwhm
+# coords = {"low":{"hlines":[(250,0,0.2),(310,0,0.4),(350,0,0.6)],"text":[(0.016,255),(0.10,310),(0.20,350)],"pval":["","***","***"]},
+#           "mid":{"hlines":[(260,1,1.2),(310,1,1.4),(350,1,1.6)],"text":[(1,260),(1.1,310),(1.15,350)],"pval":["","***","***"]},
+#           "high":{"hlines":[(260,2,2.2),(310,2,2.4),(350,2,2.6)],"text":[(2,260),(2.11,310),(2.17,350)],"pval":["","***","***"]}} # fwhm
 # --------------------------------------------
 # draw lines for significances for low frequency
 ah1.hlines(coords["low"]["hlines"][0][0],coords["low"]["hlines"][0][1],coords["low"]["hlines"][0][2],linewidth=0.5,color="k") # 
 ah1.text(coords["low"]["text"][0][0],coords["low"]["text"][0][1],coords["low"]["pval"][0],fontsize=10,font=fontprop)
 ah1.hlines(coords["low"]["hlines"][1][0],coords["low"]["hlines"][1][1],coords["low"]["hlines"][1][2],linewidth=0.5,color="k") # 
 ah1.text(coords["low"]["text"][1][0],coords["low"]["text"][1][1],coords["low"]["pval"][1],fontsize=10,font=fontprop)
-ah1.hlines(coords["low"]["hlines"][2][0],coords["low"]["hlines"][2][1],coords["low"]["hlines"][2][2],linewidth=0.5,color="k") # 
-ah1.text(coords["low"]["text"][2][0],coords["low"]["text"][2][1],coords["low"]["pval"][2],fontsize=10,font=fontprop)
+# ah1.hlines(coords["low"]["hlines"][2][0],coords["low"]["hlines"][2][1],coords["low"]["hlines"][2][2],linewidth=0.5,color="k") # 
+# ah1.text(coords["low"]["text"][2][0],coords["low"]["text"][2][1],coords["low"]["pval"][2],fontsize=10,font=fontprop)
 # draw lines for significances for mid frequency
 ah1.hlines(coords["mid"]["hlines"][0][0],coords["mid"]["hlines"][0][1],coords["mid"]["hlines"][0][2],linewidth=0.5,color="k") # 
 ah1.text(coords["mid"]["text"][0][0],coords["mid"]["text"][0][1],coords["mid"]["pval"][0],fontsize=10,font=fontprop)
@@ -204,17 +204,17 @@ fontprop_legend = font_manager.FontProperties(family='Arial',weight='normal',sty
 # ---------------------------------------------
 # saving figures
 fh1.tight_layout()
-# fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.svg" # calcium peak
+fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.svg" # calcium peak
 # fh1_name = "ap1to1000dhz30s_cacyt_rate_bar.svg" # calcium rate
 # fh1_name = "ap1to1000dhz30s_cacyt_risetime_bar.svg" # calcium risetime
 # fh1_name = "ap1to1000dhz30s_cacyt_decaytime_bar.svg" # calcium decaytime
-fh1_name = "ap1to1000dhz30s_cacyt_fwhm_bar.svg" # calcium fwhm
+# fh1_name = "ap1to1000dhz30s_cacyt_fwhm_bar.svg" # calcium fwhm
 fh1.savefig(os.path.join(figsavepath,fh1_name))
-# fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.png" # calcium peak
+fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.png" # calcium peak
 # fh1_name = "ap1to1000dhz30s_cacyt_rate_bar.png" # calcium rate
 # fh1_name = "ap1to1000dhz30s_cacyt_risetime_bar.png" # calcium risetime
 # fh1_name = "ap1to1000dhz30s_cacyt_decaytime_bar.png" # calcium decaytime
-fh1_name = "ap1to1000dhz30s_cacyt_fwhm_bar.png" # calcium fwhm
+# fh1_name = "ap1to1000dhz30s_cacyt_fwhm_bar.png" # calcium fwhm
 fh1.savefig(os.path.join(figsavepath,fh1_name))
 plt.show()
 # ---------------------------------------------------------

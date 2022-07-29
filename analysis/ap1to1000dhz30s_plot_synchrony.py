@@ -1,5 +1,9 @@
 import numpy as np
 np.random.seed(875431)
+# np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
 import pandas as pd
 import os
 import astron_common_functions as astronfuns
@@ -38,7 +42,7 @@ h5pyfname = "ap1to1000dhz30s_cacyt_rel_synchrony.hdf5" # with noise
 # dir1 = "/home/anup/goofy/data/suhitalab/astron/cooked/new_2020_python/ap1to1000dhz30s0noise" # no noise
 # h5pyfname = "ap1to1000dhz30s0noise_cacyt_rel_synchrony.hdf5" # no noise
 
-figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.3/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
+figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.5/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
 # -----------------------
 ntrials = 1000
 groups = ["ctrl","admglur","adpmca","admglurpmca"]
@@ -56,7 +60,8 @@ print("tbins: ",tbins)
 print("requested plotbin {}, obtained plotbin {}".format(plottbin, tbins[iplottbin]))
 # ----------------------------------------------------------------------------
 # plotting
-syn = syncacyt
+# syn = syncacyt
+syn = synrel[:,:,:,0:ntrials]
 # avgsynindex = syncacyt[:,:,iplottbin,:].mean(-1) # [igroup,ifreq,tbins,iboot]
 # semsynindex = syncacyt[:,:,iplottbin,:].std(-1)
 avgsynindex = syn[:,:,:,:].mean(-2).mean(-1) # [igroup,ifreq,tbins,iboot]
@@ -118,9 +123,83 @@ high = np.nanmean(syn[:,ihfreqs,:],axis=-2).mean(axis=-2)
 low0nan = [low[elm,~np.isnan(low[elm,:])] for elm in range(low.shape[0])]
 mid0nan = [mid[elm,~np.isnan(mid[elm,:])] for elm in range(mid.shape[0])]
 high0nan = [high[elm,~np.isnan(high[elm,:])] for elm in range(high.shape[0])]
+# --------------------------------------------
+# perform two-way anova
+# create dataset for two-way anova
+statdf = pd.DataFrame(
+    {
+        "control_low":syn[0,ilfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur_low":syn[1,ilfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-pmca_low":syn[2,ilfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur-pmca_low":syn[3,ilfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+
+        "control_mid":syn[0,imfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur_mid":syn[1,imfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-pmca_mid":syn[2,imfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur-pmca_mid":syn[3,imfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+
+        "control_high":syn[0,ihfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur_high":syn[1,ihfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-pmca_high":syn[2,ihfreqs,:,:].mean(-3).mean(-2).flatten(order="C"),
+        "ab-mglur-pmca_high":syn[3,ihfreqs,:,:].mean(-3).mean(-2).flatten(order="C")
+        })
+statdf.columns = statdf.columns.str.split("_",expand=True)
+print(statdf.columns)
+statdf = pd.DataFrame({"syn":statdf.stack().stack()})
+statdf.index.set_names(["id","freq","group"],inplace=True)
+statdf = statdf.droplevel("id")
+print(statdf)
+print(statdf.index)
+print(statdf.reset_index())
+# print(pd.wide_to_long(statdf,["control","ab-mglur","ab-pmca","ab-mglur-pmca"],j="group",i=))
+model_aov2w = ols('syn ~ C(group) + C(freq) + C(group):C(freq)',data=statdf.reset_index()).fit()
+model_aov1w_low = ols('syn ~ C(group)',data=statdf[statdf.index.get_level_values("freq") == "low"].reset_index()).fit()
+model_aov1w_mid = ols('syn ~ C(group)',data=statdf[statdf.index.get_level_values("freq") == "mid"].reset_index()).fit()
+model_aov1w_high = ols('syn ~ C(group)',data=statdf[statdf.index.get_level_values("freq") == "high"].reset_index()).fit()
+result_aov2w = sm.stats.anova_lm(model_aov2w,type=2)
+result_aov1w_low = sm.stats.anova_lm(model_aov1w_low,type=2)
+result_aov1w_mid = sm.stats.anova_lm(model_aov1w_mid,type=2)
+result_aov1w_high = sm.stats.anova_lm(model_aov1w_high,type=2)
+print(result_aov2w)
+print(result_aov1w_low)
+print(result_aov1w_mid)
+print(result_aov1w_high)
+print(stats.shapiro(model_aov1w_low.resid))
+print(stats.shapiro(model_aov2w.resid))
+meandf = statdf.groupby(["group","freq"]).apply(np.mean,axis=0)
+print(stats.kruskal(
+    statdf[(statdf.index.get_level_values("group")=="control") & (statdf.index.get_level_values("freq")=="high")]["syn"].values,
+    statdf[(statdf.index.get_level_values("group")=="ab-mglur") & (statdf.index.get_level_values("freq")=="high")]["syn"].values,
+    statdf[(statdf.index.get_level_values("group")=="ab-pmca") & (statdf.index.get_level_values("freq")=="high")]["syn"].values,
+    statdf[(statdf.index.get_level_values("group")=="ab-mglur-pmca") & (statdf.index.get_level_values("freq")=="high")]["syn"].values
+))
+print(stats.kruskal(
+    statdf[(statdf.index.get_level_values("group")=="control") & (statdf.index.get_level_values("freq")=="high")]["syn"].values,
+    statdf[(statdf.index.get_level_values("group")=="ab-mglur-pmca") & (statdf.index.get_level_values("freq")=="high")]["syn"].values
+    ))
+# print(statdf[(statdf.index.get_level_values("group")=="control") & (statdf.index.get_level_values("freq")=="high")]["syn"].values,
+#     statdf[(statdf.index.get_level_values("group")=="ab-mglur-pmca") & (statdf.index.get_level_values("freq")=="high")]["syn"].values)
+# fh = plt.figure()
+# ah = fh.add_subplot(111)
+# ah.hist(statdf[(statdf.index.get_level_values("group")=="control") & (statdf.index.get_level_values("freq")=="mid")]["syn"].values,50)
+# ah.hist(statdf[(statdf.index.get_level_values("group")=="ab-mglur") & (statdf.index.get_level_values("freq")=="mid")]["syn"].values,50)
+# ah.hist(statdf[(statdf.index.get_level_values("group")=="ab-pmca") & (statdf.index.get_level_values("freq")=="mid")]["syn"].values,50)
+# ah.hist(statdf[(statdf.index.get_level_values("group")=="ab-mglur-pmca") & (statdf.index.get_level_values("freq")=="mid")]["syn"].values,50)
+# plt.show()
+# input()
+# fh=plt.figure()
+# ah = fh.add_subplot(111)
+# meandf.unstack().unstack().plot(kind="bar",ax=ah)
+# input()
+# --------------------------------------------
 pvals_low = np.array([stats.ttest_ind(low0nan[elm1],low0nan[elm2])[1] for elm1 in range(len(low0nan)) for elm2 in range(len(low0nan))]).reshape(4,4)
 pvals_mid = np.array([stats.ttest_ind(mid0nan[elm1],mid0nan[elm2])[1] for elm1 in range(len(mid0nan)) for elm2 in range(len(mid0nan))]).reshape(4,4)
 pvals_high = np.array([stats.ttest_ind(high0nan[elm1],high0nan[elm2])[1] for elm1 in range(len(high0nan)) for elm2 in range(len(high0nan))]).reshape(4,4)
+
+# pvals_low = np.array([stats.ttest_ind(low[elm1],low[elm2]) for elm1 in range(len(low)) for elm2 in range(len(low))])
+# pvals_mid = np.array([stats.ttest_ind(mid[elm1],mid[elm2]) for elm1 in range(len(mid)) for elm2 in range(len(mid))])
+# pvals_high = np.array([stats.ttest_ind(high[elm1],high[elm2]) for elm1 in range(len(high)) for elm2 in range(len(high))])
+
 # get mean values for barplots
 avg_low = np.array([np.mean(low0nan[elm]) for elm in range(len(low0nan))])
 sem_low = np.array([np.std(low0nan[elm])/np.sqrt(ntrials) for elm in range(len(low0nan))])
@@ -167,13 +246,16 @@ xticks = [1,10,100]
 # ah11.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 [ah.set_xlabel("Stimulation frequency (Hz)",fontsize=8,font=fontprop) for ah in [ah11]]
 # -------------
-yticks = [0,0.3,0.6]            # adjust here for y ticks
-[ah.set_ylim([-0.03,0.6]) for ah in [ah11,ah12]]
+# yticks = [0,0.3,0.6]            # adjust here for y ticks
+# [ah.set_ylim([-0.03,0.6]) for ah in [ah11,ah12]]
+yticks = [0,0.2,0.4]            # adjust here for y ticks
+[ah.set_ylim([-0.03,0.4]) for ah in [ah11,ah12]]
 [ah.set_yticks(yticks) for ah in [ah11,ah12]]
 [ah.spines["right"].set_visible(False) for ah in [ah11]]
 [ah.spines["top"].set_visible(False) for ah in [ah11]]
 [ah.set_yticklabels(yticks,fontsize=8,font=fontprop) for ah in [ah11,ah12]] 
-[ah.set_ylabel("Ca$^{2+}$ event synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
+# [ah.set_ylabel("Ca$^{2+}$ event synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
+[ah.set_ylabel("Release synchrony index",fontsize=8,font=fontprop) for ah in [ah11]]
 # -----------------------
 fontprop1 = font_manager.FontProperties(family='Arial',weight='normal',style='normal',size=9)
 lh = ah11.legend(frameon=False,loc="center",bbox_to_anchor=(0.75,0.9,0.1,0.5),prop=fontprop1,labelspacing=0.1,markerscale=0.01,mode=None,handlelength=0.5,ncol=4,columnspacing=1)
@@ -208,7 +290,8 @@ ah35.set_axes_locator(ip)
 cb = fh3.colorbar(ph,cax=ah35,ax=[ah31,ah32,ah33,ah34],orientation="vertical",ticks=[0,0.5,1])
 cb.ax.set_ylim([0,1])
 cb.ax.set_yticklabels((0.0,0.5,1.0),fontsize=8,font=fontprop)
-cb.set_label("Ca$^{2+}$ event synchrony index",font=fontprop,fontsize=8)
+# cb.set_label("Ca$^{2+}$ event synchrony index",font=fontprop,fontsize=8)
+cb.set_label("Release synchrony index",font=fontprop,fontsize=8)
 
 # --------- formating ---------
 # fh3.subplots_adjust(bottom=0.1,left=0.0,right=0.75,top=0.9,hspace=0.2,wspace=-0.6)
@@ -232,13 +315,13 @@ yticks = [np.where(tbins>item)[0][0] for item in np.array([0,2.4,4.9]) if len(np
 # ---------------------------------------------------
 # -----------------------
 # draw bars for p-values
-# coords = {"low":{"hlines":[(0.1,0,0.2),(0.18,0,0.4),(0.25,0,0.6)],"text":[(-0.1,0.1),(0.06,0.18),(0.13,0.25)],"pval":["***","***","***"]},
-#           "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.3,1,1.6)],"text":[(0.9,0.18),(1.1,0.25),(1.15,0.3)],"pval":["***","***","***"]},
-#           "high":{"hlines":[(0.22,2,2.2),(0.27,2,2.4),(0.33,2,2.6)],"text":[(1.9,0.22),(2.0,0.27),(2.1,0.33)],"pval":["***","***","***"]}} # release syn
+coords = {"low":{"hlines":[(0.1,0,0.2),(0.18,0,0.4),(0.25,0,0.6)],"text":[(-0.1,0.1),(0.06,0.18),(0.13,0.25)],"pval":["***","***","***"]},
+          "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.3,1,1.6)],"text":[(0.9,0.18),(1.1,0.25),(1.15,0.3)],"pval":["***","***","***"]},
+          "high":{"hlines":[(0.22,2,2.2),(0.27,2,2.4),(0.33,2,2.6)],"text":[(1.9,0.22),(2.0,0.27),(2.1,0.33)],"pval":["***","***","***"]}} # release syn
 # ------------
-coords = {"low":{"hlines":[(0.1,0,0.2),(0.25,0,0.4),(0.4,0,0.6)],"text":[(-0.1,0.1),(0.06,0.25),(0.13,0.4)],"pval":["***","***","***"]},
-          "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.35,1,1.6)],"text":[(0.9,0.18),(1.0,0.25),(1.15,0.35)],"pval":["***","***","***"]},
-          "high":{"hlines":[(0.22,2,2.2),(0.3,2,2.4),(0.37,2,2.6)],"text":[(1.9,0.22),(2.0,0.3),(2.1,0.37)],"pval":["***","***","***"]}} # calcium syn
+# coords = {"low":{"hlines":[(0.1,0,0.2),(0.25,0,0.4),(0.4,0,0.6)],"text":[(-0.1,0.1),(0.06,0.25),(0.13,0.4)],"pval":["***","***","***"]},
+#           "mid":{"hlines":[(0.18,1,1.2),(0.25,1,1.4),(0.35,1,1.6)],"text":[(0.9,0.18),(1.0,0.25),(1.15,0.35)],"pval":["***","***","***"]},
+#           "high":{"hlines":[(0.22,2,2.2),(0.3,2,2.4),(0.37,2,2.6)],"text":[(1.9,0.22),(2.0,0.3),(2.1,0.37)],"pval":["***","***","***"]}} # calcium syn
 # --------------------------------------------
 # draw lines for significances for low frequency
 ah12.hlines(coords["low"]["hlines"][0][0],coords["low"]["hlines"][0][1],coords["low"]["hlines"][0][2],linewidth=0.5,color="k") # 
@@ -262,16 +345,20 @@ ah12.text(coords["high"]["text"][1][0],coords["high"]["text"][1][1],coords["high
 ah12.hlines(coords["high"]["hlines"][2][0],coords["high"]["hlines"][2][1],coords["high"]["hlines"][2][2],linewidth=0.5,color="k") # 
 ah12.text(coords["high"]["text"][2][0],coords["high"]["text"][2][1],coords["high"]["pval"][2],fontsize=10,font=fontprop)
 # ---------------------------------------------
-# fh3.tight_layout(pad=0)
+fh3.tight_layout(pad=0)
 # ---------------------------------------------------
 # saving figures
-fh1_name = "ap1to1000dhz30s0noise_synchrony_cacyt_linebar.svg"
+# fh1_name = "ap1to1000dhz30s_synchrony_cacyt_linebar.svg"
+fh1_name = "ap1to1000dhz30s_synchrony_release_linebar.svg"
 fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
-fh1_name = "ap1to1000dhz30s0noise_synchrony_cacyt_linebar.png"
+# fh1_name = "ap1to1000dhz30s_synchrony_cacyt_linebar.png"
+fh1_name = "ap1to1000dhz30s_synchrony_release_linebar.png"
 fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
-fh3_name = "ap1to1000dhz30s0noise_synchrony_cacyt_cmap.svg"
+# fh3_name = "ap1to1000dhz30s_synchrony_cacyt_cmap.svg"
+fh3_name = "ap1to1000dhz30s_synchrony_release_cmap.svg"
 fh3.savefig(os.path.join(figsavepath,fh3_name),transparent=True,dpi=300)
-fh3_name = "ap1to1000dhz30s0noise_synchrony_cacyt_cmap.png"
+# fh3_name = "ap1to1000dhz30s_synchrony_cacyt_cmap.png"
+fh3_name = "ap1to1000dhz30s_synchrony_release_cmap.png"
 fh3.savefig(os.path.join(figsavepath,fh3_name),transparent=True,dpi=300)
-# plt.show()
+plt.show()
 # ---------------------------------------------------
