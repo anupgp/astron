@@ -17,6 +17,16 @@ read -p "Press any key to continue"
 #     ln -s $FILE $DEST_DIR/$BASEFILE
 # done
 
+# copy files
+# for FILE in $SOURCE_FILES;
+# do
+#     BASEFILE=$(basename $FILE)
+#     echo $BASEFILE
+#     echo source file: $FILE
+#     echo destination file: $DEST_DIR/$BASEFILE
+#     cp $FILE $DEST_DIR/$BASEFILE
+# done
+
 # # create png files
 # SVG_FILES=$(find $DEST_DIR -regex ".*/?+fig[1-9].*.svg")
 # for FILE in $SVG_FILES;
@@ -30,7 +40,7 @@ read -p "Press any key to continue"
 # done
 
 # create eps & png files from svg
-# SVG_FILES=$(find $DEST_DIR -regex ".*/?+fig[1-9].*.svg")
+# # SVG_FILES=$(find $DEST_DIR -regex ".*/?+fig[1-9].*.svg")
 # SVG_FILES=$(find $SOURCE_DIR -regex ".*/?+fig[1-9].*.svg")
 # for FILE in $SVG_FILES;
 # do
@@ -42,7 +52,7 @@ read -p "Press any key to continue"
 #     inkscape --export-type=eps --export-area-drawing --export-ignore-filters --export-filename=$DEST_DIR/$BASENAME0EXT.eps $FILE
 #     # inkscape --export-dpi=500 --export-type=eps  --export-filename=$DEST_DIR/$BASENAME0EXT.eps $FILE
 #     inkscape --export-dpi=500 --export-type=png --export-area-page --export-filename=$DEST_DIR/$BASENAME0EXT.png $FILE
-#     inkscape --export-dpi=500 --export-type=svg --export-area-page --export-filename=$DEST_DIR/$BASENAME0EXT.svg $FILE
+#     # inkscape --export-dpi=500 --export-type=svg --export-area-page --export-filename=$DEST_DIR/$BASENAME0EXT.svg $FILE
 # done
 
 # # create tiff files from svg
@@ -116,9 +126,9 @@ do
 done
 
 
-# # delete JPG/EPS files
-# EPS_FILES=$(find $DEST_DIR -regex ".*/?+fig[1-9].*.eps")
-# for FILE in $EPS_FILES;
+# # delete files
+# FILES=$(find $DEST_DIR -regex ".*/?+fig[1-9].*.svg")
+# for FILE in $FILES;
 # do
 #     BASENAME=$(basename $FILE)
 #     BASENAME0EXT="${BASENAME%.*}"

@@ -111,7 +111,7 @@ ah1.plot([r3,r3],[avgbars[3,:]-sembars[3,:],avgbars[3,:]+sembars[3,:]],color="gr
 ylabel = "Calcium Peak ($\mu$M)" # calcium peak
 ylim = [1,6]                     # calcium peak
 yticks = [1,3,5]                 # calcium peak
-ah1.text(-0.03,-0.2,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0)
+ah1.text(-0.03,-0.4,"Stimulation frequency (Hz)",fontsize=12,font=fontprop,rotation=0)
 # -------------
 # ylabel = "Calcium event rate (Hz)" # calcium rate
 # ylim = [0,0.4]                     # calcium rate
@@ -199,7 +199,7 @@ ah1.text(coords["high"]["text"][2][0],coords["high"]["text"][2][1],coords["high"
 # ---------------------------------------------
 # legends
 fontprop_legend = font_manager.FontProperties(family='Arial',weight='normal',style='normal',size=8)
-# lh = ah1.legend(frameon=False,loc="center",bbox_to_anchor=(-0.01,0.6,0.1,0.5),prop=fontprop,fontsize=4,labelspacing=0.1,markerscale=0.01,mode='expand',handlelength=0.5)
+lh = ah1.legend(frameon=False,loc="center",bbox_to_anchor=(-0.04,0.7,0.1,0.5),prop=fontprop,fontsize=4,labelspacing=0.1,markerscale=0.01,mode='expand',handlelength=0.5)
 # lh = ah1.legend(frameon=False,loc="center",bbox_to_anchor=(0.25,0.8,0.1,0.5),prop=fontprop_legend,labelspacing=0.1,markerscale=0.01,handlelength=0.5)
 # ---------------------------------------------
 # saving figures
@@ -209,7 +209,7 @@ fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.svg" # calcium peak
 # fh1_name = "ap1to1000dhz30s_cacyt_risetime_bar.svg" # calcium risetime
 # fh1_name = "ap1to1000dhz30s_cacyt_decaytime_bar.svg" # calcium decaytime
 # fh1_name = "ap1to1000dhz30s_cacyt_fwhm_bar.svg" # calcium fwhm
-fh1.savefig(os.path.join(figsavepath,fh1_name))
+fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True)
 fh1_name = "ap1to1000dhz30s_cacyt_peak_bar.png" # calcium peak
 # fh1_name = "ap1to1000dhz30s_cacyt_rate_bar.png" # calcium rate
 # fh1_name = "ap1to1000dhz30s_cacyt_risetime_bar.png" # calcium risetime

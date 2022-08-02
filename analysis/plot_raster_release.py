@@ -16,7 +16,7 @@ fontprop = font_manager.FontProperties(family='Arial',weight='normal',style='nor
 # ==========================================================
 # load previously analyzed cacyt event properties data:  oldset(matlab)
 dir1 = "/home/anup/goofy/astron/cooked/new_2020_python/ap1to1000dhz30s"
-figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.3/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
+figsavepath = "/home/anup/goofy/astron/writing/AD_paper/ploscompbio1.5/figures2022/ap1to1000dhz30s" # path to the folder where figures will be saved
 # --------------------------------
 # fnamemat_dmaxtrel = "frap30scarel_dmaxtrel.mat"
 # fnamemat_dmaxtkrrel = "frap30scarel_dmaxtkrrel.mat"
@@ -86,8 +86,8 @@ ah11,ah12,ah13,ah14 = ah1[0,0],ah1[0,1],ah1[0,2],ah1[0,3]
 labels = ["KR release","FF release"]
 for igroup,ah in zip(range(0,ngroups),[ah11,ah12,ah13,ah14]):
     if (igroup == 0):
-        ah.plot(binst[0:-1],psthffrel[igroup,:],linestyle="-",linewidth=0.5,color="green",label=labels[0])
-        ah.plot(binst[0:-1],psthkrrel[igroup,:],linestyle="-",linewidth=0.5,color="orange",alpha=0.4,label=labels[1])
+        ah.plot(binst[0:-1],psthkrrel[igroup,:],linestyle="-",linewidth=0.5,color="orange",alpha=0.4,label=labels[0])
+        ah.plot(binst[0:-1],psthffrel[igroup,:],linestyle="-",linewidth=0.5,color="green",label=labels[1])
     else:
         ah.plot(binst[0:-1],psthffrel[igroup,:],linestyle="-",linewidth=0.5,color="green")
         ah.plot(binst[0:-1],psthkrrel[igroup,:],linestyle="-",linewidth=0.5,color="orange",alpha=0.4)
@@ -135,9 +135,9 @@ for legobj in lh.legendHandles:
 # ------------------------------
 # saving figures
 fh1_name = "ap1to1000dhz30s_release_raster_plot.svg"
-# fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
-fh1.savefig(os.path.join(figsavepath,fh1_name))
+fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True)
+# fh1.savefig(os.path.join(figsavepath,fh1_name))
 fh1_name = "ap1to1000dhz30s_release_raster_plot.png"
 fh1.savefig(os.path.join(figsavepath,fh1_name),transparent=True,dpi=300)
-# plt.show()
+plt.show()
 
